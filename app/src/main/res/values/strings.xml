@@ -3,6 +3,7 @@
 
 	<!-- Auth Activity -->
 	<string name="fragmentSignupName">Sign Up</string>
+	<string name="fragmentLoginName">Log In</string>
 
 	<string name="hintEmail">Email</string>
 	<string name="hintName">Name</string>
@@ -10,4 +11,5 @@
 	<string name="hintPassCheck">Repeat password</string>
 
 	<string name="buttonSignup">Sign Up</string>
+	<string name="buttonLogin">Log In</string>
 </resources>
