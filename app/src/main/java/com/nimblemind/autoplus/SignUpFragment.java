@@ -58,7 +58,14 @@ public class SignUpFragment extends Fragment
 					}
 				});
 
-		//TODO Добавить подтверждение пароля
+		view.findViewById(R.id.buttonGotoLogin).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				mListener.onGotoLogIn();
+			}
+		});
 	}
 
 	@Override
@@ -74,6 +81,8 @@ public class SignUpFragment extends Fragment
 			throw new RuntimeException(context.toString()
 					+ " must implement " + this.getClass().getSimpleName() + ".Listener");
 		}
+
+		getActivity().setTitle(R.string.fragmentSignupName);
 	}
 
 	@Override
@@ -86,5 +95,6 @@ public class SignUpFragment extends Fragment
 	interface Listener
 	{
 		void onSignUp(String email, String name, String password);
+		void onGotoLogIn();
 	}
 }

@@ -12,4 +12,6 @@
 
 	<string name="buttonSignup">Sign Up</string>
 	<string name="buttonLogin">Log In</string>
+	<string name="buttonGotoSignup">I don\'t have an account</string>
+	<string name="buttonGotoLogin">I have an account</string>
 </resources>

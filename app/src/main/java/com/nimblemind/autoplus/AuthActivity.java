@@ -37,4 +37,22 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 	{
 		Log.d(TAG, "onLogIn: " + email);
 	}
+
+	@Override
+	public void onGotoLogIn()
+	{
+		getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.fragmentTarget,new LogInFragment())
+				.commitNowAllowingStateLoss();
+	}
+
+	@Override
+	public void onGotoSignUp()
+	{
+		getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.fragmentTarget,new SignUpFragment())
+				.commitNowAllowingStateLoss();
+	}
 }

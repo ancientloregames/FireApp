@@ -54,6 +54,15 @@ public class LogInFragment extends Fragment
 						mListener.onLogIn(email, password);
 					}
 				});
+
+		view.findViewById(R.id.buttonGotoSignup).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				mListener.onGotoSignUp();
+			}
+		});
 	}
 
 	@Override
@@ -70,6 +79,8 @@ public class LogInFragment extends Fragment
 			throw new RuntimeException(context.toString()
 					+ " must implement " + this.getClass().getSimpleName() + ".Listener");
 		}
+
+		getActivity().setTitle(R.string.fragmentLoginName);
 	}
 
 	@Override
@@ -82,5 +93,6 @@ public class LogInFragment extends Fragment
 	interface Listener
 	{
 		void onLogIn(String email, String password);
+		void onGotoSignUp();
 	}
 }

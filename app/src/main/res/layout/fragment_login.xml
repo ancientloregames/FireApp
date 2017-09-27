@@ -43,5 +43,13 @@
 		android:text="@string/buttonLogin"
 		android:textStyle="bold"
 		/>
+	<Button
+		android:id="@+id/buttonGotoSignup"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:text="@string/buttonGotoSignup"
+		android:textStyle="bold"
+		/>
 
 </LinearLayout>
