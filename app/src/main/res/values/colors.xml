@@ -2,5 +2,9 @@
 <resources>
 	<color name="colorPrimary">#9cb21c</color>
 	<color name="colorPrimaryDark">#9cb21c</color>
-	<color name="colorAccent">#ffffff</color>
+	<color name="colorAccent">@android:color/holo_red_light</color>
+
+	<!-- Auth Activity -->
+	<color name="authMain">#f6f6f6</color>
+	<color name="authTextForm">@android:color/white</color>
 </resources>

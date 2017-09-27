@@ -1,3 +1,13 @@
 <resources>
 	<string name="app_name">Auto+</string>
+
+	<!-- Auth Activity -->
+	<string name="fragmentSignupName">Sign Up</string>
+
+	<string name="hintEmail">Email</string>
+	<string name="hintName">Name</string>
+	<string name="hintPassword">Password</string>
+	<string name="hintPassCheck">Repeat password</string>
+
+	<string name="buttonSignup">Sign Up</string>
 </resources>
