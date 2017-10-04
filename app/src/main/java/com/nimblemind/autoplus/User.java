@@ -1,5 +1,7 @@
 package com.nimblemind.autoplus;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 
 
@@ -9,13 +11,17 @@ import java.io.Serializable;
 
 class User implements Serializable
 {
-	final String id;
 	final String name;
 	final String email;
 
-	User(String id, String name, String email)
+	public User() //For Firebase Database Snapshot
 	{
-		this.id = id;
+		name = null;
+		email = null;
+	}
+
+	User(String name, String email)
+	{
 		this.name = name;
 		this.email = email;
 	}
@@ -24,8 +30,7 @@ class User implements Serializable
 	public String toString()
 	{
 		return "User{ " +
-				"id = '" + id + '\'' +
-				", name = '" + name + '\'' +
+				"name = '" + name + '\'' +
 				", email = '" + email + '\'' +
 				" }";
 	}

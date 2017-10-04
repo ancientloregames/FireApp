@@ -15,6 +15,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nimblemind.autoplus.LogInFragment.Listener;
 
 
@@ -23,15 +29,15 @@ import com.nimblemind.autoplus.LogInFragment.Listener;
  */
 
 /* TODO
-* Save account in DB on create event
 * Check ongoing auth in Firebase on onCreate
 * Check existing account in AccountManager or SharedPrefference
 * */
 public class AuthActivity extends AppCompatActivity implements SignUpFragment.Listener, Listener
 {
-	private static final String TAG = "AuthActivity";
+	private final String TAG = "AuthActivity";
 
-	FirebaseAuth auth;
+	private FirebaseAuth auth;
+	private DatabaseReference dbUsers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -41,15 +47,18 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 
 		auth = FirebaseAuth.getInstance();
 
+		dbUsers = FirebaseDatabase.getInstance().getReference("users");
+
 		getSupportFragmentManager()
 				.beginTransaction()
 				.add(R.id.fragmentTarget, new LogInFragment())
 				.commitNowAllowingStateLoss();
 	}
 
-	private void enter(@NonNull User user)
+	private void enter(@NonNull String uid, @NonNull User user)
 	{
 		Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+		intent.putExtra("uid", uid);
 		intent.putExtra("user", user);
 		startActivity(intent);
 		finish();
@@ -68,8 +77,7 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 						if (task.isSuccessful())
 						{
 							Log.d(TAG, "onSignUp: success");
-							String userId = task.getResult().getUser().getUid();
-							enter(new User(userId, name, email));
+							addUserAndEnter(task.getResult().getUser().getUid(), new User(name, email));
 						}
 						else
 						{
@@ -93,8 +101,7 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 						if (task.isSuccessful())
 						{
 							Log.d(TAG, "onLogIn: success");
-							String userId = task.getResult().getUser().getUid();
-							enter(new User(userId, "DUMMY", email));
+							findUserAndEnter(task.getResult().getUser().getUid());
 						}
 						else
 						{
@@ -123,6 +130,42 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 				.commitNowAllowingStateLoss();
 	}
 
+	private void addUserAndEnter(@NonNull String uid, @NonNull User user)
+	{
+		dbUsers.child(uid).setValue(user);
+		enter(uid, user);
+	}
+
+	private void findUserAndEnter(@NonNull final String uid)
+	{
+		dbUsers.child(uid).addListenerForSingleValueEvent(new ValueEventListener()
+		{
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot)
+			{
+				User user = dataSnapshot.getValue(User.class);
+				if (user != null)
+				{
+					Log.d(TAG, "findUserAndEnter: success");
+					enter(uid, user);
+				}
+				else
+				{
+					Log.e(TAG, "findUserAndEnter: failure");
+					Toast.makeText(AuthActivity.this, getString(R.string.errorAuthInvalidUser),
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+
+			@Override
+			public void onCancelled(DatabaseError databaseError)
+			{
+				Log.e(TAG, "getUserData: failure");
+				handleAuthError(databaseError.toException());
+			}
+		});
+	}
+
 	private void handleAuthError(Exception exception)
 	{
 		if (exception == null) return;
@@ -148,6 +191,10 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 		else if (exception instanceof FirebaseAuthInvalidCredentialsException)
 		{
 			message = getString(R.string.errorAuthInvalidCredentials);
+		}
+		else if (exception instanceof DatabaseException)
+		{
+			message = getString(R.string.errorAythDatabase);
 		}
 		else
 		{

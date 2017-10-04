@@ -19,8 +19,9 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 
+		String uid = getIntent().getStringExtra("uid");
 		User user = (User) getIntent().getSerializableExtra("user");
 
-		Log.d(TAG, user.toString());
+		Log.d(TAG, user.toString() + " uid: " + uid);
 	}
 }
