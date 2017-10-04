@@ -14,7 +14,7 @@ import android.widget.EditText;
  * com.nimblemind.autoplus. Created by nimblemind on 9/27/2017.
  */
 
-//TODO добавить возможность перехода на экран авторизации
+
 public class SignUpFragment extends Fragment
 {
 	private Listener mListener;
