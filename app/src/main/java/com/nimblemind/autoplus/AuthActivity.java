@@ -10,6 +10,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.nimblemind.autoplus.LogInFragment.Listener;
 
@@ -19,7 +23,6 @@ import com.nimblemind.autoplus.LogInFragment.Listener;
  */
 
 /* TODO
-* Add login
 * Save account in DB on create event
 * Check ongoing auth in Firebase on onCreate
 * Check existing account in AccountManager or SharedPrefference
@@ -64,35 +67,42 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 					{
 						if (task.isSuccessful())
 						{
+							Log.d(TAG, "onSignUp: success");
 							String userId = task.getResult().getUser().getUid();
 							enter(new User(userId, name, email));
 						}
 						else
 						{
-							Exception exception = task.getException();
-							if (exception != null)
-							{
-								exception.printStackTrace();
-							}
-							if (exception instanceof FirebaseAuthUserCollisionException)
-							{
-								Toast.makeText(AuthActivity.this, getString(R.string.errorSignupCollision),
-										Toast.LENGTH_SHORT).show();
-							}
-							else
-							{
-								Toast.makeText(AuthActivity.this, getString(R.string.errorSignupFailure),
-										Toast.LENGTH_SHORT).show();
-							}
+							Log.e(TAG, "onSignUp: failure");
+							handleAuthError(task.getException());
 						}
 					}
 				});
 	}
 
 	@Override
-	public void onLogIn(String email, String password)
+	public void onLogIn(final String email, final String password)
 	{
 		Log.d(TAG, "onLogIn: " + email);
+		auth.signInWithEmailAndPassword(email, password)
+				.addOnCompleteListener(new OnCompleteListener<AuthResult>()
+				{
+					@Override
+					public void onComplete(@NonNull Task<AuthResult> task)
+					{
+						if (task.isSuccessful())
+						{
+							Log.d(TAG, "onLogIn: success");
+							String userId = task.getResult().getUser().getUid();
+							enter(new User(userId, "DUMMY", email));
+						}
+						else
+						{
+							Log.e(TAG, "onLogIn: failure");
+							handleAuthError(task.getException());
+						}
+					}
+				});
 	}
 
 	@Override
@@ -111,5 +121,38 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 				.beginTransaction()
 				.replace(R.id.fragmentTarget, new SignUpFragment())
 				.commitNowAllowingStateLoss();
+	}
+
+	private void handleAuthError(Exception exception)
+	{
+		if (exception == null) return;
+
+		exception.printStackTrace();
+		String message;
+		if (exception instanceof FirebaseAuthUserCollisionException)
+		{
+			message = getString(R.string.errorAuthCollision);
+		}
+		else if (exception instanceof FirebaseAuthInvalidUserException)
+		{
+			message = getString(R.string.errorAuthInvalidUser);
+		}
+		else if (exception instanceof FirebaseAuthRecentLoginRequiredException)
+		{
+			message = getString(R.string.errorAuthRecentLogin);
+		}
+		else if (exception instanceof FirebaseAuthEmailException)
+		{
+			message = getString(R.string.errorAuthEmail);
+		}
+		else if (exception instanceof FirebaseAuthInvalidCredentialsException)
+		{
+			message = getString(R.string.errorAuthInvalidCredentials);
+		}
+		else
+		{
+			message = getString(R.string.errorAuthGeneral);
+		}
+		Toast.makeText(AuthActivity.this, message, Toast.LENGTH_SHORT).show();
 	}
 }

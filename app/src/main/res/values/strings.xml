@@ -15,6 +15,10 @@
 	<string name="buttonGotoSignup">I don\'t have an account</string>
 	<string name="buttonGotoLogin">I have an account</string>
 
-	<string name="errorSignupFailure">Authentification failed</string>
-	<string name="errorSignupCollision">User with this email already exist</string>
+	<string name="errorAuthGeneral">Authentification failed</string>
+	<string name="errorAuthCollision">User with this email already exist</string>
+	<string name="errorAuthInvalidUser">No user such record. The user may have been deleted</string>
+	<string name="errorAuthRecentLogin">Recent login required</string>
+	<string name="errorAuthInvalidCredentials">Invalid credentials</string>
+	<string name="errorAuthEmail">Email sent to Firebase Auth</string>
 </resources>
