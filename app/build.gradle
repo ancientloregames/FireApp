@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.nimblemind.autoplus"
         minSdkVersion 16
@@ -25,11 +25,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:support-v4:26.+'
+    compile "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_VERSION}"
+    compile "com.android.support:support-v4:${rootProject.ext.SUPPORT_VERSION}"
 
-    compile 'com.google.firebase:firebase-auth:11.2.0'
-    compile 'com.google.firebase:firebase-database:11.2.0'
+    compile "com.google.firebase:firebase-auth:${rootProject.ext.FIREBASE_VERSION}"
+    compile "com.google.firebase:firebase-database:${rootProject.ext.FIREBASE_VERSION}"
 
     testCompile 'junit:junit:4.12'
 }
