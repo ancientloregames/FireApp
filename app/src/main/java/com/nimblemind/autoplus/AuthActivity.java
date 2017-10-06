@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -29,7 +30,6 @@ import com.nimblemind.autoplus.LogInFragment.Listener;
  */
 
 /* TODO
-* Check ongoing auth in Firebase on onCreate
 * Check existing account in AccountManager or SharedPrefference
 * */
 public class AuthActivity extends AppCompatActivity implements SignUpFragment.Listener, Listener
@@ -49,7 +49,12 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 
 		dbUsers = FirebaseDatabase.getInstance().getReference("users");
 
-		if (savedInstanceState == null)
+		FirebaseUser currentUser = auth.getCurrentUser();
+		if (currentUser != null)
+		{
+			findUserAndEnter(currentUser.getUid());
+		}
+		else if (savedInstanceState == null)
 		{
 			getSupportFragmentManager()
 					.beginTransaction()
