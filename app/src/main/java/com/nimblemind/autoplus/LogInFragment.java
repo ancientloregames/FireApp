@@ -14,7 +14,6 @@ import android.widget.EditText;
  * com.nimblemind.autoplus. Created by nimblemind on 9/27/2017.
  */
 
-
 public class LogInFragment extends Fragment
 {
 	private Listener mListener;
@@ -50,8 +49,10 @@ public class LogInFragment extends Fragment
 						String email = mEmailView.getText().toString();
 						String password = mPasswordView.getText().toString();
 
-						// TODO Сдеать проверку корректности введенных данных
-						mListener.onLogIn(email, password);
+						if (validate(email, password))
+						{
+							mListener.onLogIn(email, password);
+						}
 					}
 				});
 
@@ -88,6 +89,38 @@ public class LogInFragment extends Fragment
 	{
 		super.onDetach();
 		mListener = null;
+	}
+
+	private boolean validate(String email, String password)
+	{
+		boolean result = true;
+
+		mEmailView.setError(null);
+		mPasswordView.setError(null);
+
+		if (email.isEmpty())
+		{
+			mEmailView.setError(getString(R.string.errorFieldRequired));
+			result = false;
+		}
+		else if (!email.matches(".+@.+\\..+"))
+		{
+			mEmailView.setError(getString(R.string.errorInvalidEmail));
+			result = false;
+		}
+
+		if (password.isEmpty())
+		{
+			mPasswordView.setError(getString(R.string.errorFieldRequired));
+			result = false;
+		}
+		else if (password.length() < 6)
+		{
+			mPasswordView.setError(getString(R.string.errorInvalidPassword));
+			result = false;
+		}
+
+		return result;
 	}
 
 	interface Listener

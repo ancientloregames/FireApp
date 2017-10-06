@@ -20,6 +20,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:hint="@string/hintEmail"
+			android:imeOptions="actionNext"
 			android:inputType="textEmailAddress"
 			android:maxLines="1"
 			/>
@@ -29,6 +30,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:hint="@string/hintName"
+			android:imeOptions="actionNext"
 			android:inputType="textPersonName|textCapWords"
 			android:maxLines="1"
 			/>
@@ -38,6 +40,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:hint="@string/hintPassword"
+			android:imeOptions="actionNext"
 			android:inputType="textPassword"
 			android:maxLines="1"
 			/>
@@ -47,6 +50,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:hint="@string/hintPassCheck"
+			android:imeOptions="actionDone"
 			android:inputType="textPassword"
 			android:maxLines="1"
 			/>

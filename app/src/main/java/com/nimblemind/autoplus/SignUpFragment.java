@@ -4,16 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 9/27/2017.
  */
-
 
 public class SignUpFragment extends Fragment
 {
@@ -22,6 +24,8 @@ public class SignUpFragment extends Fragment
 	private EditText mEmailView;
 	private EditText mNameView;
 	private EditText mPasswordView;
+
+	private boolean passConfirmed;
 
 	public SignUpFragment()
 	{
@@ -43,6 +47,29 @@ public class SignUpFragment extends Fragment
 		mNameView = view.findViewById(R.id.textName);
 		mPasswordView = view.findViewById(R.id.textPassword);
 
+		final EditText mPassConfirmView = view.findViewById(R.id.textPassword2);
+
+		mPassConfirmView.setOnEditorActionListener(new TextView.OnEditorActionListener()
+		{
+			@Override
+			public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
+			{
+				if (actionId == EditorInfo.IME_ACTION_DONE)
+				{
+					if (!mPasswordView.getText().toString().equals(mPassConfirmView.getText().toString()))
+					{
+						view.setError(getString(R.string.errorConfirmPassFailure));
+						passConfirmed = false;
+					}
+					else
+					{
+						passConfirmed = true;
+					}
+				}
+				return false;
+			}
+		});
+
 		view.findViewById(R.id.buttonSignup)
 				.setOnClickListener(new View.OnClickListener()
 				{
@@ -53,8 +80,10 @@ public class SignUpFragment extends Fragment
 						String name = mNameView.getText().toString();
 						String password = mPasswordView.getText().toString();
 
-						// TODO Сдеать проверку корректности введенных данных
-						mListener.onSignUp(email, name, password);
+						if (validate(email, name, password))
+						{
+							mListener.onSignUp(email, name, password);
+						}
 					}
 				});
 
@@ -90,6 +119,45 @@ public class SignUpFragment extends Fragment
 	{
 		super.onDetach();
 		mListener = null;
+	}
+
+	private boolean validate(String email, String name, String password)
+	{
+		boolean result = passConfirmed;
+
+		mEmailView.setError(null);
+		mNameView.setError(null);
+		mPasswordView.setError(null);
+
+		if (email.isEmpty())
+		{
+			mEmailView.setError(getString(R.string.errorFieldRequired));
+			result = false;
+		}
+		else if (!email.matches(".+@.+\\..+"))
+		{
+			mEmailView.setError(getString(R.string.errorInvalidEmail));
+			result = false;
+		}
+
+		if (name.isEmpty())
+		{
+			mNameView.setError(getString(R.string.errorFieldRequired));
+			result = false;
+		}
+
+		if (password.isEmpty())
+		{
+			mPasswordView.setError(getString(R.string.errorFieldRequired));
+			result = false;
+		}
+		else if (password.length() < 6)
+		{
+			mPasswordView.setError(getString(R.string.errorInvalidPassword));
+			result = false;
+		}
+
+		return result;
 	}
 
 	interface Listener

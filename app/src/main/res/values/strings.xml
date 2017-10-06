@@ -15,6 +15,11 @@
 	<string name="buttonGotoSignup">I don\'t have an account</string>
 	<string name="buttonGotoLogin">I have an account</string>
 
+	<string name="errorFieldRequired">This field is required</string>
+	<string name="errorInvalidEmail">This email address is invalid</string>
+	<string name="errorInvalidPassword">This password is too short (miminum 6 letters)</string>
+	<string name="errorConfirmPassFailure">Passwords do not match</string>
+
 	<string name="errorAuthGeneral">Authentification failed</string>
 	<string name="errorAuthCollision">User with this email already exist</string>
 	<string name="errorAuthInvalidUser">No user such record. The user may have been deleted</string>
