@@ -49,10 +49,13 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 
 		dbUsers = FirebaseDatabase.getInstance().getReference("users");
 
-		getSupportFragmentManager()
-				.beginTransaction()
-				.add(R.id.fragmentTarget, new LogInFragment())
-				.commitNowAllowingStateLoss();
+		if (savedInstanceState == null)
+		{
+			getSupportFragmentManager()
+					.beginTransaction()
+					.add(R.id.fragmentTarget, new LogInFragment())
+					.commitNowAllowingStateLoss();
+		}
 	}
 
 	private void enter(@NonNull String uid, @NonNull User user)
