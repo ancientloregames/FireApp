@@ -3,6 +3,7 @@ package com.nimblemind.autoplus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -23,15 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nimblemind.autoplus.LogInFragment.Listener;
+import com.securepreferences.SecurePreferences;
 
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 9/27/2017.
  */
 
-/* TODO
-* Check existing account in AccountManager or SharedPrefference
-* */
 public class AuthActivity extends AppCompatActivity implements SignUpFragment.Listener, Listener
 {
 	private final String TAG = "AuthActivity";
@@ -51,18 +50,36 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 
 		dbUsers = FirebaseDatabase.getInstance().getReference("users");
 
+		if (savedInstanceState == null)
+		{
+			onFirstCreate();
+		}
+	}
+
+	private void onFirstCreate()
+	{
 		FirebaseUser currentUser = auth.getCurrentUser();
+
+		Bundle extras = getIntent().getExtras();
+
+		SecurePreferences prefs = new SecurePreferences(this);
+		String name = prefs.getString("name", null);
+		String email = prefs.getString("email", null);
+		String pass = prefs.getString("pass", null);
+
 		if (currentUser != null)
 		{
 			findUserAndEnter(currentUser.getUid());
 		}
-		else if (savedInstanceState == null)
+		else if (!extras.getBoolean(EXTRA_NO_AUTOLOGIN, false) &&
+				name != null && email != null && pass != null)
 		{
-			getSupportFragmentManager()
+			logInInternal(email, name, pass);
+		}
+		else getSupportFragmentManager()
 					.beginTransaction()
 					.add(R.id.fragmentTarget, new LogInFragment())
 					.commitNowAllowingStateLoss();
-		}
 	}
 
 	private void enter(@NonNull String uid, @NonNull User user)
@@ -87,6 +104,7 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 						if (task.isSuccessful())
 						{
 							Log.d(TAG, "onSignUp: success");
+							saveCredentials(email, name, password);
 							addUserAndEnter(task.getResult().getUser().getUid(), new User(name, email));
 						}
 						else
@@ -99,9 +117,14 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 	}
 
 	@Override
-	public void onLogIn(final String email, final String password)
+	public void onLogIn(String email, String password)
 	{
 		Log.d(TAG, "onLogIn: " + email);
+		logInInternal(email, null, password);
+	}
+
+	private void logInInternal(@NonNull final String email, @Nullable final String name, @NonNull final String password)
+	{
 		auth.signInWithEmailAndPassword(email, password)
 				.addOnCompleteListener(new OnCompleteListener<AuthResult>()
 				{
@@ -111,7 +134,12 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 						if (task.isSuccessful())
 						{
 							Log.d(TAG, "onLogIn: success");
-							findUserAndEnter(task.getResult().getUser().getUid());
+							String uid = task.getResult().getUser().getUid();
+							if (name != null)
+							{
+								enter(uid, new User(email, name));
+							}
+							else findUserAndEnter(uid);
 						}
 						else
 						{
@@ -174,6 +202,16 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 				handleAuthError(databaseError.toException());
 			}
 		});
+	}
+
+	private void saveCredentials(String email, String name, String password)
+	{
+		new SecurePreferences(AuthActivity.this)
+				.edit()
+				.putString("name", name)
+				.putString("email", email)
+				.putString("pass", password)
+				.apply();
 	}
 
 	private void handleAuthError(Exception exception)

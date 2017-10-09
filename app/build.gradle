@@ -31,6 +31,8 @@ dependencies {
     compile "com.google.firebase:firebase-auth:${rootProject.ext.FIREBASE_VERSION}"
     compile "com.google.firebase:firebase-database:${rootProject.ext.FIREBASE_VERSION}"
 
+    compile 'com.scottyab:secure-preferences-lib:0.1.4'
+
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'
