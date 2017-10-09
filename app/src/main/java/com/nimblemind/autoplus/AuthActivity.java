@@ -36,6 +36,8 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 {
 	private final String TAG = "AuthActivity";
 
+	static final String EXTRA_NO_AUTOLOGIN = "NoAutoLogIn";
+
 	private FirebaseAuth auth;
 	private DatabaseReference dbUsers;
 

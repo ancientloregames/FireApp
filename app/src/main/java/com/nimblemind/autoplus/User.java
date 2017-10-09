@@ -1,7 +1,5 @@
 package com.nimblemind.autoplus;
 
-import com.google.firebase.database.Exclude;
-
 import java.io.Serializable;
 
 
@@ -29,9 +27,8 @@ class User implements Serializable
 	@Override
 	public String toString()
 	{
-		return "User{ " +
-				"name = '" + name + '\'' +
-				", email = '" + email + '\'' +
-				" }";
+		return "User: \n" +
+				"name = '" + name + "\'\n" +
+				"email = '" + email + '\'';
 	}
 }
