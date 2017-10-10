@@ -60,8 +60,6 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 	{
 		FirebaseUser currentUser = auth.getCurrentUser();
 
-		Bundle extras = getIntent().getExtras();
-
 		SecurePreferences prefs = new SecurePreferences(this);
 		String name = prefs.getString("name", null);
 		String email = prefs.getString("email", null);
@@ -71,7 +69,7 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 		{
 			findUserAndEnter(currentUser.getUid());
 		}
-		else if (!extras.getBoolean(EXTRA_NO_AUTOLOGIN, false) &&
+		else if (!getIntent().getBooleanExtra(EXTRA_NO_AUTOLOGIN, false) &&
 				name != null && email != null && pass != null)
 		{
 			logInInternal(email, name, pass);
