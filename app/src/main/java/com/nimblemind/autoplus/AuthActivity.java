@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nimblemind.autoplus.LogInFragment.Listener;
 import com.securepreferences.SecurePreferences;
+import io.fabric.sdk.android.Fabric;
 
 
 /**
@@ -58,6 +60,11 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 
 	private void onFirstCreate()
 	{
+		if (BuildConfig.WITH_FABRIC)
+		{
+			Fabric.with(getApplicationContext(), new Crashlytics());
+		}
+
 		FirebaseUser currentUser = auth.getCurrentUser();
 
 		SecurePreferences prefs = new SecurePreferences(this);
@@ -215,6 +222,11 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 	private void handleAuthError(Exception exception)
 	{
 		if (exception == null) return;
+
+		if (Fabric.isInitialized())
+		{
+			Crashlytics.logException(exception);
+		}
 
 		exception.printStackTrace();
 		String message;

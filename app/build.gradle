@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 26
@@ -12,9 +13,14 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "boolean", "WITH_FABRIC", "false"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "WITH_FABRIC", "true"
         }
     }
 }
@@ -32,6 +38,10 @@ dependencies {
     compile "com.google.firebase:firebase-database:${rootProject.ext.FIREBASE_VERSION}"
 
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') {
+        transitive = true;
+    }
 
     testCompile 'junit:junit:4.12'
 }
