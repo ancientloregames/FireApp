@@ -8,9 +8,9 @@ import java.io.Serializable;
  */
 
 class User implements Serializable
-{
-	final String name;
-	final String email;
+{// fields must be public for firebase database
+	public final String name;
+	public final String email;
 
 	public User() //For Firebase Database Snapshot
 	{
