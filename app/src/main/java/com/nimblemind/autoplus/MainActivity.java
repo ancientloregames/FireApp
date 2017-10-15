@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -14,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * com.nimblemind.autoplus. Created by nimblemind on 10/4/2017.
  */
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements RequestListFragment.Listener
 {
 	private final String TAG = MainActivity.class.getSimpleName();
 
@@ -36,17 +35,52 @@ public class MainActivity extends AppCompatActivity
 				.create()
 				.show();
 
-		findViewById(R.id.buttonLogout).setOnClickListener(new View.OnClickListener()
+		if (savedInstanceState == null)
 		{
-			@Override
-			public void onClick(View view)
-			{
-				FirebaseAuth.getInstance().signOut();
-				Intent intent = new Intent(MainActivity.this, AuthActivity.class);
-				intent.putExtra(AuthActivity.EXTRA_NO_AUTOLOGIN, true);
-				startActivity(intent);
-				finish();
-			}
-		});
+			onFirstCreate(uid, user);
+		}
+	}
+
+	private void onFirstCreate(String uid, User user)
+	{
+		RequestListFragment fragment = null;
+
+		switch (user.type)
+		{
+			case CLIENT:
+				fragment = new ClientTicketListFragment();
+				break;
+			case SUPPORT:
+				// TODO Сделать инфраструктуру для учетной записи сотрудника
+				break;
+			default:
+				// NOTE Такого не может произойти, так ведь? Возвращаемся на форму авторизации
+				gotoAuthActivity(true);
+				return;
+		}
+
+		Bundle arguments = new Bundle();
+		arguments.putString("uid", uid);
+		fragment.setArguments(arguments);
+
+		getSupportFragmentManager()
+				.beginTransaction()
+				.add(R.id.fragmentTarget, fragment)
+				.commitNowAllowingStateLoss();
+	}
+
+	private void gotoAuthActivity(final boolean noAutologin)
+	{
+		FirebaseAuth.getInstance().signOut();
+		Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+		intent.putExtra(AuthActivity.EXTRA_NO_AUTOLOGIN, noAutologin);
+		startActivity(intent);
+		finish();
+	}
+
+	@Override
+	public void onLogout()
+	{
+		gotoAuthActivity(true);
 	}
 }

@@ -28,4 +28,10 @@
 	<string name="errorAuthInvalidCredentials">Invalid credentials</string>
 	<string name="errorAuthEmail">Email sent to Firebase Auth</string>
 	<string name="errorAythDatabase">Error loading user data</string>
+
+	<!-- Main Activity -->
+	<string name="fragmentClientRequestListName">My requests</string>
+
+	<string name="textRequestInfo">Request №%1$i of %2$s</string>
+	<string name="textNoNewMessages">No new messages</string>
 </resources>
