@@ -66,25 +66,33 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 		}
 
 		FirebaseUser currentUser = auth.getCurrentUser();
-
-		SecurePreferences prefs = new SecurePreferences(this);
-		String name = prefs.getString("name", null);
-		String email = prefs.getString("email", null);
-		String pass = prefs.getString("pass", null);
-
 		if (currentUser != null)
 		{
 			findUserAndEnter(currentUser.getUid());
 		}
-		else if (!getIntent().getBooleanExtra(EXTRA_NO_AUTOLOGIN, false) &&
-				name != null && email != null && pass != null)
+		else
 		{
-			logInInternal(email, name, pass);
-		}
-		else getSupportFragmentManager()
+			SecurePreferences prefs = new SecurePreferences(this);
+			String name = prefs.getString("name", null);
+			String email = prefs.getString("email", null);
+			String pass = prefs.getString("pass", null);
+			UserType type = null;
+			try {
+				type = Enum.valueOf(UserType.class, prefs.getString("type", null));
+			} catch (NullPointerException | IllegalArgumentException e) {
+				// Useless exception, if we don't get type, than let it be so
+			}
+
+			if (!getIntent().getBooleanExtra(EXTRA_NO_AUTOLOGIN, false) &&
+					name != null && email != null && pass != null && type != null)
+			{
+				logInInternal(email, pass);
+			}
+			else getSupportFragmentManager()
 					.beginTransaction()
 					.add(R.id.fragmentTarget, new LogInFragment())
 					.commitNowAllowingStateLoss();
+		}
 	}
 
 	private void enter(@NonNull String uid, @NonNull User user)
@@ -109,7 +117,7 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 						if (task.isSuccessful())
 						{
 							Log.d(TAG, "onSignUp: success");
-							saveCredentials(email, name, password);
+							saveCredentials(email, name, password, UserType.CLIENT.name());
 							addUserAndEnter(task.getResult().getUser().getUid(), new User(name, email));
 						}
 						else
@@ -125,10 +133,10 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 	public void onLogIn(String email, String password)
 	{
 		Log.d(TAG, "onLogIn: " + email);
-		logInInternal(email, null, password);
+		logInInternal(email, password);
 	}
 
-	private void logInInternal(@NonNull final String email, @Nullable final String name, @NonNull final String password)
+	private void logInInternal(@NonNull final String email, @NonNull final String password)
 	{
 		auth.signInWithEmailAndPassword(email, password)
 				.addOnCompleteListener(new OnCompleteListener<AuthResult>()
@@ -139,17 +147,13 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 						if (task.isSuccessful())
 						{
 							Log.d(TAG, "onLogIn: success");
-							String uid = task.getResult().getUser().getUid();
-							if (name != null)
-							{
-								enter(uid, new User(email, name));
-							}
-							else findUserAndEnter(uid);
+							findUserAndEnter(task.getResult().getUser().getUid());
 						}
 						else
 						{
 							Log.e(TAG, "onLogIn: failure");
 							handleAuthError(task.getException());
+							onGotoLogIn();
 						}
 					}
 				});
@@ -186,10 +190,16 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot)
 			{
-				User user = dataSnapshot.getValue(User.class);
+				User user = null;
+				try {
+					user = dataSnapshot.getValue(User.class);
+				} catch (DatabaseException e) {
+					// User data in database was somehow corrupted
+				}
 				if (user != null)
 				{
 					Log.d(TAG, "findUserAndEnter: success");
+					saveCredentials(user.email, user.name, null, user.type.name());
 					enter(uid, user);
 				}
 				else
@@ -197,6 +207,7 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 					Log.e(TAG, "findUserAndEnter: failure");
 					Toast.makeText(AuthActivity.this, getString(R.string.errorAuthInvalidUser),
 							Toast.LENGTH_SHORT).show();
+					onGotoLogIn();
 				}
 			}
 
@@ -209,14 +220,17 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 		});
 	}
 
-	private void saveCredentials(String email, String name, String password)
+	private void saveCredentials(@Nullable String email, @Nullable String name,
+								 @Nullable String password, @Nullable String type)
 	{
-		new SecurePreferences(AuthActivity.this)
-				.edit()
-				.putString("name", name)
-				.putString("email", email)
-				.putString("pass", password)
-				.apply();
+		final SecurePreferences.Editor editor = new SecurePreferences(AuthActivity.this).edit();
+
+		if(email != null) editor.putString("email", email);
+		if(name != null) editor.putString("name", name);
+		if(password != null) editor.putString("pass", password);
+		if(type != null) editor.putString("type", type);
+
+		editor.apply();
 	}
 
 	private void handleAuthError(Exception exception)
