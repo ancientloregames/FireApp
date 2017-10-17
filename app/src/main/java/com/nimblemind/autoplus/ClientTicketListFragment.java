@@ -41,9 +41,7 @@ public class ClientTicketListFragment extends RequestListFragment<Ticket, Client
 	@Override
 	protected Query getQuery(DatabaseReference databaseReference)
 	{
-		return databaseReference
-				.child(getUid())
-				.equalTo("ticket", "type");
+		return databaseReference.orderByChild("uid").equalTo(getUid());
 	}
 
 	@Override

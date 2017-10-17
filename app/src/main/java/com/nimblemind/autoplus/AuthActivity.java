@@ -33,6 +33,8 @@ import io.fabric.sdk.android.Fabric;
  * com.nimblemind.autoplus. Created by nimblemind on 9/27/2017.
  */
 
+// TODO определять наличие интернет соединения. Firebase просто посылает запрос и ждет ответа до бесконечности
+// TODO сделать progress bar
 public class AuthActivity extends AppCompatActivity implements SignUpFragment.Listener, Listener
 {
 	private final String TAG = "AuthActivity";

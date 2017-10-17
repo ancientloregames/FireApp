@@ -32,6 +32,20 @@
 	<!-- Main Activity -->
 	<string name="fragmentClientRequestListName">My requests</string>
 
-	<string name="textRequestInfo">Request №%1$i of %2$s</string>
+	<string name="textRequestInfo">Request №%1$d of %2$s</string>
 	<string name="textNoNewMessages">No new messages</string>
+
+	<!-- New Request Activity -->
+	<string name="activityNewRequestName">New Request</string>
+
+	<string name="hintAutoName">auto name *</string>
+	<string name="hintAutoYear">year</string>
+	<string name="hintAutoVin">vin</string>
+	<string name="hintAutoEngine">engine</string>
+	<string name="hintAutoPart">spare part *</string>
+	<string name="hintComment">comment</string>
+
+	<string name="buttonAddRequest">Add</string>
+
+	<string name="errorInvalidField">This field is wrong</string>
 </resources>

@@ -1,15 +1,19 @@
 package com.nimblemind.autoplus;
 
+import java.io.Serializable;
+
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/12/2017.
  */
 
-public abstract class Request
+public abstract class Request implements Serializable
 {
-	public final int id;
+	public final int id;			// Set on server
+	public final String uid;
+	public final String sid;		// Id of support member
+	public final long timestamp;	// Set on server
 	public final String autoName;
-	public final long timestamp;
 	public final int vin;
 	public final int year;
 	public final String engine;
@@ -19,23 +23,28 @@ public abstract class Request
 	public Request()
 	{
 		id = 0;
-		autoName = "";
+		uid = null;
+		sid = null;
+		autoName = null;
 		timestamp = 0;
 		vin = 0;
 		year = 0;
-		engine = "";
-		comment = "";
+		engine = null;
+		comment = null;
 	}
 
-	public Request(int id, String autoName, long timestamp, int vin, int year,
-				   String engine, String comment)
+	public Request( String uid, String autoName, int vin, int year,
+					String engine, String comment)
 	{
-		this.id = id;
+		this.id = 0;
+		this.uid = uid;
 		this.autoName = autoName;
-		this.timestamp = timestamp;
+		this.timestamp = 0;
 		this.vin = vin;
 		this.year = year;
 		this.engine = engine;
 		this.comment = comment;
+
+		this.sid = null;
 	}
 }

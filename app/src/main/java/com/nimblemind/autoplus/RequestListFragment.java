@@ -1,6 +1,7 @@
 package com.nimblemind.autoplus;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/11/2017.
@@ -21,6 +24,8 @@ import com.google.firebase.database.Query;
 
 public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER extends RequestViewHolder> extends Fragment
 {
+	public static final int INTENT_NEW_REQUEST = 101;
+
 	private Listener listener;
 
 	private String uid;
@@ -46,6 +51,15 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 			public void onClick(View view)
 			{
 				listener.onLogout();
+			}
+		});
+
+		rootView.findViewById(R.id.newRequestButton).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				createNewRequest();
 			}
 		});
 
@@ -109,6 +123,33 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 		{
 			adapter.cleanup();
 		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == RESULT_OK)
+		{
+			if (requestCode == INTENT_NEW_REQUEST)
+			{
+				sendRequest((Request) data.getSerializableExtra("request"));
+			}
+		}
+	}
+
+	private void sendRequest(Request request)
+	{
+		String key = database.push().getKey();
+		database.child(key).setValue(request);
+	}
+
+	private void createNewRequest()
+	{
+		Intent intent = new Intent(getActivity(), NewRequestActivity.class);
+		intent.putExtra("uid", getUid());
+		startActivityForResult(intent, INTENT_NEW_REQUEST);
 	}
 
 	protected String getUid()

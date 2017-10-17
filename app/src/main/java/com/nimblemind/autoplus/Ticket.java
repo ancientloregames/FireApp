@@ -6,19 +6,19 @@ package com.nimblemind.autoplus;
 
 class Ticket extends Request
 {
-	public final PartType partType;
+	public final String partType;
 	// TODO public Uri partImage;
 
 	public Ticket()
 	{
 		super();
-		this.partType = PartType.part1;
+		this.partType = "part1";
 	}
 
-	public Ticket(int id, String autoName, long timestamp, int vin, int year,
-				  String engine, String comment, PartType partType)
+	public Ticket(String uid, String autoName, int vin, int year,
+				  String engine, String comment, String partType)
 	{
-		super(id, autoName, timestamp, vin, year, engine, comment);
+		super(uid, autoName, vin, year, engine, comment);
 		this.partType = partType;
 	}
 }

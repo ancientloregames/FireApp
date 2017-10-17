@@ -2,6 +2,7 @@ package com.nimblemind.autoplus;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -9,16 +10,16 @@ import android.widget.TextView;
  * com.nimblemind.autoplus. Created by nimblemind on 10/12/2017.
  */
 
-class ClientTicketViewHolder extends RequestViewHolder<Ticket>
+public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 {
 	TextView infoView;
 	TextView sparePartView;
 	TextView autoNameView;
 	TextView notificationView;
 	Button newRequestButton;
-	Button deleteRequestButton;
+	ImageButton deleteRequestButton;
 
-	ClientTicketViewHolder(View itemView)
+	public ClientTicketViewHolder(View itemView)
 	{
 		super(itemView);
 
@@ -34,7 +35,7 @@ class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 	{
 		infoView.setText(itemView.getResources()
 				.getString(R.string.textRequestInfo, ticket.id, Utils.getDate(ticket.timestamp)));
-		sparePartView.setText(ticket.partType.name());
+		sparePartView.setText(ticket.partType);
 		autoNameView.setText(ticket.autoName);
 		notificationView.setText(itemView.getResources().getString(R.string.textNoNewMessages));
 	}
