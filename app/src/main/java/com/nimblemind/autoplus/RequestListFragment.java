@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,7 +60,7 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 			@Override
 			public void onClick(View view)
 			{
-				createNewRequest();
+				createNewRequest(null);
 			}
 		});
 
@@ -150,10 +151,11 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 		adapter.getRef(position).removeValue();
 	}
 
-	private void createNewRequest()
+	protected void createNewRequest(@Nullable Request template)
 	{
 		Intent intent = new Intent(getActivity(), NewRequestActivity.class);
 		intent.putExtra("uid", getUid());
+		intent.putExtra("template", template);
 		startActivityForResult(intent, INTENT_NEW_REQUEST);
 	}
 
