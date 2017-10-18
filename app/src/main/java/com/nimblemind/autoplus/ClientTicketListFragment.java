@@ -1,5 +1,6 @@
 package com.nimblemind.autoplus;
 
+import android.view.View;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
@@ -45,11 +46,19 @@ public class ClientTicketListFragment extends RequestListFragment<Ticket, Client
 	}
 
 	@Override
-	protected void setButtonListeners(ClientTicketViewHolder viewHolder, Ticket ticket)
+	protected void bindItem(final ClientTicketViewHolder viewHolder, Ticket ticket)
 	{
 		// TODO Сделать обработку нажатий на кнопки
 		viewHolder.notificationView.setOnClickListener(null);
 		viewHolder.newRequestButton.setOnClickListener(null);
-		viewHolder.deleteRequestButton.setOnClickListener(null);
+
+		viewHolder.deleteRequestButton.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				deleteRequest(viewHolder.getAdapterPosition());
+			}
+		});
 	}
 }

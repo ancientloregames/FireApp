@@ -35,6 +35,7 @@ import io.fabric.sdk.android.Fabric;
 
 // TODO определять наличие интернет соединения. Firebase просто посылает запрос и ждет ответа до бесконечности
 // TODO сделать progress bar
+// TODO блокировать кнопки во избежание двойных нажатий
 public class AuthActivity extends AppCompatActivity implements SignUpFragment.Listener, Listener
 {
 	private final String TAG = "AuthActivity";

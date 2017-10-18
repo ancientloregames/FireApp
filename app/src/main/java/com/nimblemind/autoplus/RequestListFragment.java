@@ -108,7 +108,7 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 			{
 				viewHolder.bindToData(model);
 
-				setButtonListeners(viewHolder, model);
+				bindItem(viewHolder, model);
 			}
 		};
 
@@ -145,6 +145,11 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 		database.child(key).setValue(request);
 	}
 
+	protected void deleteRequest(final int position)
+	{
+		adapter.getRef(position).removeValue();
+	}
+
 	private void createNewRequest()
 	{
 		Intent intent = new Intent(getActivity(), NewRequestActivity.class);
@@ -169,7 +174,7 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 
 	protected abstract Query getQuery(DatabaseReference databaseReference);
 
-	protected abstract void setButtonListeners(VIEWHOLDER viewHolder, MODEL model);
+	protected abstract void bindItem(VIEWHOLDER viewHolder, MODEL model);
 
 	interface Listener
 	{
