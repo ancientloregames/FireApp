@@ -48,4 +48,7 @@
 	<string name="buttonAddRequest">Add</string>
 
 	<string name="errorInvalidField">This field is wrong</string>
+
+	<!-- Request Details Activity -->
+	<string name="activityRequestDetails">Request Answers</string>
 </resources>

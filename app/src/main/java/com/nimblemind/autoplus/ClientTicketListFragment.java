@@ -48,8 +48,14 @@ public class ClientTicketListFragment extends RequestListFragment<Ticket, Client
 	@Override
 	protected void bindItem(final ClientTicketViewHolder viewHolder, final Ticket ticket)
 	{
-		// TODO Сделать обработку нажатий на кнопки
-		viewHolder.notificationView.setOnClickListener(null);
+		viewHolder.itemView.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				showRequestDetails(ticket);
+			}
+		});
 
 		viewHolder.newRequestButton.setOnClickListener(new View.OnClickListener()
 		{

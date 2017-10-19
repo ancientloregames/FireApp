@@ -30,6 +30,9 @@
 		<activity android:name=".NewRequestActivity"
 				  android:label="@string/activityNewRequestName"
 			/>
+		<activity android:name=".RequestDetailsActivity"
+				  android:label="@string/activityRequestDetails"
+			/>
 	</application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import static android.app.Activity.RESULT_OK;
 public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER extends RequestViewHolder> extends Fragment
 {
 	public static final int INTENT_NEW_REQUEST = 101;
+	public static final int INTENT_REQUEST_DETAILS = 102;
 
 	private Listener listener;
 
@@ -157,6 +159,13 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 		intent.putExtra("uid", getUid());
 		intent.putExtra("template", template);
 		startActivityForResult(intent, INTENT_NEW_REQUEST);
+	}
+
+	protected void showRequestDetails(@NonNull Request request)
+	{
+		Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
+		intent.putExtra("request", request);
+		startActivityForResult(intent, INTENT_REQUEST_DETAILS);
 	}
 
 	protected String getUid()
