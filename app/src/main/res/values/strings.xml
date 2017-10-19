@@ -1,6 +1,10 @@
 <resources>
 	<string name="app_name">Auto+</string>
 
+	<!-- Common -->
+	<string name="textOK">OK</string>
+	<string name="textClose">Close</string>
+
 	<!-- Auth Activity -->
 	<string name="fragmentSignupName">Sign Up</string>
 	<string name="fragmentLoginName">Log In</string>
@@ -49,6 +53,14 @@
 
 	<string name="errorInvalidField">This field is wrong</string>
 
+	<string name="textUnloading">Uploading…</string>
+	<string name="textUploadSuccess">Upload finished</string>
+	<string name="textUploadFailure">Upload failed</string>
+
 	<!-- Request Details Activity -->
 	<string name="activityRequestDetails">Request Answers</string>
+
+	<!-- Permissions -->
+	<string name="textRationaleTitle">Permission requered</string>
+	<string name="textRationaleMessageCamera">For taking pictures, the app needs you\'re permission to use camera</string>
 </resources>

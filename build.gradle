@@ -35,4 +35,5 @@ task clean(type: Delete) {
 ext{
     SUPPORT_VERSION = '26.1.0'
     FIREBASE_VERSION = '11.2.0'
+    GLIDE_VERSION = '4.2.0'
 }
