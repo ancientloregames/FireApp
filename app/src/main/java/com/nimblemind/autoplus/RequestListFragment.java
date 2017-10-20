@@ -2,6 +2,7 @@ package com.nimblemind.autoplus;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -137,15 +138,23 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 		{
 			if (requestCode == INTENT_NEW_REQUEST)
 			{
-				sendRequest((Request) data.getSerializableExtra("request"));
+				Request newRequest = (Request) data.getSerializableExtra("request");
+				Uri photoUri = data.getParcelableExtra("photo");
+				sendRequest(newRequest, photoUri);
 			}
 		}
 	}
 
-	private void sendRequest(Request request)
+	private void sendRequest(Request request, Uri photoUri)
 	{
 		String key = database.push().getKey();
 		database.child(key).setValue(request);
+
+		getActivity().startService(new Intent(getActivity(), ImageUploadService.class)
+				.putExtra(ImageUploadService.EXTRA_FILE_URI, photoUri)
+				.putExtra(ImageUploadService.EXTRA_FILE_NAME, key)
+				.putExtra(ImageUploadService.EXTRA_FILE_FOLDER, getUid())
+				.setAction(ImageUploadService.ACTION_UPLOAD));
 	}
 
 	protected void deleteRequest(final int position)

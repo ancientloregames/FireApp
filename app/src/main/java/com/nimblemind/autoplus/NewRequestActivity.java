@@ -36,6 +36,8 @@ public class NewRequestActivity extends AppCompatActivity
 	private TextView commentView;
 	private ImageView imageView;
 
+	private Uri imageUri;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -92,18 +94,20 @@ public class NewRequestActivity extends AppCompatActivity
 		{
 			if (requestCode == RC_TAKE_PICTURE)
 			{
-				Uri uri = data.getData();
-
-				Glide.with(this)
-						.load(uri)
-						.into(imageView);
+				imageUri = data.getData();
+				if (imageUri != null)
+				{
+					Glide.with(this)
+							.load(imageUri)
+							.into(imageView);
+				}
 			}
 		}
 		else
 		{
 			if (requestCode == RC_TAKE_PICTURE)
 			{
-				Toast.makeText(this, "Taking picture failed.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getString(R.string.errorPhotoNotRecieved), Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -204,6 +208,7 @@ public class NewRequestActivity extends AppCompatActivity
 			Ticket ticket = new Ticket(uid, name, vin, year, engine, comment, part);
 			Intent resultIntent = new Intent();
 			resultIntent.putExtra("request", ticket);
+			resultIntent.putExtra("photo", imageUri);
 			setResult(RESULT_OK, resultIntent);
 			finish();
 		}
@@ -243,6 +248,12 @@ public class NewRequestActivity extends AppCompatActivity
 		if (year < 1900 || year > Calendar.getInstance().get(Calendar.YEAR))
 		{
 			yearView.setError(getString(R.string.errorInvalidField));
+			result = false;
+		}
+
+		if (imageUri == null)
+		{
+			Toast.makeText(this, getString(R.string.errorPhotoRequered), Toast.LENGTH_SHORT).show();
 			result = false;
 		}
 

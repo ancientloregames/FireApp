@@ -18,7 +18,6 @@ public abstract class Request implements Serializable
 	public final int year;
 	public final String engine;
 	public final String comment;
-	// TODO public Uri commentImage;
 
 	public Request()
 	{

@@ -34,6 +34,10 @@
 		<activity android:name=".RequestDetailsActivity"
 				  android:label="@string/activityRequestDetails"
 			/>
+
+		<service
+			android:name=".ImageUploadService"
+			android:exported="false" />
 	</application>
 
 </manifest>

@@ -52,6 +52,8 @@
 	<string name="buttonAddRequest">Add</string>
 
 	<string name="errorInvalidField">This field is wrong</string>
+	<string name="errorPhotoRequered">Photo must be uploaded</string>
+	<string name="errorPhotoNotRecieved">Taking picture failed</string>
 
 	<string name="textUnloading">Uploading…</string>
 	<string name="textUploadSuccess">Upload finished</string>
