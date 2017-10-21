@@ -102,7 +102,9 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 		}
 
 		RecyclerView recycler = getView().findViewById(R.id.recycler);
-		recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+		LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+		layoutManager.setReverseLayout(true);
+		recycler.setLayoutManager(layoutManager);
 
 		adapter = new FirebaseRecyclerAdapter<MODEL, VIEWHOLDER>
 				(getModelClass(), getModelLayoutId(), getViewHolderClass(), getQuery(database))
