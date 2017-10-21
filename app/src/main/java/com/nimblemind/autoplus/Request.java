@@ -18,6 +18,7 @@ public abstract class Request implements Serializable
 	public final int year;
 	public final String engine;
 	public final String comment;
+	public final String type;
 
 	public Request()
 	{
@@ -30,6 +31,7 @@ public abstract class Request implements Serializable
 		year = 0;
 		engine = null;
 		comment = null;
+		type = getClass().getSimpleName();
 	}
 
 	public Request( String uid, String autoName, String vin, int year,
@@ -43,6 +45,8 @@ public abstract class Request implements Serializable
 		this.year = year;
 		this.engine = engine;
 		this.comment = comment;
+
+		this.type = getClass().getSimpleName();
 
 		this.sid = null;
 	}
