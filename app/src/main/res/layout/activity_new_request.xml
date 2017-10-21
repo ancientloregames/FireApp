@@ -8,11 +8,13 @@
 	android:padding="@dimen/globalActivityPadding"
 	tools:context="com.nimblemind.autoplus.NewRequestActivity"
 	>
-	<EditText
+	<AutoCompleteTextView
 		android:id="@+id/textName"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:inputType="textCapWords"
+		android:imeOptions="actionNext"
+		android:completionThreshold="1"
 		android:maxLines="1"
 		android:hint="@string/hintAutoName"
 		/>
@@ -20,8 +22,8 @@
 		android:id="@+id/textVin"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:digits="0123456789"
-		android:inputType="numberDecimal"
+		android:inputType="textCapCharacters"
+		android:imeOptions="actionNext"
 		android:maxLines="1"
 		android:hint="@string/hintAutoVin"
 		/>
@@ -31,6 +33,7 @@
 		android:layout_height="wrap_content"
 		android:digits="0123456789"
 		android:inputType="numberDecimal"
+		android:imeOptions="actionNext"
 		android:maxLines="1"
 		android:hint="@string/hintAutoYear"
 		/>
@@ -38,15 +41,18 @@
 		android:id="@+id/textEngine"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:inputType="textCapSentences"
+		android:inputType="textCapWords"
+		android:imeOptions="actionNext"
 		android:maxLines="1"
 		android:hint="@string/hintAutoEngine"
 		/>
-	<EditText
+	<AutoCompleteTextView
 		android:id="@+id/textPart"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:inputType="textCapSentences"
+		android:inputType="textCapWords"
+		android:imeOptions="actionNext"
+		android:completionThreshold="1"
 		android:maxLines="1"
 		android:hint="@string/hintAutoPart"
 		/>
@@ -54,7 +60,8 @@
 		android:id="@+id/textComment"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:inputType="textLongMessage"
+		android:inputType="textCapSentences"
+		android:imeOptions="actionDone"
 		android:maxLines="3"
 		android:hint="@string/hintComment"
 		/>
@@ -65,6 +72,7 @@
 		android:src="@drawable/camera_128"
 		android:scaleType="centerInside"
 		android:background="@drawable/image_placeholder_background"
+		android:contentDescription="@string/hintImage"
 		/>
 	<Button
 		android:id="@+id/buttonAdd"

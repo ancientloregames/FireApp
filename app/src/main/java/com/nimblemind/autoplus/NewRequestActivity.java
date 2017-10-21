@@ -13,12 +13,20 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.List;
 
 
 public class NewRequestActivity extends AppCompatActivity
@@ -28,11 +36,11 @@ public class NewRequestActivity extends AppCompatActivity
 	// permission request codes need to be < 256
 	private static final int CODE_REQUEST_CAMERA = 201;
 
-	private TextView nameView;
+	private AutoCompleteTextView nameView;
 	private TextView vinView;
 	private TextView yearView;
 	private TextView engineView;
-	private TextView partView;
+	private AutoCompleteTextView partView;
 	private TextView commentView;
 	private ImageView imageView;
 
@@ -65,6 +73,10 @@ public class NewRequestActivity extends AppCompatActivity
 			}
 		}
 		else throw new RuntimeException("The Uid must be passed in order to create new ticket");
+
+		DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+		populateAutoCompleteList(dbRef.child("AutoNames"), nameView);
+		populateAutoCompleteList(dbRef.child("parts"), partView);
 
 		findViewById(R.id.buttonAdd).setOnClickListener(new View.OnClickListener()
 		{
@@ -184,14 +196,7 @@ public class NewRequestActivity extends AppCompatActivity
 		String name = nameView.getText().toString();
 		String part = partView.getText().toString();
 
-		int vin;
 		int year;
-		try {
-			vin = Integer.valueOf(vinView.getText().toString());
-		} catch(NumberFormatException | NullPointerException e) {
-			vinView.setError(getString(R.string.errorInvalidField));
-			return;
-		}
 		try {
 			year = Integer.valueOf(yearView.getText().toString());
 		} catch(NumberFormatException | NullPointerException e) {
@@ -201,7 +206,7 @@ public class NewRequestActivity extends AppCompatActivity
 
 		if (validate(name, part, year))
 		{
-
+			String vin = vinView.getText().toString();
 			String engine = engineView.getText().toString();
 			String comment = commentView.getText().toString();
 
@@ -258,5 +263,26 @@ public class NewRequestActivity extends AppCompatActivity
 		}
 
 		return result;
+	}
+
+	private void populateAutoCompleteList(@NonNull DatabaseReference dbRef, @NonNull final AutoCompleteTextView view)
+	{
+		dbRef.addListenerForSingleValueEvent(new ValueEventListener()
+		{
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot)
+			{
+				List<String> items = FirebaseUtils.snapshotToList(dataSnapshot, String.class);
+				ArrayAdapter<String> arrayAdapter =
+						new ArrayAdapter<>(NewRequestActivity.this, android.R.layout.select_dialog_item, items);
+				view.setAdapter(arrayAdapter);
+			}
+
+			@Override
+			public void onCancelled(DatabaseError databaseError)
+			{
+				databaseError.toException().printStackTrace();
+			}
+		});
 	}
 }

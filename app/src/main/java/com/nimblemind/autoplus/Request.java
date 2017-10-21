@@ -14,7 +14,7 @@ public abstract class Request implements Serializable
 	public final String sid;		// Id of support member
 	public final long timestamp;	// Set on server
 	public final String autoName;
-	public final int vin;
+	public final String vin;
 	public final int year;
 	public final String engine;
 	public final String comment;
@@ -26,13 +26,13 @@ public abstract class Request implements Serializable
 		sid = null;
 		autoName = null;
 		timestamp = 0;
-		vin = 0;
+		vin = null;
 		year = 0;
 		engine = null;
 		comment = null;
 	}
 
-	public Request( String uid, String autoName, int vin, int year,
+	public Request( String uid, String autoName, String vin, int year,
 					String engine, String comment)
 	{
 		this.id = 0;

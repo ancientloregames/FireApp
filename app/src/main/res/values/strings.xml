@@ -48,6 +48,7 @@
 	<string name="hintAutoEngine">engine</string>
 	<string name="hintAutoPart">spare part *</string>
 	<string name="hintComment">comment</string>
+	<string name="hintImage">image</string>
 
 	<string name="buttonAddRequest">Add</string>
 
