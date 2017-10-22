@@ -9,9 +9,9 @@ import com.google.firebase.database.Query;
  * com.nimblemind.autoplus. Created by nimblemind on 10/11/2017.
  */
 
-public class ClientTicketListFragment extends RequestListFragment<Ticket, ClientTicketViewHolder>
+public class ClientTicketsFragment extends ClientRequestsFragment<Ticket, ClientTicketViewHolder>
 {
-	public ClientTicketListFragment()
+	public ClientTicketsFragment()
 	{
 	}
 
@@ -42,7 +42,7 @@ public class ClientTicketListFragment extends RequestListFragment<Ticket, Client
 	@Override
 	protected Query getQuery(DatabaseReference databaseReference)
 	{
-		return databaseReference.orderByChild("uid").equalTo(getUid());
+		return databaseReference.orderByChild("uid").equalTo(uid);
 	}
 
 	@Override

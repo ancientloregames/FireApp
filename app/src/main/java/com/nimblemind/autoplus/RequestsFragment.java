@@ -2,11 +2,9 @@ package com.nimblemind.autoplus;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,27 +16,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import static android.app.Activity.RESULT_OK;
-
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/11/2017.
  */
 
-public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER extends RequestViewHolder> extends Fragment
+public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends RequestViewHolder> extends Fragment
 {
 	public static final int INTENT_NEW_REQUEST = 101;
 	public static final int INTENT_REQUEST_DETAILS = 102;
 
 	private Listener listener;
 
-	private String uid;
+	protected String uid;
 
-	private DatabaseReference database;
+	protected DatabaseReference database;
 
-	private FirebaseRecyclerAdapter<MODEL, VIEWHOLDER> adapter;
+	protected FirebaseRecyclerAdapter<MODEL, VIEWHOLDER> adapter;
 
-	public RequestListFragment()
+	public RequestsFragment()
 	{
 	}
 
@@ -55,15 +51,6 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 			public void onClick(View view)
 			{
 				listener.onLogout();
-			}
-		});
-
-		rootView.findViewById(R.id.newRequestButton).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				createNewRequest(null);
 			}
 		});
 
@@ -131,57 +118,11 @@ public abstract class RequestListFragment<MODEL extends Request, VIEWHOLDER exte
 		}
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		super.onActivityResult(requestCode, resultCode, data);
-
-		if (resultCode == RESULT_OK)
-		{
-			if (requestCode == INTENT_NEW_REQUEST)
-			{
-				Request newRequest = (Request) data.getSerializableExtra("request");
-				Uri photoUri = data.getParcelableExtra("photo");
-				sendRequest(newRequest, photoUri);
-			}
-		}
-	}
-
-	private void sendRequest(Request request, Uri photoUri)
-	{
-		String key = database.push().getKey();
-		database.child(key).setValue(request);
-
-		getActivity().startService(new Intent(getActivity(), ImageUploadService.class)
-				.putExtra(ImageUploadService.EXTRA_FILE_URI, photoUri)
-				.putExtra(ImageUploadService.EXTRA_FILE_NAME, key)
-				.putExtra(ImageUploadService.EXTRA_FILE_FOLDER, getUid())
-				.setAction(ImageUploadService.ACTION_UPLOAD));
-	}
-
-	protected void deleteRequest(final int position)
-	{
-		adapter.getRef(position).removeValue();
-	}
-
-	protected void createNewRequest(@Nullable Request template)
-	{
-		Intent intent = new Intent(getActivity(), NewRequestActivity.class);
-		intent.putExtra("uid", getUid());
-		intent.putExtra("template", template);
-		startActivityForResult(intent, INTENT_NEW_REQUEST);
-	}
-
 	protected void showRequestDetails(@NonNull Request request)
 	{
 		Intent intent = new Intent(getActivity(), RequestDetailsActivity.class);
 		intent.putExtra("request", request);
 		startActivityForResult(intent, INTENT_REQUEST_DETAILS);
-	}
-
-	protected String getUid()
-	{
-		return uid;
 	}
 
 	@LayoutRes

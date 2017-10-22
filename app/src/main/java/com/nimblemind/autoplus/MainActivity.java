@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * com.nimblemind.autoplus. Created by nimblemind on 10/4/2017.
  */
 
-public class MainActivity extends AppCompatActivity implements RequestListFragment.Listener
+public class MainActivity extends AppCompatActivity implements RequestsFragment.Listener
 {
 	private final String TAG = MainActivity.class.getSimpleName();
 
@@ -43,12 +43,12 @@ public class MainActivity extends AppCompatActivity implements RequestListFragme
 
 	private void onFirstCreate(String uid, User user)
 	{
-		RequestListFragment fragment = null;
+		RequestsFragment fragment = null;
 
 		switch (user.type)
 		{
 			case CLIENT:
-				fragment = new ClientTicketListFragment();
+				fragment = new ClientTicketsFragment();
 				break;
 			case SUPPORT:
 				// TODO Сделать инфраструктуру для учетной записи сотрудника
