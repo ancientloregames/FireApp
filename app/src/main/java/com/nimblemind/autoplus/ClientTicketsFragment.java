@@ -16,6 +16,12 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket, Client
 	}
 
 	@Override
+	protected Class<NewTicketActivity> getNewRequestActivityClass()
+	{
+		return NewTicketActivity.class;
+	}
+
+	@Override
 	protected int getFragmentLayoutId()
 	{
 		return R.layout.fragment_clientlist;

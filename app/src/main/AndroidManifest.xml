@@ -28,8 +28,8 @@
 		<activity android:name=".MainActivity"
 				  android:label="@string/app_name"
 			/>
-		<activity android:name=".NewRequestActivity"
-				  android:label="@string/activityNewRequestName"
+		<activity android:name=".NewTicketActivity"
+				  android:label="@string/activityNewTicketName"
 			/>
 		<activity android:name=".RequestDetailsActivity"
 				  android:label="@string/activityRequestDetails"

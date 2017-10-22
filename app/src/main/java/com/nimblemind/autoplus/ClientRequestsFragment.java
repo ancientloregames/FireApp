@@ -53,7 +53,7 @@ public abstract class ClientRequestsFragment<MODEL extends Request, VIEWHOLDER e
 
 	protected void createNewRequest(@Nullable Request template)
 	{
-		Intent intent = new Intent(getActivity(), NewRequestActivity.class);
+		Intent intent = new Intent(getActivity(), getNewRequestActivityClass());
 		intent.putExtra("uid", uid);
 		intent.putExtra("template", template);
 		intent.putExtra("type", getModelClass().getSimpleName());
@@ -76,4 +76,6 @@ public abstract class ClientRequestsFragment<MODEL extends Request, VIEWHOLDER e
 	{
 		adapter.getRef(position).removeValue();
 	}
+
+	protected abstract Class<? extends NewRequestActivity> getNewRequestActivityClass();
 }

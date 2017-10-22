@@ -41,6 +41,7 @@
 
 	<!-- New Request Activity -->
 	<string name="activityNewRequestName">New Request</string>
+	<string name="activityNewTicketName">New Ticket</string>
 
 	<string name="hintAutoName">auto name *</string>
 	<string name="hintAutoYear">year</string>
