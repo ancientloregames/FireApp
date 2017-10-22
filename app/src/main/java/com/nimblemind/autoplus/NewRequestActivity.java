@@ -3,8 +3,10 @@ package com.nimblemind.autoplus;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -30,6 +32,19 @@ public abstract class NewRequestActivity<MODEL extends Request> extends AppCompa
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_new_request);
+
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
+		ViewGroup formContainer = findViewById(R.id.form);
+		LayoutInflater.from(this).inflate(getFormLayoutId(), formContainer);
+	}
+
+	@Override
+	public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState)
+	{
+		super.onPostCreate(savedInstanceState, persistentState);
 
 		if (savedInstanceState == null)
 		{
@@ -39,14 +54,6 @@ public abstract class NewRequestActivity<MODEL extends Request> extends AppCompa
 
 	private void onFirstCreate()
 	{
-		setContentView(R.layout.activity_new_request);
-
-		Toolbar toolbar = findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-
-		ViewGroup formContainer = findViewById(R.id.form);
-		LayoutInflater.from(this).inflate(getFormLayoutId(), formContainer);
-
 		Intent intent = getIntent();
 		if (intent != null)
 		{
