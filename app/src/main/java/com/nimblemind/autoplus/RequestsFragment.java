@@ -88,7 +88,7 @@ public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends
 			throw new RuntimeException("Uid was not passed to the list fragment!");
 		}
 
-		RecyclerView recycler = getView().findViewById(R.id.recycler);
+		final RecyclerView recycler = getView().findViewById(R.id.recycler);
 		LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 		layoutManager.setReverseLayout(true);
 		recycler.setLayoutManager(layoutManager);
@@ -104,6 +104,15 @@ public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends
 				bindItem(viewHolder, model);
 			}
 		};
+		adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver()
+		{
+			@Override
+			public void onItemRangeInserted(int positionStart, int itemCount)
+			{
+				super.onItemRangeInserted(positionStart, itemCount);
+				recycler.scrollToPosition(positionStart);
+			}
+		});
 
 		recycler.setAdapter(adapter);
 	}

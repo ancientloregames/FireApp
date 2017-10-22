@@ -35,6 +35,7 @@
 
 	<!-- Main Activity -->
 	<string name="fragmentClientRequestListName">My requests</string>
+	<string name="fragmentClientTicketListName">My tickets</string>
 
 	<string name="textRequestInfo">Request №%1$d of %2$s</string>
 	<string name="textNoNewMessages">No new messages</string>

@@ -1,5 +1,6 @@
 package com.nimblemind.autoplus;
 
+import android.content.Context;
 import android.view.View;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
@@ -13,6 +14,14 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket, Client
 {
 	public ClientTicketsFragment()
 	{
+	}
+
+	@Override
+	public void onAttach(Context context)
+	{
+		super.onAttach(context);
+
+		getActivity().setTitle(R.string.fragmentClientTicketListName);
 	}
 
 	@Override
