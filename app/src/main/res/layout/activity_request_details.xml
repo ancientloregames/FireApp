@@ -5,7 +5,8 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	android:background="@color/recyclerBackground"
+	android:fitsSystemWindows="true"
+	android:background="@color/colorPrimary"
 	tools:context="com.nimblemind.autoplus.RequestDetailsActivity"
 	>
 	<LinearLayout

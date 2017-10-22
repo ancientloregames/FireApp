@@ -3,4 +3,6 @@
 	<dimen name="globalActivityPadding">16dp</dimen>
 
 	<dimen name="clientlistHeaderPagging">8dp</dimen>
+
+	<dimen name="navHeaderHeight">160dp</dimen>
 </resources>
