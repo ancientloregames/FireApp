@@ -1,47 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:tools="http://schemas.android.com/tools"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:orientation="vertical"
-			  tools:context=".MainActivity"
-			  android:background="@color/recyclerBackground"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			 xmlns:tools="http://schemas.android.com/tools"
+			 xmlns:app="http://schemas.android.com/apk/res-auto"
+			 android:layout_width="match_parent"
+			 android:layout_height="match_parent"
+			 android:orientation="vertical"
+			 tools:context=".MainActivity"
+			 android:background="@color/recyclerBackground"
 	>
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:padding="@dimen/clientlistHeaderPagging"
-		android:background="@android:color/white"
-		>
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			>
 
-			<Button
-				android:id="@+id/newRequestButton"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:layout_gravity="center"
-				android:text="Отправить новый запрос"
-				/>
-			<Button
-				android:id="@+id/buttonLogout"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:text="@string/buttonLogOut"
-				/>
-		</LinearLayout>
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="Отправленные запросы"
-			/>
-	</LinearLayout>
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycler"
 		android:layout_width="match_parent"
@@ -50,4 +17,13 @@
 		android:scrollbars="vertical"
 		tools:listitem="@layout/clientlist_item"
 		/>
-</LinearLayout>
+
+	<android.support.design.widget.FloatingActionButton
+		android:id="@+id/buttonNewRequest"
+		android:layout_width="@dimen/floatingButtonSize"
+		android:layout_height="@dimen/floatingButtonSize"
+		android:layout_gravity="bottom|end"
+		android:layout_margin="@dimen/globalActivityPadding"
+		app:srcCompat="@drawable/plus"
+		/>
+</FrameLayout>

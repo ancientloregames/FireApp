@@ -5,4 +5,6 @@
 	<dimen name="clientlistHeaderPagging">8dp</dimen>
 
 	<dimen name="navHeaderHeight">160dp</dimen>
+
+	<dimen name="floatingButtonSize">50dp</dimen>
 </resources>

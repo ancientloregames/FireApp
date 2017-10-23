@@ -45,15 +45,6 @@ public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends
 
 		database = FirebaseDatabase.getInstance().getReference("requests");
 
-		rootView.findViewById(R.id.buttonLogout).setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				listener.onLogout();
-			}
-		});
-
 		return rootView;
 	}
 
@@ -150,6 +141,5 @@ public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends
 
 	interface Listener
 	{
-		void onLogout();
 	}
 }

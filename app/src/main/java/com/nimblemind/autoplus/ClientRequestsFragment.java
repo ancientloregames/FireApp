@@ -25,7 +25,7 @@ public abstract class ClientRequestsFragment<MODEL extends Request, VIEWHOLDER e
 	{
 		super.onViewCreated(view, savedInstanceState);
 
-		view.findViewById(R.id.newRequestButton).setOnClickListener(new View.OnClickListener()
+		view.findViewById(R.id.buttonNewRequest).setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)

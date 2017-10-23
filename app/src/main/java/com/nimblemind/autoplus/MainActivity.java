@@ -109,6 +109,10 @@ public class MainActivity extends AppCompatActivity implements RequestsFragment.
 			case R.id.navOrderFragment:
 				// TODO
 				break;
+			case R.id.navLogOut:
+				drawer.closeDrawer(GravityCompat.START, false);
+				gotoAuthActivity(true);
+				break;
 		}
 
 		drawer.closeDrawer(GravityCompat.START);
@@ -134,11 +138,5 @@ public class MainActivity extends AppCompatActivity implements RequestsFragment.
 		intent.putExtra(AuthActivity.EXTRA_NO_AUTOLOGIN, noAutologin);
 		startActivity(intent);
 		finish();
-	}
-
-	@Override
-	public void onLogout()
-	{
-		gotoAuthActivity(true);
 	}
 }
