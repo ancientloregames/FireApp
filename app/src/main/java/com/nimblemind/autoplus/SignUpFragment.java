@@ -4,13 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.TextView;
 
 
 /**
@@ -24,8 +21,7 @@ public class SignUpFragment extends Fragment
 	private EditText mEmailView;
 	private EditText mNameView;
 	private EditText mPasswordView;
-
-	private boolean passConfirmed;
+	private EditText mPassConfirmView;
 
 	public SignUpFragment()
 	{
@@ -46,29 +42,7 @@ public class SignUpFragment extends Fragment
 		mEmailView = view.findViewById(R.id.textEmail);
 		mNameView = view.findViewById(R.id.textName);
 		mPasswordView = view.findViewById(R.id.textPassword);
-
-		final EditText mPassConfirmView = view.findViewById(R.id.textPassword2);
-
-		mPassConfirmView.setOnEditorActionListener(new TextView.OnEditorActionListener()
-		{
-			@Override
-			public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
-			{
-				if (actionId == EditorInfo.IME_ACTION_DONE)
-				{
-					if (!mPasswordView.getText().toString().equals(mPassConfirmView.getText().toString()))
-					{
-						view.setError(getString(R.string.errorConfirmPassFailure));
-						passConfirmed = false;
-					}
-					else
-					{
-						passConfirmed = true;
-					}
-				}
-				return false;
-			}
-		});
+		mPassConfirmView = view.findViewById(R.id.textPassword2);
 
 		view.findViewById(R.id.buttonSignup)
 				.setOnClickListener(new View.OnClickListener()
@@ -79,8 +53,9 @@ public class SignUpFragment extends Fragment
 						String email = mEmailView.getText().toString();
 						String name = mNameView.getText().toString();
 						String password = mPasswordView.getText().toString();
+						String confirm = mPassConfirmView.getText().toString();
 
-						if (validate(email, name, password))
+						if (validate(email, name, password, confirm))
 						{
 							mListener.onSignUp(email, name, password);
 						}
@@ -121,9 +96,9 @@ public class SignUpFragment extends Fragment
 		mListener = null;
 	}
 
-	private boolean validate(String email, String name, String password)
+	private boolean validate(String email, String name, String password, String confirm)
 	{
-		boolean result = passConfirmed;
+		boolean result = true;
 
 		mEmailView.setError(null);
 		mNameView.setError(null);
@@ -154,6 +129,12 @@ public class SignUpFragment extends Fragment
 		else if (password.length() < 6)
 		{
 			mPasswordView.setError(getString(R.string.errorInvalidPassword));
+			result = false;
+		}
+
+		if (!password.equals(confirm))
+		{
+			mPassConfirmView.setError(getString(R.string.errorConfirmPassFailure));
 			result = false;
 		}
 
