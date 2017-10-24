@@ -20,6 +20,7 @@
 	<string name="buttonGotoSignup">I don\'t have an account</string>
 	<string name="buttonGotoLogin">I have an account</string>
 
+	<string name="errorNoInternetConnection">No internet connection</string>
 	<string name="errorFieldRequired">This field is required</string>
 	<string name="errorInvalidEmail">This email address is invalid</string>
 	<string name="errorInvalidPassword">This password is too short (miminum 6 letters)</string>

@@ -34,7 +34,6 @@ import io.fabric.sdk.android.Fabric;
  * com.nimblemind.autoplus. Created by nimblemind on 9/27/2017.
  */
 
-// TODO определять наличие интернет соединения. Firebase просто посылает запрос и ждет ответа до бесконечности
 // TODO сделать progress bar
 // TODO блокировать кнопки во избежание двойных нажатий
 public class AuthActivity extends AppCompatActivity implements SignUpFragment.Listener, Listener
@@ -71,34 +70,36 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 			Fabric.with(getApplicationContext(), new Crashlytics());
 		}
 
+		boolean internetAvaible = checkIntenetConnection();
+
 		FirebaseUser currentUser = auth.getCurrentUser();
-		if (currentUser != null)
+		if (internetAvaible && currentUser != null)
 		{
 			findUserAndEnter(currentUser.getUid());
 		}
-		else
+		else if (internetAvaible && !getIntent().getBooleanExtra(EXTRA_NO_AUTOLOGIN, false))
 		{
 			SecurePreferences prefs = new SecurePreferences(this);
 			String name = prefs.getString("name", null);
 			String email = prefs.getString("email", null);
 			String pass = prefs.getString("pass", null);
 			UserType type = null;
-			try {
+			try
+			{
 				type = Enum.valueOf(UserType.class, prefs.getString("type", null));
-			} catch (NullPointerException | IllegalArgumentException e) {
+			}
+			catch (NullPointerException | IllegalArgumentException e)
+			{
 				// Useless exception, if we don't get type, than let it be so
 			}
 
-			if (!getIntent().getBooleanExtra(EXTRA_NO_AUTOLOGIN, false) &&
-					name != null && email != null && pass != null && type != null)
+			if (name != null && email != null && pass != null && type != null)
 			{
 				logInInternal(email, pass);
 			}
-			else getSupportFragmentManager()
-					.beginTransaction()
-					.add(R.id.fragmentTarget, new LogInFragment())
-					.commitNowAllowingStateLoss();
+			else onGotoLogIn();
 		}
+		else onGotoLogIn();
 	}
 
 	private void enter(@NonNull String uid, @NonNull User user)
@@ -113,6 +114,9 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 	@Override
 	public void onSignUp(final String email, final String name, final String password)
 	{
+		if (!checkIntenetConnection())
+			return;
+
 		Log.d(TAG, "onSignUp: " + name + " : " + email);
 		auth.createUserWithEmailAndPassword(email, password)
 				.addOnCompleteListener(new OnCompleteListener<AuthResult>()
@@ -144,6 +148,9 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 
 	private void logInInternal(@NonNull final String email, @NonNull final String password)
 	{
+		if (!checkIntenetConnection())
+			return;
+
 		auth.signInWithEmailAndPassword(email, password)
 				.addOnCompleteListener(new OnCompleteListener<AuthResult>()
 				{
@@ -279,5 +286,17 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 			message = getString(R.string.errorAuthGeneral);
 		}
 		Toast.makeText(AuthActivity.this, message, Toast.LENGTH_SHORT).show();
+	}
+
+	private boolean checkIntenetConnection()
+	{
+		boolean result = true;
+		if (!Utils.isNetworkAvailable(this))
+		{
+			Toast.makeText(this, getString(R.string.errorNoInternetConnection), Toast.LENGTH_SHORT).show();
+			result = false;
+		}
+
+		return result;
 	}
 }
