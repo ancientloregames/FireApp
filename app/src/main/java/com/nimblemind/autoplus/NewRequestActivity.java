@@ -3,7 +3,6 @@ package com.nimblemind.autoplus;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -42,10 +41,9 @@ public abstract class NewRequestActivity<MODEL extends Request> extends AppCompa
 	}
 
 	@Override
-	public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState)
+	protected void onPostCreate(@Nullable Bundle savedInstanceState)
 	{
-		super.onPostCreate(savedInstanceState, persistentState);
-
+		super.onPostCreate(savedInstanceState);
 		if (savedInstanceState == null)
 		{
 			onFirstCreate();
