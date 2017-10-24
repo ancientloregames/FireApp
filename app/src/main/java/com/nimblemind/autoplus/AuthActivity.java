@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,8 +35,6 @@ import io.fabric.sdk.android.Fabric;
  * com.nimblemind.autoplus. Created by nimblemind on 9/27/2017.
  */
 
-// TODO сделать progress bar
-// TODO блокировать кнопки во избежание двойных нажатий
 public class AuthActivity extends AppCompatActivity implements SignUpFragment.Listener, Listener
 {
 	private final String TAG = "AuthActivity";
@@ -44,6 +43,8 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 
 	private FirebaseAuth auth;
 	private DatabaseReference dbUsers;
+
+	private View progressBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -56,6 +57,8 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 		auth = FirebaseAuth.getInstance();
 
 		dbUsers = FirebaseDatabase.getInstance().getReference("users");
+
+		progressBar = findViewById(R.id.progressBarContainer);
 
 		if (savedInstanceState == null)
 		{
@@ -117,6 +120,8 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 		if (!checkIntenetConnection())
 			return;
 
+		progressBar.setVisibility(View.VISIBLE);
+
 		Log.d(TAG, "onSignUp: " + name + " : " + email);
 		auth.createUserWithEmailAndPassword(email, password)
 				.addOnCompleteListener(new OnCompleteListener<AuthResult>()
@@ -151,6 +156,8 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 		if (!checkIntenetConnection())
 			return;
 
+		progressBar.setVisibility(View.VISIBLE);
+
 		auth.signInWithEmailAndPassword(email, password)
 				.addOnCompleteListener(new OnCompleteListener<AuthResult>()
 				{
@@ -175,6 +182,8 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 	@Override
 	public void onGotoLogIn()
 	{
+		progressBar.setVisibility(View.GONE);
+
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentTarget, new LogInFragment())
@@ -184,6 +193,8 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 	@Override
 	public void onGotoSignUp()
 	{
+		progressBar.setVisibility(View.GONE);
+
 		getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.fragmentTarget, new SignUpFragment())
@@ -198,6 +209,8 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 
 	private void findUserAndEnter(@NonNull final String uid)
 	{
+		progressBar.setVisibility(View.VISIBLE);
+
 		dbUsers.child(uid).addListenerForSingleValueEvent(new ValueEventListener()
 		{
 			@Override
@@ -248,6 +261,8 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 
 	private void handleAuthError(Exception exception)
 	{
+		progressBar.setVisibility(View.GONE);
+
 		if (exception == null) return;
 
 		if (Fabric.isInitialized())
