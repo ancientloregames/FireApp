@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<com.nimblemind.autoplus.swipereveallayout.SwipeRevealLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	xmlns:card_view="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/card_view"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:layout_margin="5dp"
-	card_view:cardCornerRadius="4dp"
+	android:layout_marginTop="@dimen/recyclerItemPadding"
+	app:dragEdge="right"
 	>
-	<LinearLayout
+	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:orientation="horizontal"
+		android:layout_gravity="center"
+		android:background="@color/colorPrimary"
+		>
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingStart="@dimen/globalActivityPadding"
+			android:paddingLeft="@dimen/globalActivityPadding"
+			android:layout_gravity="start|center_vertical"
+			>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@android:color/white"
+				android:text="@string/textRequestDeleted"
+				/>
+			<Button
+				android:id="@+id/buttonCancelDeletion"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/buttonCancelDeletion"
+				/>
+		</LinearLayout>
+	</FrameLayout>
+	<LinearLayout
+		android:id="@+id/itemLayout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		android:padding="5dp"
+		android:padding="@dimen/recyclerItemInnerPadding"
+		android:background="@color/recyclerItem"
 		>
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -30,19 +59,19 @@
 					android:id="@+id/infoView"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					tools:text="Запрос 11111 от 01.01.1972"
+					tools:text="@string/textRequestInfo"
 					/>
 				<TextView
 					android:id="@+id/sparePartView"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					tools:text="Аккумулятор"
+					tools:text="@string/hintAutoPart"
 					/>
 				<TextView
 					android:id="@+id/autoNameView"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					tools:text="Audi 100"
+					tools:text="@string/hintAutoName"
 					/>
 			</LinearLayout>
 			<TextView
@@ -51,26 +80,14 @@
 				android:layout_height="match_parent"
 				android:layout_weight="1"
 				android:gravity="right"
-				tools:text="Ответов нет"
+				tools:text="@string/textNoNewMessages"
 				/>
 		</LinearLayout>
-		<LinearLayout
-			android:layout_width="match_parent"
+		<Button
+			android:id="@+id/newRequestButton"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			>
-			<Button
-				android:id="@+id/newRequestButton"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="Создать обращене"
-				/>
-			<ImageButton
-				android:id="@+id/deleteRequestButton"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				app:srcCompat="@android:drawable/ic_menu_delete"
-				/>
-		</LinearLayout>
+			android:text="@string/buttonCreateRequestByTemplate"
+			/>
 	</LinearLayout>
-</android.support.v7.widget.CardView>
+</com.nimblemind.autoplus.swipereveallayout.SwipeRevealLayout>

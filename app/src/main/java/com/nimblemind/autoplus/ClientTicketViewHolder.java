@@ -2,8 +2,8 @@ package com.nimblemind.autoplus;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
+import com.nimblemind.autoplus.swipereveallayout.SwipeRevealLayout;
 
 
 /**
@@ -17,18 +17,20 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 	TextView autoNameView;
 	TextView notificationView;
 	Button newRequestButton;
-	ImageButton deleteRequestButton;
+	Button cancelDeletionButton;
+	View itemLayout;
 
 	public ClientTicketViewHolder(View itemView)
 	{
 		super(itemView);
 
+		itemLayout = itemView.findViewById(R.id.itemLayout);
 		infoView = itemView.findViewById(R.id.infoView);
 		sparePartView = itemView.findViewById(R.id.sparePartView);
 		autoNameView = itemView.findViewById(R.id.autoNameView);
 		notificationView = itemView.findViewById(R.id.notificationView);
 		newRequestButton = itemView.findViewById(R.id.newRequestButton);
-		deleteRequestButton = itemView.findViewById(R.id.deleteRequestButton);
+		cancelDeletionButton = itemView.findViewById(R.id.buttonCancelDeletion);
 	}
 
 	public void bindToData(Ticket ticket)
@@ -38,5 +40,10 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 		sparePartView.setText(ticket.partType);
 		autoNameView.setText(ticket.autoName);
 		notificationView.setText(itemView.getResources().getString(R.string.textNoNewMessages));
+	}
+
+	public SwipeRevealLayout getView()
+	{
+		return (SwipeRevealLayout) itemView;
 	}
 }

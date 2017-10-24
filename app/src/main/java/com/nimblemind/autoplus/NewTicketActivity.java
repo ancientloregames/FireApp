@@ -15,6 +15,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
+import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
+
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/22/2017.
@@ -97,6 +99,7 @@ public class NewTicketActivity extends NewRequestActivity<Ticket>
 		commentView.setText(template.comment);
 		commentView.setInputType(InputType.TYPE_NULL);
 		commentView.setFocusable(false);
+		partView.setImeOptions(IME_ACTION_DONE);
 	}
 
 	@Override

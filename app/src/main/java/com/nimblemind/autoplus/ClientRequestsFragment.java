@@ -5,6 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import com.nimblemind.autoplus.swipereveallayout.ViewBinderHelper;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -16,6 +20,10 @@ import static android.app.Activity.RESULT_OK;
 public abstract class ClientRequestsFragment<MODEL extends Request, VIEWHOLDER extends RequestViewHolder>
 		extends RequestsFragment<MODEL, VIEWHOLDER>
 {
+	protected final ViewBinderHelper binderHelper = new ViewBinderHelper();
+
+	protected Set<Integer> deleteCandidates = new HashSet<>();
+
 	public ClientRequestsFragment()
 	{
 	}
@@ -58,6 +66,16 @@ public abstract class ClientRequestsFragment<MODEL extends Request, VIEWHOLDER e
 		intent.putExtra("template", template);
 		intent.putExtra("type", getModelClass().getSimpleName());
 		startActivityForResult(intent, INTENT_NEW_REQUEST);
+	}
+
+	@Override
+	public void onDestroy()
+	{
+		for (Integer id : deleteCandidates)
+		{
+			deleteRequest(id);
+		}
+		super.onDestroy();
 	}
 
 	protected void sendRequest(Request request, Uri photoUri)

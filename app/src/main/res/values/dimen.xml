@@ -7,4 +7,8 @@
 	<dimen name="navHeaderHeight">160dp</dimen>
 
 	<dimen name="floatingButtonSize">50dp</dimen>
+	
+	<dimen name="recyclerItemPadding">5dp</dimen>
+
+	<dimen name="recyclerItemInnerPadding">5dp</dimen>
 </resources>

@@ -9,5 +9,6 @@
 	<color name="authTextForm">@android:color/white</color>
 
 	<!-- Main Activity -->
-	<color name="recyclerBackground">#e1e1e1</color>
+	<color name="recyclerBackground">@android:color/white</color>
+	<color name="recyclerItem">#e8f1f0</color>
 </resources>

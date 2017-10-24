@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
+import com.nimblemind.autoplus.swipereveallayout.SwipeRevealLayout;
 
 
 /**
@@ -63,7 +64,21 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket, Client
 	@Override
 	protected void bindItem(final ClientTicketViewHolder viewHolder, final Ticket ticket)
 	{
-		viewHolder.itemView.setOnClickListener(new View.OnClickListener()
+		final SwipeRevealLayout swipeLayout = viewHolder.getView();
+
+		binderHelper.bind(swipeLayout, String.valueOf(ticket.id));
+
+		swipeLayout.setSwipeListener(new SwipeRevealLayout.SimpleSwipeListener()
+		{
+			@Override
+			public void onOpened(SwipeRevealLayout view)
+			{
+				deleteCandidates.add(viewHolder.getAdapterPosition());
+				view.setLockDrag(true);
+			}
+		});
+
+		viewHolder.itemLayout.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)
@@ -81,12 +96,14 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket, Client
 			}
 		});
 
-		viewHolder.deleteRequestButton.setOnClickListener(new View.OnClickListener()
+		viewHolder.cancelDeletionButton.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)
 			{
-				deleteRequest(viewHolder.getAdapterPosition());
+				deleteCandidates.remove(viewHolder.getAdapterPosition());
+				swipeLayout.setLockDrag(false);
+				swipeLayout.close(true);
 			}
 		});
 	}

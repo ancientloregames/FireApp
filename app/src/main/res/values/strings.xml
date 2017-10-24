@@ -47,6 +47,11 @@
 	<string name="drawerOpen">Open navigation drawer</string>
 	<string name="drawerClose">Close navigation drawer</string>
 
+	<string name="textRequestDeleted">Request has been deleted</string>
+
+	<string name="buttonCancelDeletion">Cancel deletion</string>
+	<string name="buttonCreateRequestByTemplate">Create request based on this</string>
+
 	<!-- New Request Activity -->
 	<string name="activityNewRequestName">New Request</string>
 	<string name="activityNewTicketName">New Ticket</string>
