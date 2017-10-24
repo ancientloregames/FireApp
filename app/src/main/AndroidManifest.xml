@@ -30,9 +30,11 @@
 			/>
 		<activity android:name=".NewTicketActivity"
 				  android:label="@string/activityNewTicketName"
+				  android:parentActivityName=".MainActivity"
 			/>
 		<activity android:name=".RequestDetailsActivity"
 				  android:label="@string/activityRequestDetails"
+				  android:parentActivityName=".MainActivity"
 			/>
 
 		<service

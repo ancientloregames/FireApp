@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 
@@ -19,6 +20,7 @@ public class RequestDetailsActivity extends AppCompatActivity
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		setTitle(R.string.activityRequestDetails);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		TextView infoView = findViewById(R.id.textRequestInfo);
 		TextView partView = findViewById(R.id.textAutoPart);
@@ -42,5 +44,19 @@ public class RequestDetailsActivity extends AppCompatActivity
 			else throw new RuntimeException("Existing request must be passed as an Extra");
 		}
 		else throw new RuntimeException("Existing request must be passed as an Extra");
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+				setResult(RESULT_CANCELED);
+				finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 }

@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -35,6 +36,7 @@ public abstract class NewRequestActivity<MODEL extends Request> extends AppCompa
 
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		ViewGroup formContainer = findViewById(R.id.form);
 		LayoutInflater.from(this).inflate(getFormLayoutId(), formContainer);
@@ -68,6 +70,20 @@ public abstract class NewRequestActivity<MODEL extends Request> extends AppCompa
 			}
 		}
 		else throw new RuntimeException("The Uid must be passed in order to create new ticket");
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+				setResult(RESULT_CANCELED);
+				finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
