@@ -39,6 +39,7 @@ public abstract class Request implements Serializable
 	{
 		this.id = 0;
 		this.uid = uid;
+		this.sid = "";
 		this.autoName = autoName;
 		this.timestamp = 0;
 		this.vin = vin;
@@ -47,7 +48,5 @@ public abstract class Request implements Serializable
 		this.comment = comment;
 
 		this.type = getClass().getSimpleName();
-
-		this.sid = null;
 	}
 }
