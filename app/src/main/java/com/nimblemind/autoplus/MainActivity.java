@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements RequestsFragment.
 				}
 				else if (userType == UserType.SUPPORT)
 				{
-					// TODO
+					fragment = new SupportTicketFragment();
 				}
 				break;
 			case R.id.navOfferFragment:

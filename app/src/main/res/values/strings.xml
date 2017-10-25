@@ -37,6 +37,7 @@
 	<!-- Main Activity -->
 	<string name="fragmentClientRequestListName">My requests</string>
 	<string name="fragmentClientTicketListName">My tickets</string>
+	<string name="fragmentSupportTicketList">Opened tickets</string>
 
 	<string name="textRequestInfo">Request №%1$d of %2$s</string>
 	<string name="textNoNewMessages">No new messages</string>
@@ -52,6 +53,9 @@
 
 	<string name="buttonCancelDeletion">Cancel deletion</string>
 	<string name="buttonCreateRequestByTemplate">Create request based on this</string>
+
+	<!-- == Support Fragments == -->
+	<string name="buttonAnswerRequest">Answer</string>
 
 	<!-- New Request Activity -->
 	<string name="activityNewRequest">New Request</string>
