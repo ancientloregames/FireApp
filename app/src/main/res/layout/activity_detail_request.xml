@@ -7,50 +7,19 @@
 	android:orientation="vertical"
 	android:fitsSystemWindows="true"
 	android:background="@color/colorPrimary"
-	tools:context="com.nimblemind.autoplus.RequestDetailsActivity"
+	tools:context="com.nimblemind.autoplus.DetailTicketActivity"
 	>
 
 	<include layout="@layout/topbar"/>
 
-	<LinearLayout
+	<FrameLayout
+		android:id="@+id/form"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical"
 		android:padding="@dimen/globalActivityPadding"
 		android:background="@android:color/white"
-		>
-		<TextView
-			android:id="@+id/textRequestInfo"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			tools:text="@string/textRequestInfo"
-			/>
-		<TextView
-			android:id="@+id/textAutoPart"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			tools:text="@string/hintAutoPart"
-			/>
-		<TextView
-			android:id="@+id/textAutoName"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			tools:text="@string/hintAutoName"
-			/>
-		<TextView
-			android:id="@+id/textAutoYear"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			tools:text="@string/hintAutoYear"
-			/>
-		<TextView
-			android:id="@+id/textAutoVin"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			tools:text="@string/hintAutoVin"
-			/>
-	</LinearLayout>
+		/>
+
 	<android.support.v7.widget.CardView
 		xmlns:card_view="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"

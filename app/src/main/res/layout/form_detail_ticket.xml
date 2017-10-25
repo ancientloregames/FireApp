@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	>
+	<TextView
+		android:id="@+id/textRequestInfo"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		tools:text="@string/textRequestInfo"
+		/>
+	<TextView
+		android:id="@+id/textAutoPart"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textStyle="bold"
+		tools:text="@string/hintAutoPart"
+		/>
+	<TextView
+		android:id="@+id/textAutoName"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		tools:text="@string/hintAutoName"
+		/>
+	<TextView
+		android:id="@+id/textAutoYear"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		tools:text="@string/hintAutoYear"
+		/>
+	<TextView
+		android:id="@+id/textAutoVin"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		tools:text="@string/hintAutoVin"
+		/>
+</LinearLayout>

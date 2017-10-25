@@ -32,7 +32,7 @@
 				  android:label="@string/activityNewTicketName"
 				  android:parentActivityName=".MainActivity"
 			/>
-		<activity android:name=".RequestDetailsActivity"
+		<activity android:name=".DetailTicketActivity"
 				  android:label="@string/activityRequestDetails"
 				  android:parentActivityName=".MainActivity"
 			/>
