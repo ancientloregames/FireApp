@@ -120,7 +120,7 @@ public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends
 
 	protected void showRequestDetails(@NonNull Request request)
 	{
-		Intent intent = new Intent(getActivity(), DetailTicketActivity.class);
+		Intent intent = new Intent(getActivity(), ClientTicketActivity.class);
 		intent.putExtra("request", request);
 		startActivityForResult(intent, INTENT_REQUEST_DETAILS);
 	}

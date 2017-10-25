@@ -10,22 +10,22 @@ import android.util.AttributeSet;
 import android.widget.ProgressBar;
 
 
-public class SupportProgressBar extends ProgressBar
+public class TintedProgressBar extends ProgressBar
 {
-	public SupportProgressBar(Context context)
+	public TintedProgressBar(Context context)
 	{
 		super(context);
 	}
 
-	public SupportProgressBar(Context context, AttributeSet attrs)
+	public TintedProgressBar(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 
-		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SupportProgressBar, 0, 0);
+		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TintedProgressBar, 0, 0);
 
 		try
 		{
-			setColor(typedArray.getColor(R.styleable.SupportProgressBar_color, Color.BLACK));
+			setColor(typedArray.getColor(R.styleable.TintedProgressBar_color, Color.BLACK));
 		}
 		finally
 		{
@@ -33,13 +33,13 @@ public class SupportProgressBar extends ProgressBar
 		}
 	}
 
-	public SupportProgressBar(Context context, AttributeSet attrs, int defStyleAttr)
+	public TintedProgressBar(Context context, AttributeSet attrs, int defStyleAttr)
 	{
 		super(context, attrs, defStyleAttr);
 	}
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	public SupportProgressBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+	public TintedProgressBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
 	{
 		super(context, attrs, defStyleAttr, defStyleRes);
 	}
