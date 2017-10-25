@@ -29,11 +29,11 @@
 				  android:label="@string/app_name"
 			/>
 		<activity android:name=".NewTicketActivity"
-				  android:label="@string/activityNewTicketName"
+				  android:label="@string/activityNewTicket"
 				  android:parentActivityName=".MainActivity"
 			/>
 		<activity android:name=".DetailTicketActivity"
-				  android:label="@string/activityRequestDetails"
+				  android:label="@string/activityDetailTicket"
 				  android:parentActivityName=".MainActivity"
 			/>
 

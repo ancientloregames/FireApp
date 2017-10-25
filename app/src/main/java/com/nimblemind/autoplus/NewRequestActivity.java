@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public abstract class NewRequestActivity<MODEL extends Request> extends AppCompa
 
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		setTitle(getActivityTitle());
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		ViewGroup formContainer = findViewById(R.id.form);
@@ -132,6 +134,9 @@ public abstract class NewRequestActivity<MODEL extends Request> extends AppCompa
 
 	@LayoutRes
 	protected abstract int getFormLayoutId();
+
+	@StringRes
+	protected abstract int getActivityTitle();
 
 	protected abstract void onRecivedImage(Uri imageUri);
 

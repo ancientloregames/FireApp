@@ -77,6 +77,12 @@ public class NewTicketActivity extends NewRequestActivity<Ticket>
 	}
 
 	@Override
+	protected int getActivityTitle()
+	{
+		return R.string.activityNewTicket;
+	}
+
+	@Override
 	protected void onRecivedImage(Uri imageUri)
 	{
 		this.imageUri = imageUri;

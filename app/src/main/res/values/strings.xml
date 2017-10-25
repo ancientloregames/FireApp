@@ -54,8 +54,8 @@
 	<string name="buttonCreateRequestByTemplate">Create request based on this</string>
 
 	<!-- New Request Activity -->
-	<string name="activityNewRequestName">New Request</string>
-	<string name="activityNewTicketName">New Ticket</string>
+	<string name="activityNewRequest">New Request</string>
+	<string name="activityNewTicket">New Ticket</string>
 
 	<string name="hintAutoName">auto name *</string>
 	<string name="hintAutoYear">year</string>
