@@ -3,7 +3,7 @@ apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    buildToolsVersion "27.0.0"
     defaultConfig {
         applicationId "com.nimblemind.autoplus"
         minSdkVersion 16
@@ -40,8 +40,9 @@ dependencies {
     compile "com.google.firebase:firebase-auth:${rootProject.ext.FIREBASE_VERSION}"
     compile "com.google.firebase:firebase-database:${rootProject.ext.FIREBASE_VERSION}"
     compile "com.google.firebase:firebase-storage:${rootProject.ext.FIREBASE_VERSION}"
+    compile "com.google.firebase:firebase-messaging:${rootProject.ext.FIREBASE_VERSION}"
 
-    compile 'com.firebaseui:firebase-ui-database:1.2.0'
+    compile 'com.firebaseui:firebase-ui-database:3.0.0'
 
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
 

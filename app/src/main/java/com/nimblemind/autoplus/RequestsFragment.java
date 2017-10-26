@@ -11,7 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.SnapshotParser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -21,18 +23,16 @@ import com.google.firebase.database.Query;
  * com.nimblemind.autoplus. Created by nimblemind on 10/11/2017.
  */
 
-public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends RequestViewHolder> extends Fragment
+public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 {
 	public static final int INTENT_NEW_REQUEST = 101;
 	public static final int INTENT_REQUEST_DETAILS = 102;
-
-	private Listener listener;
 
 	protected String uid;
 
 	protected DatabaseReference database;
 
-	protected FirebaseRecyclerAdapter<MODEL, VIEWHOLDER> adapter;
+	protected RequestsAdapter adapter;
 
 	public RequestsFragment()
 	{
@@ -52,15 +52,6 @@ public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends
 	public void onAttach(Context context)
 	{
 		super.onAttach(context);
-		if (context instanceof Listener)
-		{
-			listener = (Listener) context;
-		}
-		else
-		{
-			throw new RuntimeException(context.toString()
-					+ " must implement " + this.getClass().getSimpleName() + ".Listener");
-		}
 
 		getActivity().setTitle(R.string.fragmentClientRequestListName);
 	}
@@ -84,17 +75,18 @@ public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends
 		layoutManager.setReverseLayout(true);
 		recycler.setLayoutManager(layoutManager);
 
-		adapter = new FirebaseRecyclerAdapter<MODEL, VIEWHOLDER>
-				(getModelClass(), getModelLayoutId(), getViewHolderClass(), getQuery(database))
-		{
+		SnapshotParser<MODEL> parser = new SnapshotParser<MODEL>() {
 			@Override
-			protected void populateViewHolder(VIEWHOLDER viewHolder, MODEL model, int position)
-			{
-				viewHolder.bindToData(model);
-
-				bindItem(viewHolder, model);
+			public MODEL parseSnapshot(DataSnapshot dataSnapshot) {
+				return dataSnapshot.getValue(getModelClass());
 			}
 		};
+
+		FirebaseRecyclerOptions<MODEL> options = new FirebaseRecyclerOptions.Builder<MODEL>()
+				.setQuery(getQuery(database), parser)
+				.build();
+
+		adapter = createAdapter(options);
 		adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver()
 		{
 			@Override
@@ -109,13 +101,17 @@ public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends
 	}
 
 	@Override
-	public void onDestroy()
+	public void onResume()
 	{
-		super.onDestroy();
-		if (adapter != null)
-		{
-			adapter.cleanup();
-		}
+		super.onResume();
+		adapter.startListening();
+	}
+
+	@Override
+	public void onPause()
+	{
+		adapter.stopListening();
+		super.onPause();
 	}
 
 	protected void showRequestDetails(@NonNull Request request)
@@ -128,18 +124,9 @@ public abstract class RequestsFragment<MODEL extends Request, VIEWHOLDER extends
 	@LayoutRes
 	protected abstract int getFragmentLayoutId();
 
-	@LayoutRes
-	protected abstract int getModelLayoutId();
-
 	protected abstract Class<MODEL> getModelClass();
-
-	protected abstract Class<VIEWHOLDER> getViewHolderClass();
 
 	protected abstract Query getQuery(DatabaseReference databaseReference);
 
-	protected abstract void bindItem(VIEWHOLDER viewHolder, MODEL model);
-
-	interface Listener
-	{
-	}
+	protected abstract RequestsAdapter createAdapter(FirebaseRecyclerOptions<MODEL> options);
 }

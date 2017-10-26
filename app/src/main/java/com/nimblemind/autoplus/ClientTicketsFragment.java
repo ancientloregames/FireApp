@@ -1,16 +1,15 @@
 package com.nimblemind.autoplus;
 
-import android.view.View;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.nimblemind.autoplus.swipereveallayout.SwipeRevealLayout;
 
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/11/2017.
  */
 
-public class ClientTicketsFragment extends ClientRequestsFragment<Ticket, ClientTicketViewHolder>
+public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implements ClientRequestsAdapter.Listener<Ticket>
 {
 	public ClientTicketsFragment()
 	{
@@ -25,13 +24,7 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket, Client
 	@Override
 	protected int getFragmentLayoutId()
 	{
-		return R.layout.fragment_clientlist;
-	}
-
-	@Override
-	protected int getModelLayoutId()
-	{
-		return R.layout.clientlist_item;
+		return R.layout.client_list_fragment;
 	}
 
 	@Override
@@ -41,67 +34,44 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket, Client
 	}
 
 	@Override
-	protected Class<ClientTicketViewHolder> getViewHolderClass()
-	{
-		return ClientTicketViewHolder.class;
-	}
-
-	@Override
 	protected Query getQuery(DatabaseReference databaseReference)
 	{
 		return databaseReference.orderByChild("uid").equalTo(uid);
 	}
 
 	@Override
-	protected void bindItem(final ClientTicketViewHolder viewHolder, final Ticket ticket)
+	protected RequestsAdapter createAdapter(FirebaseRecyclerOptions<Ticket> options)
 	{
-		final SwipeRevealLayout swipeLayout = viewHolder.getView();
-
-		binderHelper.bind(swipeLayout, String.valueOf(ticket.id));
-
-		swipeLayout.setSwipeListener(new SwipeRevealLayout.SimpleSwipeListener()
-		{
-			@Override
-			public void onOpened(SwipeRevealLayout view)
-			{
-				deleteCandidates.add(viewHolder.getAdapterPosition());
-				view.setLockDrag(true);
-			}
-		});
-
-		viewHolder.itemLayout.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				showRequestDetails(ticket);
-			}
-		});
-
-		viewHolder.newRequestButton.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				createNewRequest(ticket);
-			}
-		});
-
-		viewHolder.cancelDeletionButton.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				deleteCandidates.remove(viewHolder.getAdapterPosition());
-				swipeLayout.setLockDrag(false);
-				swipeLayout.close(true);
-			}
-		});
+		return new ClientTicketsAdapter(options, this);
 	}
 
 	@Override
 	protected int getActivityTitle()
 	{
 		return R.string.fragmentClientTicketListName;
+	}
+
+	@Override
+	public void onShowRequestClicked(Ticket request)
+	{
+		showRequestDetails(request);
+	}
+
+	@Override
+	public void onCreateRequestClicked(Ticket request)
+	{
+		createNewRequest(request);
+	}
+
+	@Override
+	public void onDeleteRequestClicked(String key)
+	{
+		deleteCandidates.add(key);
+	}
+
+	@Override
+	public void onCancelDeleteRequestClicked(String key)
+	{
+		deleteCandidates.remove(key);
 	}
 }

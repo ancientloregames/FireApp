@@ -20,8 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * com.nimblemind.autoplus. Created by nimblemind on 10/4/2017.
  */
 
-public class MainActivity extends AppCompatActivity implements RequestsFragment.Listener,
-		NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 	private final String TAG = MainActivity.class.getSimpleName();
 
