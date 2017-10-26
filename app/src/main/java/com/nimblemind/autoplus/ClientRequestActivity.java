@@ -16,7 +16,7 @@ import android.view.ViewGroup;
  * com.nimblemind.autoplus. Created by nimblemind on 10/25/2017.
  */
 
-public abstract class DetailRequestActivity<MODEL extends Request> extends AppCompatActivity
+public abstract class ClientRequestActivity<MODEL extends Request> extends AppCompatActivity
 {
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)

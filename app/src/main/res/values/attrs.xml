@@ -19,7 +19,7 @@
 		<attr name="minDistRequestDisallowParent" format="dimension" />
 	</declare-styleable>
 
-	<declare-styleable name="SupportProgressBar">
+	<declare-styleable name="TintedProgressBar">
 		<attr name="color" format="color" />
 	</declare-styleable>
 </resources>

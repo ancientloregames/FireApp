@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 
-public class DetailTicketActivity extends DetailRequestActivity<Ticket>
+public class ClientTicketActivity extends ClientRequestActivity<Ticket>
 {
 	private TextView infoView;
 	private TextView partView;
