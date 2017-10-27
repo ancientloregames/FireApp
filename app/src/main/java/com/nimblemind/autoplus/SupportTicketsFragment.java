@@ -52,8 +52,8 @@ public class SupportTicketsFragment extends SupportRequestsFragment<Ticket> impl
 	}
 
 	@Override
-	public void onShowRequestClicked(Ticket request)
+	public void onShowRequestClicked(Ticket request, String requestKey)
 	{
-		showRequestDetails(request);
+		showRequestDetails(request, requestKey);
 	}
 }

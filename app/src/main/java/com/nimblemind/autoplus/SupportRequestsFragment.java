@@ -2,15 +2,10 @@ package com.nimblemind.autoplus;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
-import com.nimblemind.autoplus.swipereveallayout.ViewBinderHelper;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -40,6 +35,31 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 		super.onViewCreated(view, savedInstanceState);
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == RESULT_OK)
+		{
+			if (requestCode == INTENT_SUPPORT_REQUEST_DETAILS)
+			{
+				assignRequest(data.getStringExtra("requestKey"));
+			}
+		}
+	}
+
+	private void assignRequest(String requestKey)
+	{
+		database.child(requestKey).child("sid").setValue(uid);
+	}
+
 	@StringRes
 	protected abstract int getActivityTitle();
+
+	@Override
+	protected int getIntentCodeForRequestDetails()
+	{
+		return INTENT_SUPPORT_REQUEST_DETAILS;
+	}
 }

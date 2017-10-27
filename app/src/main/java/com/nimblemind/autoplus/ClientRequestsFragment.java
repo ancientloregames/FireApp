@@ -83,6 +83,12 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 		super.onDestroy();
 	}
 
+	@Override
+	protected int getIntentCodeForRequestDetails()
+	{
+		return INTENT_CLIENT_REQUEST_DETAILS;
+	}
+
 	protected void sendRequest(Request request, Uri photoUri)
 	{
 		String key = database.push().getKey();

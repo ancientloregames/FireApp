@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 
 public abstract class SupportRequestActivity<MODEL extends Request> extends AppCompatActivity
 {
+	protected String requestKey;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -48,6 +50,8 @@ public abstract class SupportRequestActivity<MODEL extends Request> extends AppC
 		Intent intent = getIntent();
 		if (intent != null)
 		{
+			requestKey = intent.getStringExtra("requestKey");
+
 			MODEL request = (MODEL) intent.getSerializableExtra("request");
 
 			if (request != null)
@@ -57,6 +61,14 @@ public abstract class SupportRequestActivity<MODEL extends Request> extends AppC
 			else throw new RuntimeException("Existing request must be passed as an Extra");
 		}
 		else throw new RuntimeException("Existing request must be passed as an Extra");
+	}
+
+	protected void answerRequest()
+	{
+		Intent resultIntent = new Intent();
+		resultIntent.putExtra("requestKey", requestKey);
+		setResult(RESULT_OK, resultIntent);
+		finish();
 	}
 
 	protected abstract void populateForm(MODEL request);

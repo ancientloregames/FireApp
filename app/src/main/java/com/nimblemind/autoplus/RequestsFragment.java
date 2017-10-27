@@ -28,7 +28,8 @@ import com.google.firebase.database.Query;
 public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 {
 	public static final int INTENT_NEW_REQUEST = 101;
-	public static final int INTENT_REQUEST_DETAILS = 102;
+	public static final int INTENT_CLIENT_REQUEST_DETAILS = 102;
+	public static final int INTENT_SUPPORT_REQUEST_DETAILS = 103;
 
 	protected String uid;
 
@@ -116,11 +117,12 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		super.onPause();
 	}
 
-	protected void showRequestDetails(@NonNull Request request)
+	protected void showRequestDetails(@NonNull Request request, String requestKey)
 	{
 		Intent intent = new Intent(getActivity(), getDetailsRequestActivityClass());
 		intent.putExtra("request", request);
-		startActivityForResult(intent, INTENT_REQUEST_DETAILS);
+		intent.putExtra("requestKey", requestKey);
+		startActivityForResult(intent, getIntentCodeForRequestDetails());
 	}
 
 	@LayoutRes
@@ -133,6 +135,8 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	protected abstract RequestsAdapter createAdapter(FirebaseRecyclerOptions<MODEL> options);
 
 	protected abstract Class<? extends AppCompatActivity> getDetailsRequestActivityClass();
+
+	protected abstract int getIntentCodeForRequestDetails();
 
 	@StringRes
 	protected abstract int getActivityTitle();

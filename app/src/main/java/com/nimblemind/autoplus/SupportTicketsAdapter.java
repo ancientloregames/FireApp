@@ -25,7 +25,7 @@ class SupportTicketsAdapter extends SupportRequestsAdapter<Ticket, SupportTicket
 			{
 				if (listener.get() != null)
 				{
-					listener.get().onShowRequestClicked(ticket);
+					listener.get().onShowRequestClicked(ticket, key);
 				}
 			}
 		});

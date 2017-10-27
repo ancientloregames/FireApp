@@ -58,9 +58,9 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	}
 
 	@Override
-	public void onShowRequestClicked(Ticket request)
+	public void onShowRequestClicked(Ticket request, String requestKey)
 	{
-		showRequestDetails(request);
+		showRequestDetails(request, requestKey);
 	}
 
 	@Override

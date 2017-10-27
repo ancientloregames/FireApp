@@ -37,7 +37,7 @@ public class SupportTicketActivity extends SupportRequestActivity<Ticket>
 			@Override
 			public void onClick(View v)
 			{
-				// TODO Взять заявку (назначить sid) и открыть чат
+				answerRequest();
 			}
 		});
 	}

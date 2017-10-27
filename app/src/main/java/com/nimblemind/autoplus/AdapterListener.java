@@ -6,5 +6,5 @@ package com.nimblemind.autoplus;
 
 interface AdapterListener<MODEL extends Request>
 {
-	void onShowRequestClicked(MODEL request);
+	void onShowRequestClicked(MODEL request, String requestKey);
 }
