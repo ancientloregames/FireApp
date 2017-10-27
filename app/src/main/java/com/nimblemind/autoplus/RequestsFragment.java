@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -116,7 +118,7 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 
 	protected void showRequestDetails(@NonNull Request request)
 	{
-		Intent intent = new Intent(getActivity(), ClientTicketActivity.class);
+		Intent intent = new Intent(getActivity(), getDetailsRequestActivityClass());
 		intent.putExtra("request", request);
 		startActivityForResult(intent, INTENT_REQUEST_DETAILS);
 	}
@@ -129,4 +131,9 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	protected abstract Query getQuery(DatabaseReference databaseReference);
 
 	protected abstract RequestsAdapter createAdapter(FirebaseRecyclerOptions<MODEL> options);
+
+	protected abstract Class<? extends AppCompatActivity> getDetailsRequestActivityClass();
+
+	@StringRes
+	protected abstract int getActivityTitle();
 }

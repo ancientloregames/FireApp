@@ -82,6 +82,10 @@
 	<!-- Request Details Activity -->
 	<string name="activityRequestDetails">Request Answers</string>
 	<string name="activityDetailTicket">Ticket Answers</string>
+	<string name="activitySupportRequest">Request Details</string>
+	<string name="activitySupportTicket">Ticket Details</string>
+
+	<string name="hintUid">User id</string>
 
 	<!-- Permissions -->
 	<string name="textRationaleTitle">Permission requered</string>

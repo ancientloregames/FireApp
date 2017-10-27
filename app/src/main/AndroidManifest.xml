@@ -36,6 +36,10 @@
 				  android:label="@string/activityDetailTicket"
 				  android:parentActivityName=".MainActivity"
 			/>
+		<activity android:name=".SupportTicketActivity"
+				  android:label="@string/activitySupportTicket"
+				  android:parentActivityName=".MainActivity"
+			/>
 
 		<service
 			android:name=".ImageUploadService"

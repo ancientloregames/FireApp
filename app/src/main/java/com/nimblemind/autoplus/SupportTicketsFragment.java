@@ -9,9 +9,9 @@ import com.google.firebase.database.Query;
  * com.nimblemind.autoplus. Created by nimblemind on 10/25/2017.
  */
 
-public class SupportTicketFragment extends SupportRequestsFragment<Ticket> implements SupportRequestsAdapter.Listener<Ticket>
+public class SupportTicketsFragment extends SupportRequestsFragment<Ticket> implements SupportRequestsAdapter.Listener<Ticket>
 {
-	public SupportTicketFragment()
+	public SupportTicketsFragment()
 	{
 	}
 
@@ -46,8 +46,14 @@ public class SupportTicketFragment extends SupportRequestsFragment<Ticket> imple
 	}
 
 	@Override
+	protected Class<SupportTicketActivity> getDetailsRequestActivityClass()
+	{
+		return SupportTicketActivity.class;
+	}
+
+	@Override
 	public void onShowRequestClicked(Ticket request)
 	{
-		// TODO
+		showRequestDetails(request);
 	}
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.view.View;
 
 import java.util.HashSet;
@@ -102,7 +101,4 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 	}
 
 	protected abstract Class<? extends NewRequestActivity> getNewRequestActivityClass();
-
-	@StringRes
-	protected abstract int getActivityTitle();
 }

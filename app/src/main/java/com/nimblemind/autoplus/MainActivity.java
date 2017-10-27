@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 				}
 				else if (userType == UserType.SUPPORT)
 				{
-					fragment = new SupportTicketFragment();
+					fragment = new SupportTicketsFragment();
 				}
 				break;
 			case R.id.navOfferFragment:
