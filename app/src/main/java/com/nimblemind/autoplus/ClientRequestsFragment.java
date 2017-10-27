@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
-import com.nimblemind.autoplus.swipereveallayout.ViewBinderHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,12 +18,9 @@ import static android.app.Activity.RESULT_OK;
  * com.nimblemind.autoplus. Created by nimblemind on 10/22/2017.
  */
 
-public abstract class ClientRequestsFragment<MODEL extends Request, VIEWHOLDER extends RequestViewHolder>
-		extends RequestsFragment<MODEL, VIEWHOLDER>
+public abstract class ClientRequestsFragment<MODEL extends Request> extends RequestsFragment<MODEL>
 {
-	protected final ViewBinderHelper binderHelper = new ViewBinderHelper();
-
-	protected Set<Integer> deleteCandidates = new HashSet<>();
+	protected Set<String> deleteCandidates = new HashSet<>();
 
 	public ClientRequestsFragment()
 	{
@@ -81,9 +77,9 @@ public abstract class ClientRequestsFragment<MODEL extends Request, VIEWHOLDER e
 	@Override
 	public void onDestroy()
 	{
-		for (Integer id : deleteCandidates)
+		for (String key : deleteCandidates)
 		{
-			deleteRequest(id);
+			deleteRequest(key);
 		}
 		super.onDestroy();
 	}
@@ -100,9 +96,9 @@ public abstract class ClientRequestsFragment<MODEL extends Request, VIEWHOLDER e
 				.setAction(ImageUploadService.ACTION_UPLOAD));
 	}
 
-	protected void deleteRequest(final int position)
+	protected void deleteRequest(final String key)
 	{
-		adapter.getRef(position).removeValue();
+		database.child(key).removeValue();
 	}
 
 	protected abstract Class<? extends NewRequestActivity> getNewRequestActivityClass();

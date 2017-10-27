@@ -1,6 +1,6 @@
 package com.nimblemind.autoplus;
 
-import android.view.View;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
@@ -9,7 +9,7 @@ import com.google.firebase.database.Query;
  * com.nimblemind.autoplus. Created by nimblemind on 10/25/2017.
  */
 
-public class SupportTicketFragment extends SupportRequestsFragment<Ticket, SupportTicketViewHolder>
+public class SupportTicketFragment extends SupportRequestsFragment<Ticket> implements SupportRequestsAdapter.Listener<Ticket>
 {
 	public SupportTicketFragment()
 	{
@@ -28,21 +28,9 @@ public class SupportTicketFragment extends SupportRequestsFragment<Ticket, Suppo
 	}
 
 	@Override
-	protected int getModelLayoutId()
-	{
-		return R.layout.support_list_item;
-	}
-
-	@Override
 	protected Class<Ticket> getModelClass()
 	{
 		return Ticket.class;
-	}
-
-	@Override
-	protected Class<SupportTicketViewHolder> getViewHolderClass()
-	{
-		return SupportTicketViewHolder.class;
 	}
 
 	@Override
@@ -52,16 +40,14 @@ public class SupportTicketFragment extends SupportRequestsFragment<Ticket, Suppo
 	}
 
 	@Override
-	protected void bindItem(SupportTicketViewHolder viewHolder, Ticket ticket)
+	protected RequestsAdapter createAdapter(FirebaseRecyclerOptions<Ticket> options)
 	{
+		return new SupportTicketsAdapter(options, this);
+	}
 
-		viewHolder.answerRequestButton.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				// TODO
-			}
-		});
+	@Override
+	public void onShowRequestClicked(Ticket request)
+	{
+		// TODO
 	}
 }

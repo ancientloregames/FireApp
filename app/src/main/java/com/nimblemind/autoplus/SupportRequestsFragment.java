@@ -19,8 +19,7 @@ import static android.app.Activity.RESULT_OK;
  * com.nimblemind.autoplus. Created by nimblemind on 10/25/2017.
  */
 
-public abstract class SupportRequestsFragment<MODEL extends Request, VIEWHOLDER extends RequestViewHolder>
-		extends RequestsFragment<MODEL, VIEWHOLDER>
+public abstract class SupportRequestsFragment<MODEL extends Request> extends RequestsFragment<MODEL>
 {
 
 	public SupportRequestsFragment()

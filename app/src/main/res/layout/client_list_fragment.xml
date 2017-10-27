@@ -15,7 +15,7 @@
 		android:layout_height="wrap_content"
 		android:clipToPadding="false"
 		android:scrollbars="vertical"
-		tools:listitem="@layout/clientlist_item"
+		tools:listitem="@layout/client_list_item"
 		/>
 
 	<android.support.design.widget.FloatingActionButton
