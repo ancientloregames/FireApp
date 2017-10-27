@@ -40,6 +40,10 @@
 				  android:label="@string/activitySupportTicket"
 				  android:parentActivityName=".MainActivity"
 			/>
+		<activity android:name=".ChatActivity"
+				  android:label="@string/activityChat"
+				  android:parentActivityName=".MainActivity"
+			/>
 
 		<service
 			android:name=".ImageUploadService"

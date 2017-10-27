@@ -30,6 +30,7 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	public static final int INTENT_NEW_REQUEST = 101;
 	public static final int INTENT_CLIENT_REQUEST_DETAILS = 102;
 	public static final int INTENT_SUPPORT_REQUEST_DETAILS = 103;
+	public static final int INTENT_CHAT = 110;
 
 	protected String uid;
 
@@ -123,6 +124,13 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		intent.putExtra("request", request);
 		intent.putExtra("requestKey", requestKey);
 		startActivityForResult(intent, getIntentCodeForRequestDetails());
+	}
+
+	protected void showChat(Request request)
+	{
+		Intent intent = new Intent(getActivity(), ChatActivity.class);
+		intent.putExtra("request", request);
+		startActivityForResult(intent, INTENT_CHAT);
 	}
 
 	@LayoutRes

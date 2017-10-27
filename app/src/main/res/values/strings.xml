@@ -87,6 +87,15 @@
 
 	<string name="hintUid">User id</string>
 
+	<!-- Chat Activity -->
+	<string name="activityChat">Chat</string>
+
+	<string name="hintClientName">Client Name</string>
+	<string name="hintSupportName">Support Name</string>
+
+	<string name="hintTextField">Type a message</string>
+	<string name="buttonSend">Send</string>
+
 	<!-- Permissions -->
 	<string name="textRationaleTitle">Permission requered</string>
 	<string name="textRationaleMessageCamera">For taking pictures, the app needs you\'re permission to use camera</string>
