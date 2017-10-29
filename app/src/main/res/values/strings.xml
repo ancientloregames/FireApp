@@ -81,6 +81,7 @@
 
 	<!-- Gallery Activity -->
 	<string name="activityGallery">Gallery</string>
+	<string name="activityCamera">Camera</string>
 
 	<string name="textTakePhoto">Take Photo</string>
 

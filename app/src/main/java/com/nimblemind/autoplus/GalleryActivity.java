@@ -18,6 +18,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import java.io.File;
@@ -33,7 +34,10 @@ import java.util.concurrent.Executors;
 
 public class GalleryActivity extends AppCompatActivity implements GalleryAdapter.Listener
 {
+	private final int CODE_INTENT_CAMERA = 100;
+
 	private final int CODE_REQUEST_STORAGE = 101;
+	private final int CODE_REQUEST_CAMERA = 102;
 
 	GalleryAdapter adapter;
 
@@ -49,6 +53,15 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 
 		final RecyclerView recycler = findViewById(R.id.recycler);
 		final Button cameraButton = findViewById(R.id.buttonTakePhoto);
+
+		cameraButton.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				tryLaunchCamera();
+			}
+		});
 
 		int rc = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
 		if (rc == PackageManager.PERMISSION_GRANTED)
@@ -70,6 +83,20 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == CODE_INTENT_CAMERA && resultCode == RESULT_OK)
+		{
+			Intent intent = new Intent();
+			intent.setData(data.getData());
+			setResult(RESULT_OK, intent);
+			finish();
+		}
+	}
+
+	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
 	{
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -79,6 +106,10 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 			if (requestCode == CODE_REQUEST_STORAGE)
 			{
 				populateGallery();
+			}
+			if (requestCode == CODE_REQUEST_CAMERA)
+			{
+				launchCamera();
 			}
 		}
 	}
@@ -177,5 +208,25 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 		}
 		Collections.reverse(items);
 		return items;
+	}
+
+	private void tryLaunchCamera()
+	{
+		int rc = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
+		if (rc == PackageManager.PERMISSION_GRANTED)
+		{
+			launchCamera();
+		}
+		else
+		{
+			requestPermission(android.Manifest.permission.CAMERA,
+					CODE_REQUEST_CAMERA, R.string.textRationaleMessageCamera);
+		}
+	}
+
+	private void launchCamera()
+	{
+		Intent intent = new Intent(this, CameraActivity.class);
+		startActivityForResult(intent, CODE_INTENT_CAMERA);
 	}
 }
