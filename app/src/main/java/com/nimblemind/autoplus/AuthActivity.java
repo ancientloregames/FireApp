@@ -107,7 +107,19 @@ public class AuthActivity extends AppCompatActivity implements SignUpFragment.Li
 
 	private void enter(@NonNull String uid, @NonNull User user)
 	{
-		Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+		Class mainActivityClass = null;
+		switch (user.type)
+		{
+			case CLIENT:
+				mainActivityClass = ClientMainActivity.class;
+				break;
+			case SUPPORT:
+				// TODO
+				break;
+			default:
+				throw new RuntimeException("Wrong User Type!");
+		}
+		Intent intent = new Intent(AuthActivity.this, mainActivityClass);
 		intent.putExtra("uid", uid);
 		intent.putExtra("user", user);
 		startActivity(intent);

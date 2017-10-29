@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * com.nimblemind.autoplus. Created by nimblemind on 10/4/2017.
  */
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public abstract class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 	private final String TAG = MainActivity.class.getSimpleName();
 
@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	private ActionBarDrawerToggle drawerToggle;
 
 	private String uid;
-	private UserType userType;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 		uid = getIntent().getStringExtra("uid");
 		User user = (User) getIntent().getSerializableExtra("user");
-		userType = user.type;
 
 		Log.d(TAG, user.toString() + " uid: " + uid);
 
@@ -93,14 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		switch (id)
 		{
 			case R.id.navTicketFragment:
-				if (userType == UserType.CLIENT)
-				{
-					fragment = new ClientTicketsFragment();
-				}
-				else if (userType == UserType.SUPPORT)
-				{
-					// TODO
-				}
+				fragment = getTicketsFragment();
 				break;
 			case R.id.navOfferFragment:
 				// TODO
@@ -138,4 +129,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		startActivity(intent);
 		finish();
 	}
+
+	protected abstract RequestsFragment getTicketsFragment();
 }
