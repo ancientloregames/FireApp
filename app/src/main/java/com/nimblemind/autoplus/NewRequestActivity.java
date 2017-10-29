@@ -122,14 +122,10 @@ public abstract class NewRequestActivity<MODEL extends Request> extends AppCompa
 		finish();
 	}
 
-	protected void tryOpenGallery()
+	protected void openGallery()
 	{
-		// FIXME Сделать собственную галерею с вызовом камеры
-		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		intent.setType("image/*");
+		Intent intent = new Intent(this, GalleryActivity.class);
 		startActivityForResult(intent, RC_TAKE_PICTURE);
-//		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//		startActivityForResult(intent, RC_TAKE_PICTURE);
 	}
 
 	@LayoutRes

@@ -11,4 +11,8 @@
 	<dimen name="recyclerItemPadding">5dp</dimen>
 
 	<dimen name="recyclerItemInnerPadding">5dp</dimen>
+
+	<dimen name="galleryItemIndent">1dp</dimen>
+
+	<dimen name="galleryItemSize">100dp</dimen>
 </resources>

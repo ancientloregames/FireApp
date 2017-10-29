@@ -65,7 +65,7 @@ public class NewTicketActivity extends NewRequestActivity<Ticket>
 			@Override
 			public void onClick(View view)
 			{
-				tryOpenGallery();
+				openGallery();
 			}
 		});
 	}
