@@ -33,6 +33,7 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	public static final int INTENT_CHAT = 110;
 
 	protected String uid;
+	protected String userName;
 
 	protected DatabaseReference database;
 
@@ -68,7 +69,10 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		Bundle arguments = getArguments();
 
 		if (arguments != null)
+		{
 			uid = arguments.getString("uid");
+			userName = arguments.getString("userName");
+		}
 		else
 		{
 			throw new RuntimeException("Uid was not passed to the list fragment!");
@@ -126,10 +130,12 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		startActivityForResult(intent, getIntentCodeForRequestDetails());
 	}
 
-	protected void showChat(Request request)
+	protected void showChat(String requestKey)
 	{
 		Intent intent = new Intent(getActivity(), ChatActivity.class);
-		intent.putExtra("request", request);
+		intent.putExtra("uid", uid);
+		intent.putExtra("userName", userName);
+		intent.putExtra("requestKey", requestKey);
 		startActivityForResult(intent, INTENT_CHAT);
 	}
 

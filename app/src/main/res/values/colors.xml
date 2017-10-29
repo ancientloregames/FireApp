@@ -11,4 +11,7 @@
 	<!-- Main Activity -->
 	<color name="recyclerBackground">@android:color/white</color>
 	<color name="recyclerItem">#e8f1f0</color>
+	
+	<color name="chatUserMessage">#d4fffb</color>
+	<color name="chatCollocutorMessage">#eaeaea</color>
 </resources>

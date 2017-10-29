@@ -56,6 +56,8 @@
 
 	<!-- == Support Fragments == -->
 	<string name="buttonAnswerRequest">Answer</string>
+	<string name="buttonTakeRequest">Take Request</string>
+	<string name="buttonOpenChat">Open Chat</string>
 
 	<!-- New Request Activity -->
 	<string name="activityNewRequest">New Request</string>
@@ -92,6 +94,8 @@
 
 	<string name="hintClientName">Client Name</string>
 	<string name="hintSupportName">Support Name</string>
+
+	<string name="textMessageInfo"><b>%1$s</b>  %2$s</string>
 
 	<string name="hintTextField">Type a message</string>
 	<string name="buttonSend">Send</string>

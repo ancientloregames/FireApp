@@ -18,6 +18,9 @@ import android.view.ViewGroup;
 
 public abstract class SupportRequestActivity<MODEL extends Request> extends AppCompatActivity
 {
+	public final static int ACTION_OPEN_CHAT = 1;
+	public final static int ACTION_TAKE_REQUEST = 2;
+
 	protected String requestKey;
 
 	@Override
@@ -63,9 +66,19 @@ public abstract class SupportRequestActivity<MODEL extends Request> extends AppC
 		else throw new RuntimeException("Existing request must be passed as an Extra");
 	}
 
-	protected void answerRequest()
+	protected void takeRequest()
 	{
 		Intent resultIntent = new Intent();
+		resultIntent.putExtra("action", ACTION_TAKE_REQUEST);
+		resultIntent.putExtra("requestKey", requestKey);
+		setResult(RESULT_OK, resultIntent);
+		finish();
+	}
+
+	protected void openChat()
+	{
+		Intent resultIntent = new Intent();
+		resultIntent.putExtra("action", ACTION_OPEN_CHAT);
 		resultIntent.putExtra("requestKey", requestKey);
 		setResult(RESULT_OK, resultIntent);
 		finish();

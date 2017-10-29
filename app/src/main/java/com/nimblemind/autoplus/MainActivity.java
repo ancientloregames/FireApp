@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	private ActionBarDrawerToggle drawerToggle;
 
 	private String uid;
-	private UserType userType;
+	private User user;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		NavigationView navigationView = findViewById(R.id.navigator);
 		navigationView.setNavigationItemSelectedListener(this);
 
-		uid = getIntent().getStringExtra("uid");
-		User user = (User) getIntent().getSerializableExtra("user");
-		userType = user.type;
+		Intent intent = getIntent();
+		uid = intent.getStringExtra("uid");
+		user = (User) intent.getSerializableExtra("user");
 
 		Log.d(TAG, user.toString() + " uid: " + uid);
 
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item)
 	{
+		UserType userType = user.type;
 		RequestsFragment fragment = null;
 		int id = item.getItemId();
 		switch (id)
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		{
 			Bundle arguments = new Bundle();
 			arguments.putString("uid", uid);
+			arguments.putString("userName", user.name);
 			fragment.setArguments(arguments);
 			getSupportFragmentManager()
 					.beginTransaction()

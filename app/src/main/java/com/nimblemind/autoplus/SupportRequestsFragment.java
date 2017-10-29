@@ -44,8 +44,13 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 		{
 			if (requestCode == INTENT_SUPPORT_REQUEST_DETAILS)
 			{
-				assignRequest(data.getStringExtra("requestKey"));
-				showChat(null);
+				String requestKey = data.getStringExtra("requestKey");
+				int action = data.getIntExtra("action", 1);
+				if (action == SupportRequestActivity.ACTION_TAKE_REQUEST)
+				{
+					assignRequest(requestKey);
+				}
+				showChat(requestKey);
 			}
 		}
 	}

@@ -11,4 +11,10 @@
 	<dimen name="recyclerItemPadding">5dp</dimen>
 
 	<dimen name="recyclerItemInnerPadding">5dp</dimen>
+
+	<dimen name="chatMessageInnerIndent">5dp</dimen>
+
+	<dimen name="chatMessageOuterTopIndent">5dp</dimen>
+
+	<dimen name="chatMessageOuterEndIndent">35dp</dimen>
 </resources>
