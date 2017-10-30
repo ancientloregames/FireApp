@@ -85,8 +85,10 @@
 
 	<string name="textTakePhoto">Take Photo</string>
 
+	<string name="photoPrefix">Auto_plus</string>
+
 	<!-- Permissions -->
 	<string name="textRationaleTitle">Permission requered</string>
-	<string name="textRationaleMessageCamera">For taking pictures, the app needs your permission to use camera</string>
+	<string name="textRationaleMessageCamera">To take photos, the app needs your permission to use camera and write the result to Pictures folder</string>
 	<string name="textRationaleMessageStorage">To pick image from you gallery, the app needs your permission to read storage</string>
 </resources>

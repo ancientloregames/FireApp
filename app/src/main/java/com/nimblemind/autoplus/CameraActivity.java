@@ -105,11 +105,12 @@ public class CameraActivity extends AppCompatActivity
 				@Override
 				public void run() {
 					File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-							"picture.jpg");
+							getString(R.string.photoPrefix) + '_' +System.currentTimeMillis() + ".jpg");
 					OutputStream os = null;
 					try {
 						os = new FileOutputStream(file);
 						os.write(data);
+						os.flush();
 						os.close();
 						finishWithResult(Uri.fromFile(file));
 					} catch (IOException e) {

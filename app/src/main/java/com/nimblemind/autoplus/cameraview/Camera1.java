@@ -61,6 +61,8 @@ class Camera1 extends CameraViewImpl {
 
     private AspectRatio mAspectRatio;
 
+	private final AspectRatio mSreenAspectRatio;
+
     private boolean mShowingPreview;
 
     private boolean mAutoFocus;
@@ -71,8 +73,9 @@ class Camera1 extends CameraViewImpl {
 
     private int mDisplayOrientation;
 
-    Camera1(Callback callback, PreviewImpl preview) {
+    Camera1(Callback callback, PreviewImpl preview, AspectRatio screenRatio) {
         super(callback, preview);
+		mSreenAspectRatio = screenRatio;
         preview.setCallback(new PreviewImpl.Callback() {
             @Override
             public void onSurfaceChanged() {
@@ -302,7 +305,7 @@ class Camera1 extends CameraViewImpl {
         }
         // AspectRatio
         if (mAspectRatio == null) {
-            mAspectRatio = Constants.DEFAULT_ASPECT_RATIO;
+            mAspectRatio = mSreenAspectRatio;
         }
         adjustCameraParameters();
         mCamera.setDisplayOrientation(calcDisplayOrientation(mDisplayOrientation));
@@ -313,10 +316,16 @@ class Camera1 extends CameraViewImpl {
         AspectRatio r = null;
         for (AspectRatio ratio : mPreviewSizes.ratios()) {
             r = ratio;
-            if (ratio.equals(Constants.DEFAULT_ASPECT_RATIO)) {
+            if (ratio.equals(mSreenAspectRatio)) {
                 return ratio;
             }
         }
+		for (AspectRatio ratio : mPreviewSizes.ratios()) {
+			r = ratio;
+			if (ratio.equals(Constants.DEFAULT_ASPECT_RATIO)) {
+				return ratio;
+			}
+		}
         return r;
     }
 

@@ -16,6 +16,7 @@
 
 package com.nimblemind.autoplus.cameraview;
 
+import android.graphics.Point;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -101,6 +102,13 @@ public class AspectRatio implements Comparable<AspectRatio>, Parcelable {
         int y = size.getHeight() / gcd;
         return mX == x && mY == y;
     }
+
+    public boolean matches(Point size) {
+		int gcd = gcd(size.x, size.y);
+		int x = size.x / gcd;
+		int y = size.y / gcd;
+		return mX == x && mY == y;
+	}
 
     @Override
     public boolean equals(Object o) {

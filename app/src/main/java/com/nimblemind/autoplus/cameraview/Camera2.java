@@ -190,14 +190,17 @@ class Camera2 extends CameraViewImpl {
 
     private AspectRatio mAspectRatio = Constants.DEFAULT_ASPECT_RATIO;
 
+	private final AspectRatio mSreenAspectRatio;
+
     private boolean mAutoFocus;
 
     private int mFlash;
 
     private int mDisplayOrientation;
 
-    Camera2(Callback callback, PreviewImpl preview, Context context) {
+    Camera2(Callback callback, PreviewImpl preview, Context context, AspectRatio screenRatio) {
         super(callback, preview);
+		mSreenAspectRatio = screenRatio;
         mCameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
         mPreview.setCallback(new PreviewImpl.Callback() {
             @Override
@@ -432,9 +435,14 @@ class Camera2 extends CameraViewImpl {
             }
         }
 
-        if (!mPreviewSizes.ratios().contains(mAspectRatio)) {
-            mAspectRatio = mPreviewSizes.ratios().iterator().next();
-        }
+		if (mPreviewSizes.ratios().contains(mSreenAspectRatio))
+		{
+			mAspectRatio = mSreenAspectRatio;
+		}
+		else if(!mPreviewSizes.ratios().contains(mAspectRatio))
+		{
+			mAspectRatio = mPreviewSizes.ratios().iterator().next();
+		}
     }
 
     protected void collectPictureSizes(SizeMap sizes, StreamConfigurationMap map) {

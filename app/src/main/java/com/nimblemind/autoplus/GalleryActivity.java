@@ -1,5 +1,6 @@
 package com.nimblemind.autoplus;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,7 +60,7 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 			@Override
 			public void onClick(View v)
 			{
-				tryLaunchCamera();
+				launchCamera();
 			}
 		});
 
@@ -70,8 +71,8 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 		}
 		else
 		{
-			requestPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE,
-					CODE_REQUEST_STORAGE, R.string.textRationaleMessageStorage);
+			requestPermission(CODE_REQUEST_STORAGE, R.string.textRationaleMessageStorage,
+					android.Manifest.permission.READ_EXTERNAL_STORAGE);
 		}
 
 		final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
@@ -137,11 +138,9 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 		finish();
 	}
 
-	private void requestPermission(String permission, final int requestCode, @StringRes int ratianaleText)
+	private void requestPermission(final int requestCode, @StringRes int ratianaleText, @NonNull final String... permissions)
 	{
-		final String[] permissions = new String[] { permission };
-
-		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission))
+		if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[0]))
 		{
 			ActivityCompat.requestPermissions(this, permissions, requestCode);
 		}
@@ -219,14 +218,16 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 		}
 		else
 		{
-			requestPermission(android.Manifest.permission.CAMERA,
-					CODE_REQUEST_CAMERA, R.string.textRationaleMessageCamera);
+			requestPermission(CODE_REQUEST_CAMERA, R.string.textRationaleMessageCamera,
+					android.Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 		}
 	}
 
 	private void launchCamera()
 	{
-		Intent intent = new Intent(this, CameraActivity.class);
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		startActivityForResult(intent, CODE_INTENT_CAMERA);
+//		Intent intent = new Intent(this, CameraActivity.class);
+//		startActivityForResult(intent, CODE_INTENT_CAMERA);
 	}
 }

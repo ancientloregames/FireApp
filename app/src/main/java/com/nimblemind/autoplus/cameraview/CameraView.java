@@ -19,6 +19,7 @@ package com.nimblemind.autoplus.cameraview;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -29,6 +30,8 @@ import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import com.nimblemind.autoplus.R;
 
@@ -77,6 +80,8 @@ public class CameraView extends FrameLayout {
 
     private boolean mAdjustViewBounds;
 
+	AspectRatio mSreenAspectRatio;
+
     private final DisplayOrientationDetector mDisplayOrientationDetector;
 
     public CameraView(Context context) {
@@ -95,15 +100,22 @@ public class CameraView extends FrameLayout {
             mDisplayOrientationDetector = null;
             return;
         }
+
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		mSreenAspectRatio = AspectRatio.of(Math.max(size.y, size.x), Math.min(size.y, size.x));
+
         // Internal setup
         final PreviewImpl preview = createPreviewImpl(context);
         mCallbacks = new CallbackBridge();
         if (Build.VERSION.SDK_INT < 21) {
-            mImpl = new Camera1(mCallbacks, preview);
+            mImpl = new Camera1(mCallbacks, preview, mSreenAspectRatio);
         } else if (Build.VERSION.SDK_INT < 23) {
-            mImpl = new Camera2(mCallbacks, preview, context);
+            mImpl = new Camera2(mCallbacks, preview, context, mSreenAspectRatio);
         } else {
-            mImpl = new Camera2Api23(mCallbacks, preview, context);
+            mImpl = new Camera2Api23(mCallbacks, preview, context, mSreenAspectRatio);
         }
         // Attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CameraView, defStyleAttr,
@@ -248,7 +260,7 @@ public class CameraView extends FrameLayout {
             //store the state ,and restore this state after fall back o Camera1
             Parcelable state=onSaveInstanceState();
             // Camera2 uses legacy hardware layer; fall back to Camera1
-            mImpl = new Camera1(mCallbacks, createPreviewImpl(getContext()));
+            mImpl = new Camera1(mCallbacks, createPreviewImpl(getContext()), mSreenAspectRatio);
             onRestoreInstanceState(state);
             mImpl.start();
         }
