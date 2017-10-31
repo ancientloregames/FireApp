@@ -17,7 +17,7 @@ class ClientTicketsAdapter extends ClientRequestsAdapter<Ticket, ClientTicketVie
 	}
 
 	@Override
-	protected void bindItem(final ClientTicketViewHolder holder, final Ticket ticket, final String key)
+	protected void bindItem(final ClientTicketViewHolder holder, final Ticket ticket)
 	{
 		final SwipeRevealLayout swipeLayout = holder.getView();
 
@@ -30,6 +30,7 @@ class ClientTicketsAdapter extends ClientRequestsAdapter<Ticket, ClientTicketVie
 			{
 				if (listener.get() != null)
 				{
+					String key = getRef(holder.getAdapterPosition()).getKey();
 					listener.get().onDeleteRequestClicked(key);
 					view.setLockDrag(true);
 				}
@@ -67,6 +68,7 @@ class ClientTicketsAdapter extends ClientRequestsAdapter<Ticket, ClientTicketVie
 			{
 				if (listener.get() != null)
 				{
+					String key = getRef(holder.getAdapterPosition()).getKey();
 					listener.get().onCancelDeleteRequestClicked(key);
 					swipeLayout.setLockDrag(false);
 					swipeLayout.close(true);
