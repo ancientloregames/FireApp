@@ -2,11 +2,10 @@
 			  android:orientation="vertical"
 			  android:layout_width="match_parent"
 			  android:layout_height="match_parent">
-	<AutoCompleteTextView
+	<EditText
 		android:id="@+id/textName"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:inputType="textCapWords"
 		android:imeOptions="actionNext"
 		android:completionThreshold="1"
 		android:maxLines="1"
@@ -40,11 +39,10 @@
 		android:maxLines="1"
 		android:hint="@string/hintAutoEngine"
 		/>
-	<AutoCompleteTextView
+	<EditText
 		android:id="@+id/textPart"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:inputType="textCapWords"
 		android:imeOptions="actionNext"
 		android:completionThreshold="1"
 		android:maxLines="1"

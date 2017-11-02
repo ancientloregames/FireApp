@@ -1,17 +1,15 @@
 package com.nimblemind.autoplus;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
@@ -24,11 +22,14 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 
 public class NewTicketActivity extends NewRequestActivity<Ticket>
 {
-	private AutoCompleteTextView nameView;
+	private final int INTENT_AUTO_NAME = 100;
+	private final int INTENT_SPARE_PART = 101;
+
+	private TextView nameView;
 	private TextView vinView;
 	private TextView yearView;
 	private TextView engineView;
-	private AutoCompleteTextView partView;
+	private TextView partView;
 	private TextView commentView;
 	private ImageView imageView;
 
@@ -47,9 +48,26 @@ public class NewTicketActivity extends NewRequestActivity<Ticket>
 		commentView = findViewById(R.id.textComment);
 		imageView = findViewById(R.id.image);
 
-		DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
-		populateAutoCompleteList(dbRef.child("AutoNames"), nameView);
-		populateAutoCompleteList(dbRef.child("parts"), partView);
+		nameView.setInputType(InputType.TYPE_NULL);
+		partView.setInputType(InputType.TYPE_NULL);
+
+		nameView.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				openList("AutoNames", INTENT_AUTO_NAME);
+			}
+		});
+
+		partView.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				openList("parts", INTENT_SPARE_PART);
+			}
+		});
 
 		findViewById(R.id.buttonAdd).setOnClickListener(new View.OnClickListener()
 		{
@@ -68,6 +86,32 @@ public class NewTicketActivity extends NewRequestActivity<Ticket>
 				openGallery();
 			}
 		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == RESULT_OK)
+		{
+			String selectedItem = data.getStringExtra("result");
+			if (requestCode == INTENT_AUTO_NAME)
+			{
+				nameView.setText(selectedItem);
+			}
+			else if (requestCode == INTENT_SPARE_PART)
+			{
+				partView.setText(selectedItem);
+			}
+		}
+	}
+
+	private void openList(String dbNodeName, int requestCode)
+	{
+		Intent intent = new Intent(this, ListActivity.class);
+		intent.putExtra("dbNodeName", dbNodeName);
+		startActivityForResult(intent, requestCode);
 	}
 
 	@Override

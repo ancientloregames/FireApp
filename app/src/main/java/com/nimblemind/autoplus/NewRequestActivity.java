@@ -12,15 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.List;
 
 
 public abstract class NewRequestActivity<MODEL extends Request> extends AppCompatActivity
@@ -139,25 +131,4 @@ public abstract class NewRequestActivity<MODEL extends Request> extends AppCompa
 	protected abstract void populateWithTemplate(@NonNull MODEL template);
 
 	protected abstract void tryCreateRequest();
-
-	protected void populateAutoCompleteList(@NonNull DatabaseReference dbRef, @NonNull final AutoCompleteTextView view)
-	{
-		dbRef.addListenerForSingleValueEvent(new ValueEventListener()
-		{
-			@Override
-			public void onDataChange(DataSnapshot dataSnapshot)
-			{
-				List<String> items = FirebaseUtils.snapshotToList(dataSnapshot, String.class);
-				ArrayAdapter<String> arrayAdapter =
-						new ArrayAdapter<>(NewRequestActivity.this, android.R.layout.select_dialog_item, items);
-				view.setAdapter(arrayAdapter);
-			}
-
-			@Override
-			public void onCancelled(DatabaseError databaseError)
-			{
-				databaseError.toException().printStackTrace();
-			}
-		});
-	}
 }

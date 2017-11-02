@@ -45,6 +45,7 @@
 		<activity android:name=".CameraActivity"
 				  android:label="@string/activityCamera"
 			/>
+		<activity android:name=".ListActivity"/>
 
 		<service
 			android:name=".ImageUploadService"
