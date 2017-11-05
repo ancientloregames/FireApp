@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<dimen name="globalActivityPadding">16dp</dimen>
+	
+	<dimen name="authLogoPagging">50dp</dimen>
+
+	<dimen name="authCommonPagging">25dp</dimen>
+
+	<dimen name="authLowerButtonPagging">30dp</dimen>
 
 	<dimen name="clientlistHeaderPagging">8dp</dimen>
 

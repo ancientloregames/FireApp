@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
+			  xmlns:tools="http://schemas.android.com/tools"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:orientation="vertical"
+			  android:fitsSystemWindows="true"
+			  android:background="#434753"
+			  tools:context="com.nimblemind.autoplus.SignupActivity"
+	>
+
+	<include layout="@layout/topbar"
+			 android:id="@+id/topbar"/>
+
+	<ScrollView android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:isScrollContainer="false"
+		>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:orientation="vertical"
+			android:padding="@dimen/globalActivityPadding"
+			>
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/containerEmail"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingBottom="@dimen/authCommonPagging"
+				android:textColorHint="@color/authHint"
+				>
+				<android.support.design.widget.TextInputEditText
+					android:id="@+id/textEmail"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:inputType="textEmailAddress"
+					android:imeOptions="actionNext"
+					android:maxLines="1"
+					android:textColor="@android:color/white"
+					android:hint="@string/hintEmail"
+					/>
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/containerName"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingBottom="@dimen/authCommonPagging"
+				android:textColorHint="@color/authHint"
+				>
+				<android.support.design.widget.TextInputEditText
+					android:id="@+id/textName"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:inputType="textPersonName|textCapWords"
+					android:imeOptions="actionNext"
+					android:maxLines="1"
+					android:textColor="@android:color/white"
+					android:hint="@string/hintName"
+					/>
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/containerPassword"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingBottom="@dimen/authCommonPagging"
+				android:textColorHint="@color/authHint"
+				>
+				<android.support.design.widget.TextInputEditText
+					android:id="@+id/textPassword"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:inputType="textPassword"
+					android:imeOptions="actionNext"
+					android:maxLines="1"
+					android:textColor="@android:color/white"
+					android:hint="@string/hintPassword"
+					/>
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:id="@+id/containerPassword2"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingBottom="@dimen/authCommonPagging"
+				android:textColorHint="@color/authHint"
+				>
+				<android.support.design.widget.TextInputEditText
+					android:id="@+id/textPassword2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:inputType="textPassword"
+					android:imeOptions="actionDone"
+					android:maxLines="1"
+					android:textColor="@android:color/white"
+					android:hint="@string/hintPassCheck"
+					/>
+			</android.support.design.widget.TextInputLayout>
+
+			<LinearLayout
+				android:id="@+id/buttonAgreement"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:gravity="center"
+				android:layout_margin="5dp"
+				>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/textUserAgreementInfo"
+					android:textColor="@color/authHint"
+					/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/textUserAgreement"
+					android:textColor="@android:color/white"
+					/>
+			</LinearLayout>
+
+			<android.support.v7.widget.AppCompatButton
+				android:id="@+id/buttonSignup"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:text="@string/buttonSignup"
+				android:textStyle="bold"
+				android:textColor="@android:color/white"
+				app:backgroundTint="@color/colorPrimary"
+				/>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

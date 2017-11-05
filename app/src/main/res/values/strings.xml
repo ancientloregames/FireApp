@@ -6,8 +6,12 @@
 	<string name="textClose">Close</string>
 
 	<!-- Auth Activity -->
-	<string name="fragmentSignupName">Sign Up</string>
-	<string name="fragmentLoginName">Log In</string>
+	<string name="activitySignup">Sign Up</string>
+
+	<string name="buttonPassRecovery">Forgotten your password?</string>
+
+	<string name="textUserAgreementInfo">Signing up, I accept</string>
+	<string name="textUserAgreement">user agreement</string>
 
 	<string name="hintEmail">Email</string>
 	<string name="hintName">Name</string>

@@ -73,7 +73,7 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 		}
 		else
 		{
-			super.onBackPressed();
+			moveTaskToBack(true);
 		}
 	}
 
@@ -101,7 +101,7 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 				break;
 			case R.id.navLogOut:
 				drawer.closeDrawer(GravityCompat.START, false);
-				gotoAuthActivity(true);
+				gotoAuthActivity();
 				break;
 		}
 
@@ -121,11 +121,10 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 		else return super.onOptionsItemSelected(item);
 	}
 
-	private void gotoAuthActivity(final boolean noAutologin)
+	private void gotoAuthActivity()
 	{
 		FirebaseAuth.getInstance().signOut();
-		Intent intent = new Intent(MainActivity.this, AuthActivity.class);
-		intent.putExtra(AuthActivity.EXTRA_NO_AUTOLOGIN, noAutologin);
+		Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 		startActivity(intent);
 		finish();
 	}

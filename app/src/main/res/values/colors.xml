@@ -2,11 +2,13 @@
 <resources>
 	<color name="colorPrimary">#009486</color>
 	<color name="colorPrimaryDark">#00786d</color>
-	<color name="colorAccent">@android:color/holo_orange_dark</color>
+	<color name="colorAccent">#009486</color>
 
 	<!-- Auth Activity -->
 	<color name="authMain">#f6f6f6</color>
 	<color name="authTextForm">@android:color/white</color>
+
+	<color name="authHint">#7f7c80</color>
 
 	<!-- Main Activity -->
 	<color name="recyclerBackground">@android:color/white</color>
