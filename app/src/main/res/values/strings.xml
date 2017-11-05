@@ -13,6 +13,10 @@
 	<string name="textUserAgreementInfo">Signing up, I accept</string>
 	<string name="textUserAgreement">user agreement</string>
 
+	<string name="dialogAgreementTitle">User agreement</string>
+	<string name="dialogAgreementMessage">DUMMY</string>
+	<string name="dialogAgreementButtonOk">Close</string>
+
 	<string name="hintEmail">Email</string>
 	<string name="hintName">Name</string>
 	<string name="hintPassword">Password</string>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -63,6 +64,15 @@ public class SignupActivity extends AuthActivity
 						}
 					}
 				});
+
+		findViewById(R.id.buttonAgreement).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				showAgreement();
+			}
+		});
 	}
 
 	@Override
@@ -169,5 +179,15 @@ public class SignupActivity extends AuthActivity
 		}
 
 		return result;
+	}
+
+	private void showAgreement()
+	{
+		new AlertDialog.Builder(SignupActivity.this)
+				.setTitle(getString(R.string.dialogAgreementTitle))
+				.setMessage(getString(R.string.dialogAgreementMessage))
+				.setPositiveButton(getString(R.string.dialogAgreementButtonOk), null)
+				.create()
+				.show();
 	}
 }
