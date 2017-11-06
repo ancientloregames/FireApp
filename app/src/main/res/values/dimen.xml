@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 	<dimen name="globalActivityPadding">16dp</dimen>
 	
 	<dimen name="authLogoPagging">50dp</dimen>
@@ -21,4 +21,6 @@
 	<dimen name="galleryItemIndent">1dp</dimen>
 
 	<dimen name="galleryItemSize">100dp</dimen>
+
+	<dimen name="navigatorFooterIndent">15dp</dimen>
 </resources>

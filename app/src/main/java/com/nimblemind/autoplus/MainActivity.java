@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -48,6 +50,17 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 
 		uid = getIntent().getStringExtra("uid");
 		User user = (User) getIntent().getSerializableExtra("user");
+
+		((TextView)navigationView.findViewById(R.id.textEmail)).setText(user.email);
+		navigationView.findViewById(R.id.buttonLogOut).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				drawer.closeDrawer(GravityCompat.START, false);
+				gotoAuthActivity();
+			}
+		});
 
 		Log.d(TAG, user.toString() + " uid: " + uid);
 
@@ -98,10 +111,6 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 				break;
 			case R.id.navOrderFragment:
 				// TODO
-				break;
-			case R.id.navLogOut:
-				drawer.closeDrawer(GravityCompat.START, false);
-				gotoAuthActivity();
 				break;
 		}
 
