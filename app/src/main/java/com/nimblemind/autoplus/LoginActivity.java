@@ -28,34 +28,19 @@ public class LoginActivity extends AuthActivity
 	private TextInputLayout emailContainer;
 	private TextInputLayout passwordContainer;
 
-	private static boolean firstStart = true;
+	private View progressBar;
+	private View mainContent;
 
-	private boolean initialized;
+	private static boolean firstStart = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
-		if (firstStart && checkIntenetConnection())
-		{
-			firstStart = false;
-			if (!tryAutoLogin())
-			{
-				initialize();
-			}
-		}
-		else initialize();
-	}
-
-	private void initialize()
-	{
-		if (initialized)
-			return;
-
-		initialized = true;
-
 		setContentView(R.layout.activity_login);
+
+		progressBar = findViewById(R.id.progressBar);
+		mainContent = findViewById(R.id.mainContent);
 
 		emailContainer = findViewById(R.id.containerEmail);
 		passwordContainer = findViewById(R.id.containerPassword);
@@ -87,6 +72,16 @@ public class LoginActivity extends AuthActivity
 				signUp();
 			}
 		});
+
+		if (firstStart && checkIntenetConnection())
+		{
+			firstStart = false;
+			if (!tryAutoLogin())
+			{
+				showInterface(true);
+			}
+		}
+		else showInterface(true);
 	}
 
 	private boolean tryAutoLogin()
@@ -120,6 +115,7 @@ public class LoginActivity extends AuthActivity
 			return;
 
 		Log.d(TAG, "logIn: " + email);
+		showInterface(false);
 		auth.signInWithEmailAndPassword(email, password)
 				.addOnCompleteListener(new OnCompleteListener<AuthResult>()
 				{
@@ -135,7 +131,7 @@ public class LoginActivity extends AuthActivity
 						{
 							Log.e(TAG, "logIn: failure");
 							handleAuthError(task.getException());
-							initialize();
+							showInterface(true);
 						}
 					}
 				});
@@ -166,7 +162,7 @@ public class LoginActivity extends AuthActivity
 					Log.e(TAG, "findUserAndEnter: failure");
 					Toast.makeText(LoginActivity.this, getString(R.string.errorAuthInvalidUser),
 							Toast.LENGTH_SHORT).show();
-					initialize();
+					showInterface(true);
 				}
 			}
 
@@ -175,7 +171,7 @@ public class LoginActivity extends AuthActivity
 			{
 				Log.e(TAG, "getUserData: failure");
 				handleAuthError(databaseError.toException());
-				initialize();
+				showInterface(true);
 			}
 		});
 	}
@@ -217,5 +213,11 @@ public class LoginActivity extends AuthActivity
 		Intent intent = new Intent(this, SignupActivity.class);
 		startActivity(intent);
 		finish();
+	}
+
+	private void showInterface(boolean show)
+	{
+		progressBar.setVisibility(show ? View.GONE : View.VISIBLE);
+		mainContent.setVisibility(show ? View.VISIBLE : View.GONE);
 	}
 }

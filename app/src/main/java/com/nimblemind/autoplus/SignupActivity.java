@@ -30,7 +30,8 @@ public class SignupActivity extends AuthActivity
 	private TextInputLayout passwordContainer;
 	private TextInputLayout passConfirmContainer;
 
-	private View buttonSignup;
+	private View progressBar;
+	private View mainContent;
 
 	private String tmpName;
 	private String tmpEmail;
@@ -45,24 +46,24 @@ public class SignupActivity extends AuthActivity
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+		progressBar = findViewById(R.id.progressBar);
+		mainContent = findViewById(R.id.mainContent);
+
 		emailContainer = findViewById(R.id.containerEmail);
 		nameContainer = findViewById(R.id.containerName);
 		passwordContainer = findViewById(R.id.containerPassword);
 		passConfirmContainer = findViewById(R.id.containerPassword2);
-
-		buttonSignup = findViewById(R.id.buttonSignup);
 
 		final TextView emailView = findViewById(R.id.textEmail);
 		final TextView nameView = findViewById(R.id.textName);
 		final TextView passwordView = findViewById(R.id.textPassword);
 		final TextView passConfirmView = findViewById(R.id.textPassword2);
 
-		buttonSignup.setOnClickListener(new View.OnClickListener()
+		findViewById(R.id.buttonSignup).setOnClickListener(new View.OnClickListener()
 				{
 					@Override
 					public void onClick(View view)
 					{
-						buttonSignup.setEnabled(false);
 						String email = emailView.getText().toString();
 						String name = nameView.getText().toString();
 						String password = passwordView.getText().toString();
@@ -72,7 +73,6 @@ public class SignupActivity extends AuthActivity
 						{
 							signUp(email, name, password);
 						}
-						else buttonSignup.setEnabled(true);
 					}
 				});
 
@@ -101,7 +101,7 @@ public class SignupActivity extends AuthActivity
 				addUserAndEnter(user.getUid(), new User(tmpName, tmpEmail));
 			}
 		}
-		else buttonSignup.setEnabled(true);
+		else showInterface(true);
 	}
 
 	@Override
@@ -124,6 +124,7 @@ public class SignupActivity extends AuthActivity
 		if (!checkIntenetConnection())
 			return;
 
+		showInterface(false);
 		Log.d(TAG, "signUp: " + name + " : " + email);
 		auth.createUserWithEmailAndPassword(email, password)
 				.addOnCompleteListener(new OnCompleteListener<AuthResult>()
@@ -143,6 +144,7 @@ public class SignupActivity extends AuthActivity
 						{
 							Log.e(TAG, "onSignUp: failure");
 							handleAuthError(task.getException());
+							showInterface(true);
 						}
 					}
 				});
@@ -225,5 +227,11 @@ public class SignupActivity extends AuthActivity
 				.setPositiveButton(getString(R.string.dialogAgreementButtonOk), null)
 				.create()
 				.show();
+	}
+
+	private void showInterface(boolean show)
+	{
+		progressBar.setVisibility(show ? View.GONE : View.VISIBLE);
+		mainContent.setVisibility(show ? View.VISIBLE : View.GONE);
 	}
 }
