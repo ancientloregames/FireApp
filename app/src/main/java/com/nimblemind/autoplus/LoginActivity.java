@@ -135,6 +135,7 @@ public class LoginActivity extends AuthActivity
 						{
 							Log.e(TAG, "logIn: failure");
 							handleAuthError(task.getException());
+							initialize();
 						}
 					}
 				});
@@ -165,6 +166,7 @@ public class LoginActivity extends AuthActivity
 					Log.e(TAG, "findUserAndEnter: failure");
 					Toast.makeText(LoginActivity.this, getString(R.string.errorAuthInvalidUser),
 							Toast.LENGTH_SHORT).show();
+					initialize();
 				}
 			}
 
@@ -173,6 +175,7 @@ public class LoginActivity extends AuthActivity
 			{
 				Log.e(TAG, "getUserData: failure");
 				handleAuthError(databaseError.toException());
+				initialize();
 			}
 		});
 	}

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				xmlns:app="http://schemas.android.com/apk/res-auto"
+				xmlns:tools="http://schemas.android.com/tools"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:fitsSystemWindows="true"
+				android:background="@color/colorPrimary"
+				tools:context="com.nimblemind.autoplus.SignupActivity"
+	>
+	<ImageView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@drawable/splash"
+		android:contentDescription="@null"
+		/>
+
+	<include layout="@layout/topbar"
+			 android:id="@+id/topbar"/>
+
+	<LinearLayout
+		android:id="@+id/mainContent"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@id/topbar"
+		android:orientation="vertical"
+		android:gravity="center"
+		android:visibility="gone"
+		tools:visibility="visible"
+		>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/textVerificationMessage"
+			android:textColor="@android:color/white"
+			android:textSize="18sp"
+			android:gravity="center"
+			/>
+
+		<TextView
+			android:id="@+id/textEmail"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/authHint"
+			android:textSize="20sp"
+			/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/textVerificationInstruction"
+			android:textColor="@color/authHint"
+			android:gravity="center"
+			/>
+		<TextView
+			android:id="@+id/buttonRepeat"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/buttonVerificationRepeat"
+			android:textColor="@android:color/white"
+			android:padding="@dimen/authCommonPagging"
+			/>
+
+		<android.support.v7.widget.AppCompatButton
+			android:id="@+id/buttonFinish"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/buttonVerificationFinish"
+			android:textStyle="bold"
+			android:textColor="@android:color/white"
+			app:backgroundTint="@color/colorPrimary"
+			/>
+	</LinearLayout>
+
+	<com.nimblemind.autoplus.TintedProgressBar
+		android:id="@+id/progressBar"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_centerInParent="true"
+		android:indeterminate="true"
+		app:color="@android:color/white"
+		android:background="@android:color/transparent"
+		/>
+</RelativeLayout>

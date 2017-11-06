@@ -23,10 +23,18 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class SignupActivity extends AuthActivity
 {
+	private final int INTENT_VERIFY = 100;
+
 	private TextInputLayout emailContainer;
 	private TextInputLayout nameContainer;
 	private TextInputLayout passwordContainer;
 	private TextInputLayout passConfirmContainer;
+
+	private View buttonSignup;
+
+	private String tmpName;
+	private String tmpEmail;
+	private String tmpPassword;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -42,17 +50,19 @@ public class SignupActivity extends AuthActivity
 		passwordContainer = findViewById(R.id.containerPassword);
 		passConfirmContainer = findViewById(R.id.containerPassword2);
 
+		buttonSignup = findViewById(R.id.buttonSignup);
+
 		final TextView emailView = findViewById(R.id.textEmail);
 		final TextView nameView = findViewById(R.id.textName);
 		final TextView passwordView = findViewById(R.id.textPassword);
 		final TextView passConfirmView = findViewById(R.id.textPassword2);
 
-		findViewById(R.id.buttonSignup)
-				.setOnClickListener(new View.OnClickListener()
+		buttonSignup.setOnClickListener(new View.OnClickListener()
 				{
 					@Override
 					public void onClick(View view)
 					{
+						buttonSignup.setEnabled(false);
 						String email = emailView.getText().toString();
 						String name = nameView.getText().toString();
 						String password = passwordView.getText().toString();
@@ -62,6 +72,7 @@ public class SignupActivity extends AuthActivity
 						{
 							signUp(email, name, password);
 						}
+						else buttonSignup.setEnabled(true);
 					}
 				});
 
@@ -73,6 +84,24 @@ public class SignupActivity extends AuthActivity
 				showAgreement();
 			}
 		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == INTENT_VERIFY && resultCode == RESULT_OK)
+		{
+			final FirebaseUser user = auth.getCurrentUser();
+			if (user != null)
+			{
+				setUserName(tmpName);
+				saveCredentials(tmpEmail, tmpPassword);
+				addUserAndEnter(user.getUid(), new User(tmpName, tmpEmail));
+			}
+		}
+		else buttonSignup.setEnabled(true);
 	}
 
 	@Override
@@ -105,9 +134,10 @@ public class SignupActivity extends AuthActivity
 						if (task.isSuccessful())
 						{
 							Log.d(TAG, "onSignUp: success");
-							setUserName(name);
-							saveCredentials(email, password);
-							addUserAndEnter(task.getResult().getUser().getUid(), new User(name, email));
+							tmpName = name;
+							tmpEmail = email;
+							tmpPassword = password;
+							verifyUserData();
 						}
 						else
 						{
@@ -116,6 +146,12 @@ public class SignupActivity extends AuthActivity
 						}
 					}
 				});
+	}
+
+	private void verifyUserData()
+	{
+		Intent intent = new Intent(this, VerficationActivity.class);
+		startActivityForResult(intent, INTENT_VERIFY);
 	}
 
 	private void setUserName(String name)

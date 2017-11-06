@@ -41,6 +41,12 @@ public abstract class AuthActivity extends AppCompatActivity
 		dbUsers = FirebaseDatabase.getInstance().getReference("users");
 	}
 
+	@Override
+	public void onBackPressed()
+	{
+		moveTaskToBack(false);
+	}
+
 	protected void enter(@NonNull String uid, @NonNull User user)
 	{
 		Class mainActivityClass = null;
