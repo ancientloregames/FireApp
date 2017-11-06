@@ -4,6 +4,8 @@
 	<color name="colorPrimaryDark">#00786d</color>
 	<color name="colorAccent">#00c6b3</color>
 
+	<color name="floatingButton">#ffa000</color>
+
 	<!-- Auth Activity -->
 	<color name="authMain">#f6f6f6</color>
 	<color name="authTextForm">@android:color/white</color>

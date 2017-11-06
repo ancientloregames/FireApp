@@ -24,6 +24,7 @@
 		android:layout_height="@dimen/floatingButtonSize"
 		android:layout_gravity="bottom|end"
 		android:layout_margin="@dimen/globalActivityPadding"
-		app:srcCompat="@drawable/plus"
+		app:backgroundTint="@color/floatingButton"
+		app:srcCompat="@drawable/ic_plus_white_24dp"
 		/>
 </FrameLayout>
