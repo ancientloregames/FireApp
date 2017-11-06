@@ -11,10 +11,14 @@ import io.fabric.sdk.android.Fabric;
 
 public class App extends Application
 {
+	public static int statusBarHeight;
+
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
+
+		statusBarHeight = Utils.getStatusBarHeight(getResources());
 
 		if (BuildConfig.WITH_FABRIC)
 		{

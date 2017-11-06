@@ -23,7 +23,6 @@
 		<activity android:name=".LoginActivity"
 				  android:label="@string/app_name"
 				  android:theme="@style/SplashTheme"
-				  android:screenOrientation="portrait"
 			>
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
@@ -33,14 +32,20 @@
 
 		<activity android:name=".SignupActivity"
 				  android:label="@string/activitySignup"
+				  android:theme="@style/SplashTheme"
 				  android:parentActivityName=".LoginActivity"
-				  android:screenOrientation="portrait"
 			/>
 
 		<activity android:name=".VerficationActivity"
 				  android:label="@string/activityVerification"
+				  android:theme="@style/SplashTheme"
 				  android:parentActivityName=".SignupActivity"
-				  android:screenOrientation="portrait"
+			/>
+
+		<activity android:name=".RecoveryActivity"
+				  android:label="@string/activityRecovery"
+				  android:theme="@style/SplashTheme"
+				  android:parentActivityName=".LoginActivity"
 			/>
 
 		<activity android:name=".ClientMainActivity"

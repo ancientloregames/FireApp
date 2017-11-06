@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,9 +29,6 @@ public class SignupActivity extends AuthActivity
 	private TextInputLayout passwordContainer;
 	private TextInputLayout passConfirmContainer;
 
-	private View progressBar;
-	private View mainContent;
-
 	private String tmpName;
 	private String tmpEmail;
 	private String tmpPassword;
@@ -41,13 +37,6 @@ public class SignupActivity extends AuthActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_signup);
-		Toolbar toolbar = findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		progressBar = findViewById(R.id.progressBar);
-		mainContent = findViewById(R.id.mainContent);
 
 		emailContainer = findViewById(R.id.containerEmail);
 		nameContainer = findViewById(R.id.containerName);
@@ -121,7 +110,7 @@ public class SignupActivity extends AuthActivity
 
 	private void signUp(final String email, final String name, final String password)
 	{
-		if (!checkIntenetConnection())
+		if (!Utils.checkInternetConnection(this, true))
 			return;
 
 		showInterface(false);
@@ -229,9 +218,15 @@ public class SignupActivity extends AuthActivity
 				.show();
 	}
 
-	private void showInterface(boolean show)
+	@Override
+	protected int getLayoutRes()
 	{
-		progressBar.setVisibility(show ? View.GONE : View.VISIBLE);
-		mainContent.setVisibility(show ? View.VISIBLE : View.GONE);
+		return R.layout.activity_signup;
+	}
+
+	@Override
+	protected boolean withToolbar()
+	{
+		return true;
 	}
 }

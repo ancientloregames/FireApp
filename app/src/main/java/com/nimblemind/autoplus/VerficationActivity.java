@@ -3,8 +3,6 @@ package com.nimblemind.autoplus;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,24 +18,14 @@ import com.google.firebase.auth.FirebaseUser;
  * com.nimblemind.autoplus. Created by nimblemind on 11/5/2017.
  */
 
-public class VerficationActivity extends AppCompatActivity
+public class VerficationActivity extends AuthBaseActivity
 {
 	private FirebaseUser user;
-
-	private View progressBar;
-	private View mainContent;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_verification);
-		Toolbar toolbar = findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		progressBar = findViewById(R.id.progressBar);
-		mainContent = findViewById(R.id.mainContent);
 
 		user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -90,12 +78,6 @@ public class VerficationActivity extends AppCompatActivity
 	}
 
 	@Override
-	public void onBackPressed()
-	{
-		moveTaskToBack(true);
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		switch (item.getItemId())
@@ -140,5 +122,17 @@ public class VerficationActivity extends AppCompatActivity
 						}
 					}
 				});
+	}
+
+	@Override
+	protected int getLayoutRes()
+	{
+		return R.layout.activity_verification;
+	}
+
+	@Override
+	protected boolean withToolbar()
+	{
+		return true;
 	}
 }

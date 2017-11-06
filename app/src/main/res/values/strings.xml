@@ -8,6 +8,7 @@
 	<!-- Auth Activities -->
 	<string name="activitySignup">Sign Up</string>
 	<string name="activityVerification">Verification</string>
+	<string name="activityRecovery">Password recovery</string>
 
 	<string name="buttonPassRecovery">Forgotten your password?</string>
 
@@ -33,6 +34,8 @@
 	<string name="buttonLogOut">Log Out</string>
 	<string name="buttonGotoSignup">I don\'t have an account</string>
 	<string name="buttonGotoLogin">I have an account</string>
+	
+	<string name="buttonSendResetEmail">Send reset email</string>
 
 	<string name="errorNoInternetConnection">No internet connection</string>
 	<string name="errorFieldRequired">This field is required</string>

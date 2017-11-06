@@ -3,6 +3,7 @@ package com.nimblemind.autoplus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
@@ -28,19 +29,12 @@ public class LoginActivity extends AuthActivity
 	private TextInputLayout emailContainer;
 	private TextInputLayout passwordContainer;
 
-	private View progressBar;
-	private View mainContent;
-
 	private static boolean firstStart = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
-
-		progressBar = findViewById(R.id.progressBar);
-		mainContent = findViewById(R.id.mainContent);
 
 		emailContainer = findViewById(R.id.containerEmail);
 		passwordContainer = findViewById(R.id.containerPassword);
@@ -48,8 +42,7 @@ public class LoginActivity extends AuthActivity
 		final TextView emailView = findViewById(R.id.textEmail);
 		final TextView passwordView = findViewById(R.id.textPassword);
 
-		findViewById(R.id.buttonLogin)
-				.setOnClickListener(new View.OnClickListener()
+		findViewById(R.id.buttonLogin).setOnClickListener(new View.OnClickListener()
 				{
 					@Override
 					public void onClick(View view)
@@ -73,7 +66,19 @@ public class LoginActivity extends AuthActivity
 			}
 		});
 
-		if (firstStart && checkIntenetConnection())
+		findViewById(R.id.buttonPassRecovery).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				String email = emailView.getText().toString();
+				recoverPassword(!email.isEmpty() && email.matches(".+@.+\\..+")
+						? email
+						: null);
+			}
+		});
+
+		if (firstStart && Utils.checkInternetConnection(this, true))
 		{
 			firstStart = false;
 			if (!tryAutoLogin())
@@ -111,7 +116,7 @@ public class LoginActivity extends AuthActivity
 
 	private void logIn(@NonNull String email, @NonNull String password)
 	{
-		if (!checkIntenetConnection())
+		if (!Utils.checkInternetConnection(this, true))
 			return;
 
 		Log.d(TAG, "logIn: " + email);
@@ -215,9 +220,22 @@ public class LoginActivity extends AuthActivity
 		finish();
 	}
 
-	private void showInterface(boolean show)
+	private void recoverPassword(@Nullable String email)
 	{
-		progressBar.setVisibility(show ? View.GONE : View.VISIBLE);
-		mainContent.setVisibility(show ? View.VISIBLE : View.GONE);
+		Intent intent = new Intent(this, RecoveryActivity.class);
+		intent.putExtra("email", email);
+		startActivity(intent);
+	}
+
+	@Override
+	protected int getLayoutRes()
+	{
+		return R.layout.activity_login;
+	}
+
+	@Override
+	protected boolean withToolbar()
+	{
+		return false;
 	}
 }

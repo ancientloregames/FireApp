@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +23,7 @@ import io.fabric.sdk.android.Fabric;
  * com.nimblemind.autoplus. Created by nimblemind on 9/27/2017.
  */
 
-public abstract class AuthActivity extends AppCompatActivity
+public abstract class AuthActivity extends AuthBaseActivity
 {
 	protected final String TAG = "AuthActivity";
 
@@ -39,12 +38,6 @@ public abstract class AuthActivity extends AppCompatActivity
 		auth = FirebaseAuth.getInstance();
 
 		dbUsers = FirebaseDatabase.getInstance().getReference("users");
-	}
-
-	@Override
-	public void onBackPressed()
-	{
-		moveTaskToBack(false);
 	}
 
 	protected void enter(@NonNull String uid, @NonNull User user)
@@ -118,17 +111,5 @@ public abstract class AuthActivity extends AppCompatActivity
 			message = getString(R.string.errorAuthGeneral);
 		}
 		Toast.makeText(AuthActivity.this, message, Toast.LENGTH_SHORT).show();
-	}
-
-	protected boolean checkIntenetConnection()
-	{
-		boolean result = true;
-		if (!Utils.isNetworkAvailable(this))
-		{
-			Toast.makeText(this, getString(R.string.errorNoInternetConnection), Toast.LENGTH_SHORT).show();
-			result = false;
-		}
-
-		return result;
 	}
 }

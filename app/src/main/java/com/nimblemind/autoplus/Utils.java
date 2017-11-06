@@ -1,10 +1,14 @@
 package com.nimblemind.autoplus;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.WorkerThread;
 import android.text.format.DateFormat;
+import android.util.DisplayMetrics;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -25,6 +29,37 @@ public class Utils
 		cal.setTimeInMillis(time);
 		String date = DateFormat.format("dd-MM-yyyy", cal).toString();
 		return date;
+	}
+
+	public static int getStatusBarHeight(Resources resources)
+	{
+		int result;
+		int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+		if(resourceId != 0)
+		{
+			result = resources.getDimensionPixelSize(resourceId);
+		}
+		else
+		{
+			DisplayMetrics metrics = resources.getDisplayMetrics();
+			result = (int)(24 * metrics.density); // 24dp - standard status bar height
+		}
+		return result;
+	}
+
+	public static boolean checkInternetConnection(Activity activity, boolean withFailToast)
+	{
+		boolean result = true;
+		if (!Utils.isNetworkAvailable(activity))
+		{
+			if (withFailToast)
+			{
+				Toast.makeText(activity, activity.getString(R.string.errorNoInternetConnection), Toast.LENGTH_SHORT).show();
+			}
+			result = false;
+		}
+
+		return result;
 	}
 
 	// Check if network is available
