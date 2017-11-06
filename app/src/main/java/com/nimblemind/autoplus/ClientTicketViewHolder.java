@@ -16,8 +16,8 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 	TextView sparePartView;
 	TextView autoNameView;
 	TextView notificationView;
-	Button newRequestButton;
-	Button cancelDeletionButton;
+	View newRequestButton;
+	View cancelDeletionButton;
 	View itemLayout;
 
 	public ClientTicketViewHolder(View itemView)

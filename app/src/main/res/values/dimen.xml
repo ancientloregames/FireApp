@@ -16,7 +16,7 @@
 	
 	<dimen name="recyclerItemPadding">5dp</dimen>
 
-	<dimen name="recyclerItemInnerPadding">5dp</dimen>
+	<dimen name="recyclerItemInnerPadding">10dp</dimen>
 
 	<dimen name="galleryItemIndent">1dp</dimen>
 

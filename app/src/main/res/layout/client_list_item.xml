@@ -15,6 +15,13 @@
 		android:layout_gravity="center"
 		android:background="@color/colorPrimary"
 		>
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="100dp"
+			android:layout_gravity="right|center_vertical"
+			android:src="@drawable/trashcan"
+			android:contentDescription="@string/hintImage"
+			/>
 		<LinearLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -29,11 +36,18 @@
 				android:textColor="@android:color/white"
 				android:text="@string/textRequestDeleted"
 				/>
-			<Button
+			<TextView
 				android:id="@+id/buttonCancelDeletion"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:paddingLeft="10dp"
+				android:paddingRight="10dp"
+				android:paddingTop="5dp"
+				android:paddingBottom="5dp"
 				android:text="@string/buttonCancelDeletion"
+				android:textColor="@android:color/white"
+				android:background="@drawable/button_border_solid"
 				/>
 		</LinearLayout>
 	</FrameLayout>
@@ -51,43 +65,49 @@
 			android:orientation="horizontal"
 			>
 			<LinearLayout
-				android:layout_width="wrap_content"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
+				android:layout_weight="1"
 				android:orientation="vertical"
 				>
-				<TextView
-					android:id="@+id/infoView"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					tools:text="@string/textRequestInfo"
-					/>
 				<TextView
 					android:id="@+id/sparePartView"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					tools:text="@string/hintAutoPart"
+					android:textStyle="bold"
+					android:paddingBottom="5dp"
 					/>
 				<TextView
 					android:id="@+id/autoNameView"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					tools:text="@string/hintAutoName"
+					android:drawableLeft="@drawable/ic_car_black_24dp"
+					/>
+				<TextView
+					android:id="@+id/notificationView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:drawableLeft="@drawable/ic_message_reply_text_black_24dp"
+					tools:text="@string/textNoNewMessages"
 					/>
 			</LinearLayout>
 			<TextView
-				android:id="@+id/notificationView"
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:layout_weight="1"
+				android:id="@+id/infoView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
 				android:gravity="right"
-				tools:text="@string/textNoNewMessages"
+				tools:text="@string/textRequestInfo"
 				/>
 		</LinearLayout>
-		<Button
+		<TextView
 			android:id="@+id/newRequestButton"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/buttonCreateRequestByTemplate"
+			android:textColor="@color/authHint"
+			android:paddingTop="5dp"
 			/>
 	</LinearLayout>
 </com.nimblemind.autoplus.swipereveallayout.SwipeRevealLayout>
