@@ -1,15 +1,20 @@
 package com.nimblemind.autoplus;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,6 +22,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.securepreferences.SecurePreferences;
 
 
@@ -89,6 +96,74 @@ public class LoginActivity extends AuthActivity
 		else showInterface(true);
 	}
 
+	@Override
+	protected void onNewIntent(Intent intent)
+	{
+		super.onNewIntent(intent);
+		firstStart = false;
+		handleDeepLink();
+	}
+
+	private void handleDeepLink()
+	{
+		FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent())
+				.addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>()
+				{
+					@Override
+					public void onSuccess(PendingDynamicLinkData data)
+					{
+						Uri link = data.getLink();
+						FirebaseUser user = auth.getCurrentUser();
+						if (link != null && user != null)
+						{
+							String strLink = link.toString();
+							if (strLink.matches(".+verify\\?uid.+"))
+							{
+								setUserVerified(user.getUid());
+							}
+						}
+						/* TODO find out, how to manually verify user */
+					}
+				})
+				.addOnFailureListener(this, new OnFailureListener()
+				{
+					@Override
+					public void onFailure(@NonNull Exception e) {
+						Log.w(TAG, "getDynamicLink:onFailure", e);
+					}
+				});
+	}
+
+	private void setUserVerified(@NonNull final String uid)
+	{
+		dbUsers.child(uid).child("verified").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>()
+		{
+			@Override
+			public void onComplete(@NonNull Task<Void> task)
+			{
+				showVerifiedDialog(uid);
+			}
+		});
+	}
+
+	private void showVerifiedDialog(final String uid)
+	{
+		AlertDialog dialog = new AlertDialog.Builder(LoginActivity.this)
+				.setTitle(getString(R.string.dialogVerificationSuccessTitle))
+				.setMessage(getString(R.string.dialogVerificationMessage))
+				.setPositiveButton(getString(R.string.dialogVerificationButtonEnter), new DialogInterface.OnClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{
+						findUserAndEnter(uid);
+					}
+				})
+				.setCancelable(false)
+				.create();
+		dialog.show();
+	}
+
 	private boolean tryAutoLogin()
 	{
 		boolean result = true;
@@ -158,9 +233,18 @@ public class LoginActivity extends AuthActivity
 				}
 				if (user != null)
 				{
-					Log.d(TAG, "findUserAndEnter: success");
-					saveCredentials(user.email, null);
-					enter(uid, user);
+					if (user.verified)
+					{
+						Log.d(TAG, "findUserAndEnter: success");
+						saveCredentials(user.email, null);
+						enter(uid, user);
+					}
+					else
+					{
+						Toast.makeText(LoginActivity.this, getString(R.string.errorNotVerified),
+								Toast.LENGTH_SHORT).show();
+						showInterface(true);
+					}
 				}
 				else
 				{
@@ -217,7 +301,6 @@ public class LoginActivity extends AuthActivity
 	{
 		Intent intent = new Intent(this, SignupActivity.class);
 		startActivity(intent);
-		finish();
 	}
 
 	private void recoverPassword(@Nullable String email)

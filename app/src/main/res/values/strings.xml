@@ -15,10 +15,14 @@
 	<string name="textUserAgreementInfo">Signing up, I accept</string>
 	<string name="textUserAgreement">user agreement</string>
 
-	<string name="textVerificationMessage">Verification link has been sent on the email:</string>
-	<string name="textVerificationInstruction">Go to your email, follow the link and press Finish here</string>
+	<string name="textVerificationSuccessMessage">Verification link has been sent on the email:</string>
+	<string name="textVerificationFailedMessage">Failed to sent verification link on the email:</string>
 	<string name="buttonVerificationRepeat">Send new link</string>
 	<string name="buttonVerificationFinish">Finish</string>
+
+	<string name="dialogVerificationSuccessTitle">Congratulations!</string>
+	<string name="dialogVerificationMessage">You have been verified</string>
+	<string name="dialogVerificationButtonEnter">Enter</string>
 
 	<string name="dialogAgreementTitle">User agreement</string>
 	<string name="dialogAgreementMessage">DUMMY</string>
@@ -50,6 +54,7 @@
 	<string name="errorAuthInvalidCredentials">Invalid credentials</string>
 	<string name="errorAuthEmail">Email sent to Firebase Auth</string>
 	<string name="errorAythDatabase">Error loading user data</string>
+	<string name="errorNotVerified">Account is not verified</string>
 
 	<!-- Main Activity -->
 	<string name="fragmentClientRequestListName">My requests</string>

@@ -41,6 +41,7 @@ dependencies {
     compile "com.google.firebase:firebase-database:${rootProject.ext.FIREBASE_VERSION}"
     compile "com.google.firebase:firebase-storage:${rootProject.ext.FIREBASE_VERSION}"
     compile "com.google.firebase:firebase-messaging:${rootProject.ext.FIREBASE_VERSION}"
+    compile "com.google.firebase:firebase-invites:${rootProject.ext.FIREBASE_VERSION}"
 
     compile 'com.firebaseui:firebase-ui-database:3.0.0'
 

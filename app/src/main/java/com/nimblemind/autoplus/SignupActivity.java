@@ -22,16 +22,10 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class SignupActivity extends AuthActivity
 {
-	private final int INTENT_VERIFY = 100;
-
 	private TextInputLayout emailContainer;
 	private TextInputLayout nameContainer;
 	private TextInputLayout passwordContainer;
 	private TextInputLayout passConfirmContainer;
-
-	private String tmpName;
-	private String tmpEmail;
-	private String tmpPassword;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -76,31 +70,12 @@ public class SignupActivity extends AuthActivity
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		super.onActivityResult(requestCode, resultCode, data);
-
-		if (requestCode == INTENT_VERIFY && resultCode == RESULT_OK)
-		{
-			final FirebaseUser user = auth.getCurrentUser();
-			if (user != null)
-			{
-				setUserName(tmpName);
-				saveCredentials(tmpEmail, tmpPassword);
-				addUserAndEnter(user.getUid(), new User(tmpName, tmpEmail));
-			}
-		}
-		else showInterface(true);
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		switch (item.getItemId())
 		{
 			case android.R.id.home:
-				Intent intent = new Intent(this, LoginActivity.class);
-				startActivity(intent);
+				setResult(RESULT_CANCELED);
 				finish();
 				return true;
 			default:
@@ -124,9 +99,9 @@ public class SignupActivity extends AuthActivity
 						if (task.isSuccessful())
 						{
 							Log.d(TAG, "onSignUp: success");
-							tmpName = name;
-							tmpEmail = email;
-							tmpPassword = password;
+							saveCredentials(email, password);
+							setUserName(name);
+							addUserToDb(auth.getCurrentUser().getUid(), new User(name, email));
 							verifyUserData();
 						}
 						else
@@ -137,12 +112,6 @@ public class SignupActivity extends AuthActivity
 						}
 					}
 				});
-	}
-
-	private void verifyUserData()
-	{
-		Intent intent = new Intent(this, VerficationActivity.class);
-		startActivityForResult(intent, INTENT_VERIFY);
 	}
 
 	private void setUserName(String name)
@@ -156,10 +125,17 @@ public class SignupActivity extends AuthActivity
 		}
 	}
 
-	private void addUserAndEnter(@NonNull String uid, @NonNull User user)
+	private void addUserToDb(@NonNull String uid, @NonNull User user)
 	{
 		dbUsers.child(uid).setValue(user);
-		enter(uid, user);
+	}
+
+	private void verifyUserData()
+	{
+		Intent intent = new Intent(this, VerificationActivity.class);
+		startActivity(intent);
+		setResult(RESULT_OK);
+		finish();
 	}
 
 	private boolean validate(String email, String name, String password, String confirm)
