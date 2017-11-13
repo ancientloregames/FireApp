@@ -34,7 +34,7 @@
 			android:id="@+id/containerEmail"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:paddingBottom="@dimen/authCommonPagging"
+			android:paddingBottom="@dimen/authLowerButtonPagging"
 			android:textColorHint="@color/authHint"
 			>
 			<android.support.design.widget.TextInputEditText
@@ -45,6 +45,7 @@
 				android:inputType="textEmailAddress"
 				android:maxLines="1"
 				android:textColor="@android:color/white"
+				android:textSize="@dimen/loginInputTextSize"
 				android:hint="@string/hintEmail"
 				/>
 		</android.support.design.widget.TextInputLayout>

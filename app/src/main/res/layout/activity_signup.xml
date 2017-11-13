@@ -54,6 +54,7 @@
 					android:imeOptions="actionNext"
 					android:maxLines="1"
 					android:textColor="@android:color/white"
+					android:textSize="@dimen/loginInputTextSize"
 					android:hint="@string/hintEmail"
 					/>
 			</android.support.design.widget.TextInputLayout>
@@ -74,6 +75,7 @@
 					android:imeOptions="actionNext"
 					android:maxLines="1"
 					android:textColor="@android:color/white"
+					android:textSize="@dimen/loginInputTextSize"
 					android:hint="@string/hintName"
 					/>
 			</android.support.design.widget.TextInputLayout>
@@ -94,6 +96,7 @@
 					android:imeOptions="actionNext"
 					android:maxLines="1"
 					android:textColor="@android:color/white"
+					android:textSize="@dimen/loginInputTextSize"
 					android:hint="@string/hintPassword"
 					/>
 			</android.support.design.widget.TextInputLayout>
@@ -114,6 +117,7 @@
 					android:imeOptions="actionDone"
 					android:maxLines="1"
 					android:textColor="@android:color/white"
+					android:textSize="@dimen/loginInputTextSize"
 					android:hint="@string/hintPassCheck"
 					/>
 			</android.support.design.widget.TextInputLayout>

@@ -112,6 +112,8 @@ public class LoginActivity extends AuthActivity
 					@Override
 					public void onSuccess(PendingDynamicLinkData data)
 					{
+						if (data == null)
+							return;
 						Uri link = data.getLink();
 						FirebaseUser user = auth.getCurrentUser();
 						if (link != null && user != null)

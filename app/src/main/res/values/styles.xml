@@ -2,6 +2,7 @@
 	<style name="SplashTheme" parent="AppTheme">
 		<item name="android:windowBackground">@drawable/splashscreen</item>
 		<item name="android:screenOrientation">portrait</item>
+		<item name="android:textColorSecondary">@color/authHint</item>
 		<!--<item name="android:windowAnimationStyle">@null</item> - Works, but stability is unknown. Use overridePendingTransition(0, 0) -->
 	</style>
 

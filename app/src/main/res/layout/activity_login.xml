@@ -52,6 +52,7 @@
 					android:inputType="textEmailAddress"
 					android:maxLines="1"
 					android:textColor="@android:color/white"
+					android:textSize="@dimen/loginInputTextSize"
 					android:hint="@string/hintEmail"
 					/>
 			</android.support.design.widget.TextInputLayout>
@@ -70,6 +71,7 @@
 					android:inputType="textPassword"
 					android:maxLines="1"
 					android:textColor="@android:color/white"
+					android:textSize="@dimen/loginInputTextSize"
 					android:hint="@string/hintPassword"
 					/>
 			</android.support.design.widget.TextInputLayout>

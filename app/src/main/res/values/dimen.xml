@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 	<dimen name="globalActivityPadding">16dp</dimen>
-	
-	<dimen name="authLogoPagging">50dp</dimen>
 
-	<dimen name="authCommonPagging">25dp</dimen>
+	<dimen name="authLogoPagging">70dp</dimen>
+
+	<dimen name="authCommonPagging">20dp</dimen>
 
 	<dimen name="authLowerButtonPagging">30dp</dimen>
 
@@ -13,7 +13,7 @@
 	<dimen name="navHeaderHeight">160dp</dimen>
 
 	<dimen name="floatingButtonSize">50dp</dimen>
-	
+
 	<dimen name="recyclerItemPadding">5dp</dimen>
 
 	<dimen name="recyclerItemInnerPadding">10dp</dimen>
@@ -23,4 +23,6 @@
 	<dimen name="galleryItemSize">100dp</dimen>
 
 	<dimen name="navigatorFooterIndent">15dp</dimen>
+
+	<dimen name="loginInputTextSize">25sp</dimen>
 </resources>
