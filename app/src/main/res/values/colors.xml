@@ -10,6 +10,8 @@
 	<color name="authMain">#f6f6f6</color>
 	<color name="authTextForm">@android:color/white</color>
 
+	<color name="mainNewRequestButton">#969c9b</color>
+
 	<color name="authHint">#4cffffff</color>
 
 	<!-- Main Activity -->

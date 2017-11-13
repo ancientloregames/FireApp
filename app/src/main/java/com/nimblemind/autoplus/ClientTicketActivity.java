@@ -27,7 +27,7 @@ public class ClientTicketActivity extends ClientRequestActivity<Ticket>
 	@Override
 	protected void populateForm(Ticket request)
 	{
-		infoView.setText(getString(R.string.textRequestInfo, request.id, Utils.getDate(request.timestamp)));
+		infoView.setText(getString(R.string.textRequestInfo, request.id, Utils.getDate(request.timestamp, "dd-MM-yyyy")));
 		partView.setText(request.partType);
 		nameView.setText(request.autoName);
 		yearView.setText(String.valueOf(request.year));

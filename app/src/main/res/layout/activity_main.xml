@@ -45,7 +45,7 @@
 			<View
 				android:layout_width="match_parent"
 				android:layout_height="2dp"
-				android:background="@color/authHint"
+				android:background="@color/authMain"
 				/>
 
 			<TextView
@@ -53,7 +53,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/hintEmail"
-				android:textColor="@color/authHint"
+				android:textColor="@color/mainNewRequestButton"
 				android:paddingTop="@dimen/navigatorFooterIndent"
 				android:paddingLeft="@dimen/navigatorFooterIndent"
 				/>
@@ -64,6 +64,7 @@
 				android:text="@string/buttonLogOut"
 				android:paddingLeft="@dimen/navigatorFooterIndent"
 				android:paddingBottom="@dimen/navigatorFooterIndent"
+				android:textColor="@android:color/black"
 				/>
 		</LinearLayout>
 	</android.support.design.widget.NavigationView>

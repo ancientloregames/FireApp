@@ -23,11 +23,11 @@ import java.util.Locale;
 
 public class Utils
 {
-	public static String getDate(long time)
+	public static String getDate(long time, String format)
 	{
 		Calendar cal = Calendar.getInstance(Locale.getDefault());
 		cal.setTimeInMillis(time);
-		String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+		String date = DateFormat.format(format, cal).toString();
 		return date;
 	}
 

@@ -17,8 +17,10 @@
 		>
 		<ImageView
 			android:layout_width="wrap_content"
-			android:layout_height="100dp"
+			android:layout_height="115dp"
 			android:layout_gravity="right|center_vertical"
+			android:adjustViewBounds="true"
+			android:padding="15dp"
 			android:src="@drawable/trashcan"
 			android:contentDescription="@string/hintImage"
 			/>
@@ -76,20 +78,27 @@
 					android:layout_height="wrap_content"
 					tools:text="@string/hintAutoPart"
 					android:textStyle="bold"
+					android:textColor="@android:color/black"
+					android:textSize="18sp"
+					android:ellipsize="end"
 					android:paddingBottom="5dp"
 					/>
-				<TextView
+				<com.nimblemind.autoplus.IconTextView
 					android:id="@+id/autoNameView"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					tools:text="@string/hintAutoName"
+					android:textColor="@android:color/black"
+					android:textSize="16sp"
 					android:drawableLeft="@drawable/ic_car_black_24dp"
+					tools:text="@string/hintAutoName"
 					/>
-				<TextView
+				<com.nimblemind.autoplus.IconTextView
 					android:id="@+id/notificationView"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:drawableLeft="@drawable/ic_message_reply_text_black_24dp"
+					android:textColor="@android:color/black"
+					android:textSize="16sp"
+					android:drawableLeft="@drawable/ic_chat_empty_24dp"
 					tools:text="@string/textNoNewMessages"
 					/>
 			</LinearLayout>
@@ -99,6 +108,7 @@
 				android:layout_height="wrap_content"
 				android:gravity="right"
 				tools:text="@string/textRequestInfo"
+				android:textColor="@color/mainNewRequestButton"
 				/>
 		</LinearLayout>
 		<TextView
@@ -106,7 +116,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/buttonCreateRequestByTemplate"
-			android:textColor="@color/authHint"
+			android:textColor="@color/mainNewRequestButton"
 			android:paddingTop="5dp"
 			/>
 	</LinearLayout>

@@ -61,6 +61,7 @@
 	<string name="fragmentClientTicketListName">My tickets</string>
 
 	<string name="textRequestInfo">Request №%1$d of %2$s</string>
+	<string name="textListTimestamp">Request №%1$d of %2$s</string>
 	<string name="textNoNewMessages">No new messages</string>
 	
 	<string name="textTickets">Tickets</string>
