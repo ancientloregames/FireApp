@@ -2,8 +2,8 @@ package com.nimblemind.autoplus;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
@@ -58,9 +58,8 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 		{
 			if (requestCode == INTENT_NEW_REQUEST)
 			{
-				Request newRequest = (Request) data.getSerializableExtra("request");
-				Uri photoUri = data.getParcelableExtra("photo");
-				sendRequest(newRequest, photoUri);
+				MODEL newRequest = data.getParcelableExtra("request");
+				sendRequest(newRequest);
 			}
 		}
 	}
@@ -69,8 +68,10 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 	{
 		Intent intent = new Intent(getActivity(), getNewRequestActivityClass());
 		intent.putExtra("uid", uid);
-		intent.putExtra("template", template);
-		intent.putExtra("type", getModelClass().getSimpleName());
+		if (template != null)
+		{
+			intent.putExtra("template", template);
+		}
 		startActivityForResult(intent, INTENT_NEW_REQUEST);
 	}
 
@@ -84,16 +85,12 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 		super.onDestroy();
 	}
 
-	protected void sendRequest(Request request, Uri photoUri)
+	@CallSuper
+	protected String sendRequest(MODEL request)
 	{
 		String key = database.push().getKey();
 		database.child(key).setValue(request);
-
-		getActivity().startService(new Intent(getActivity(), ImageUploadService.class)
-				.putExtra(ImageUploadService.EXTRA_FILE_URI, photoUri)
-				.putExtra(ImageUploadService.EXTRA_FILE_NAME, key)
-				.putExtra(ImageUploadService.EXTRA_FILE_FOLDER, uid)
-				.setAction(ImageUploadService.ACTION_UPLOAD));
+		return key;
 	}
 
 	protected void deleteRequest(final String key)

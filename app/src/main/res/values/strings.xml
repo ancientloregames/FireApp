@@ -81,13 +81,14 @@
 	<string name="activityNewRequest">New Request</string>
 	<string name="activityNewTicket">New Ticket</string>
 
-	<string name="hintAutoName">auto name *</string>
+	<string name="textInputSwitcher">Input type:</string>
+
+	<string name="hintAutoName">auto name</string>
 	<string name="hintAutoYear">year</string>
 	<string name="hintAutoVin">vin</string>
-	<string name="hintAutoEngine">engine</string>
-	<string name="hintAutoPart">spare part *</string>
+	<string name="hintAutoPart">spare part</string>
 	<string name="hintComment">comment</string>
-	<string name="hintImage">image</string>
+	<string name="hintImage">Add image:</string>
 
 	<string name="buttonAddRequest">Add</string>
 
@@ -98,6 +99,9 @@
 	<string name="textUnloading">Uploading…</string>
 	<string name="textUploadSuccess">Upload finished</string>
 	<string name="textUploadFailure">Upload failed</string>
+	
+	<string name="textNewRequestTextMode">Text</string>
+	<string name="textNewRequestPhotoMode">Photo</string>
 
 	<!-- Request Details Activity -->
 	<string name="activityRequestDetails">Request Answers</string>

@@ -1,5 +1,6 @@
 package com.nimblemind.autoplus;
 
+import android.content.Intent;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
@@ -13,6 +14,18 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 {
 	public ClientTicketsFragment()
 	{
+	}
+
+	@Override
+	protected String sendRequest(Ticket ticket)
+	{
+		String ticketId = super.sendRequest(ticket);
+
+		getActivity().startService(new Intent(getActivity(), ImageUploadService.class)
+				.putExtra(ImageUploadService.EXTRA_FILE_URI, ticket.photoUri)
+				.putExtra(ImageUploadService.EXTRA_FILE_PATH, new String[] {uid, ticketId})
+				.setAction(ImageUploadService.ACTION_UPLOAD));
+		return ticketId;
 	}
 
 	@Override

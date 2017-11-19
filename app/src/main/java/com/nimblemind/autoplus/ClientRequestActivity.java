@@ -48,7 +48,7 @@ public abstract class ClientRequestActivity<MODEL extends Request> extends AppCo
 		Intent intent = getIntent();
 		if (intent != null)
 		{
-			MODEL request = (MODEL) intent.getSerializableExtra("request");
+			MODEL request = intent.getParcelableExtra("request");
 
 			if (request != null)
 			{

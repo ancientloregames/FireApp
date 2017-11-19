@@ -32,7 +32,7 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true"
-		app:srcCompat="@drawable/camera_128"
+		app:srcCompat="@drawable/camera"
 		app:useCompatPadding="true"/>
 
 </RelativeLayout>

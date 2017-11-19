@@ -35,7 +35,7 @@ public class ImageUploadService extends BasicService
 
 	public static final String EXTRA_FILE_URI = "extra_file_uri";
 	public static final String EXTRA_FILE_NAME = "extra_file_name";
-	public static final String EXTRA_FILE_FOLDER = "extra_file_folder";
+	public static final String EXTRA_FILE_PATH = "extra_file_path";
 	public static final String EXTRA_DOWNLOAD_URL = "extra_download_url";
 
 	private StorageReference storagePhotoRef;
@@ -64,11 +64,13 @@ public class ImageUploadService extends BasicService
 		if (ACTION_UPLOAD.equals(intent.getAction()))
 		{
 			Uri fileUri = intent.getParcelableExtra(EXTRA_FILE_URI);
-			String name = intent.getStringExtra(EXTRA_FILE_NAME);
-			String folder = intent.getStringExtra(EXTRA_FILE_FOLDER);
+			String name = intent.hasExtra(EXTRA_FILE_NAME)
+					? intent.getStringExtra(EXTRA_FILE_NAME)
+					: String.valueOf(System.currentTimeMillis());
+			String[] path = intent.getStringArrayExtra(EXTRA_FILE_PATH);
 			try
 			{
-				uploadFromUri(fileUri, name, folder);
+				uploadFromUri(fileUri, name, path);
 			}
 			catch (IOException e)
 			{
@@ -79,7 +81,7 @@ public class ImageUploadService extends BasicService
 		return START_REDELIVER_INTENT;
 	}
 
-	private void uploadFromUri(final Uri fileUri, final String name, final String folder) throws IOException
+	private void uploadFromUri(final Uri fileUri, final String name, final String[] path) throws IOException
 	{
 		Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
@@ -91,7 +93,12 @@ public class ImageUploadService extends BasicService
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
 
 		// Get a reference to store file at photos/uid/{orderid}.jpg
-		final StorageReference photoRef = storagePhotoRef.child(folder).child(name);
+		StorageReference photoRef = storagePhotoRef;
+		for (String folder : path)
+		{
+			photoRef = photoRef.child(folder);
+		}
+		photoRef = photoRef.child(name);
 
 		Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
 		photoRef.putBytes(out.toByteArray()).
