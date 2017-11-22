@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -59,7 +60,8 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 			if (requestCode == INTENT_NEW_REQUEST)
 			{
 				MODEL newRequest = data.getParcelableExtra("request");
-				sendRequest(newRequest);
+				ArrayList<TitledUri> images = data.getParcelableArrayListExtra("images");
+				sendRequest(newRequest, images);
 			}
 		}
 	}
@@ -86,11 +88,11 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 	}
 
 	@CallSuper
-	protected String sendRequest(MODEL request)
+	protected String sendRequest(MODEL request, ArrayList<TitledUri> images)
 	{
-		String key = database.push().getKey();
-		database.child(key).setValue(request);
-		return key;
+		String requestId = database.push().getKey();
+		database.child(requestId).setValue(request);
+		return requestId;
 	}
 
 	protected void deleteRequest(final String key)

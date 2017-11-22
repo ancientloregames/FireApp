@@ -33,8 +33,12 @@ public class NewTicketActivity extends NewRequestActivity
 			Fragment textFragment = new NewTicketTextFragment();
 			textFragment.setArguments(args);
 
+			Fragment photoFragment = new NewTicketPhotoFragment();
+			photoFragment.setArguments(args);
+
 			return new TitledFragment[] {
-					new TitledFragment(getString(R.string.textNewRequestTextMode), textFragment)
+					new TitledFragment(getString(R.string.textNewRequestTextMode), textFragment),
+					new TitledFragment(getString(R.string.textNewRequestPhotoMode), photoFragment)
 			};
 		}
 		else throw new RuntimeException("The Uid must be passed in order to create new ticket");

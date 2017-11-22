@@ -12,6 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 11/14/2017.
@@ -21,14 +25,23 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 {
 	interface Listener<MODEL extends Request>
 	{
-		void onSubmit(MODEL request);
+		void onSubmit(MODEL request, ArrayList<TitledUri> images);
 	}
 
 	protected static final int INTENT_ADD_PART_PHOTO = 100;
+	protected static final int INTENT_SPARE_PART = 101;
 
 	protected Listener<MODEL> listener;
 
 	protected String uid;
+
+	protected final int maxPartPhotoCount = 1;
+
+	protected final ArrayList<TitledUri> partPhotos = new ArrayList<>(maxPartPhotoCount);
+
+	protected final ArrayList<String> partPhotosNames = new ArrayList<>(maxPartPhotoCount);
+
+	protected int photoMaxSize;
 
 	public NewRequestFragment()
 	{
@@ -45,12 +58,32 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 
 		if (context instanceof Listener) listener = (Listener) context;
 		else throw new RuntimeException("Activity must be a listener of this fragment");
+
+		photoMaxSize = context.getResources().getDimensionPixelSize(R.dimen.newRequestPhotoSize);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
 	{
 		return inflater.inflate(getLayoutId(), container, false);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == INTENT_ADD_PART_PHOTO && resultCode == RESULT_OK)
+		{
+			Uri imageUri = data.getData();
+			if (imageUri != null)
+			{
+				String name = String.valueOf(System.currentTimeMillis());
+				partPhotos.add(new TitledUri(name, imageUri));
+				partPhotosNames.add(name);
+				onPartPhotoRecieved(imageUri);
+			}
+		}
 	}
 
 	@Override

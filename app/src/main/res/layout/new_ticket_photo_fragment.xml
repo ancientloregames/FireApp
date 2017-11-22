@@ -13,57 +13,28 @@
 		android:descendantFocusability="beforeDescendants"
 		android:focusableInTouchMode="true"
 		>
-
-		<android.support.design.widget.TextInputLayout
-			android:id="@+id/containerName"
+		<EditText
+			android:id="@+id/buttonAddPTSPhoto"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/hintPTSPhoto"
+			android:focusable="false"
+			android:drawableRight="@drawable/ic_camera"
+			android:hint="@string/hintImage"
+			/>
+		<HorizontalScrollView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			>
-			<android.support.design.widget.TextInputEditText
-				android:id="@+id/textName"
-				android:layout_width="match_parent"
+			<LinearLayout
+				android:id="@+id/containerPTSPhotos"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:imeOptions="actionNext"
-				android:maxLines="1"
-				android:hint="@string/hintAutoName"
-				android:focusable="false"
+				android:gravity="center_vertical"
+				android:orientation="horizontal"
+				android:padding="5dp"
 				/>
-		</android.support.design.widget.TextInputLayout>
-
-		<android.support.design.widget.TextInputLayout
-			android:id="@+id/containerYear"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			>
-			<android.support.design.widget.TextInputEditText
-				android:id="@+id/textYear"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:digits="0123456789"
-				android:inputType="numberDecimal"
-				android:imeOptions="actionNext"
-				android:maxLines="1"
-				android:hint="@string/hintAutoYear"
-				/>
-		</android.support.design.widget.TextInputLayout>
-
-		<android.support.design.widget.TextInputLayout
-			android:id="@+id/containerVin"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			app:counterEnabled="true"
-			app:counterMaxLength="17"
-			>
-			<android.support.design.widget.TextInputEditText
-				android:id="@+id/textVin"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:inputType="textCapCharacters"
-				android:imeOptions="actionNext"
-				android:maxLines="1"
-				android:hint="@string/hintAutoVin"
-				/>
-		</android.support.design.widget.TextInputLayout>
+		</HorizontalScrollView>
 
 		<LinearLayout
 			android:id="@+id/containerPartsList"
@@ -104,7 +75,7 @@
 			android:layout_height="wrap_content"
 			>
 			<LinearLayout
-				android:id="@+id/containerPhotosList"
+				android:id="@+id/containerPartPhotos"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"

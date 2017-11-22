@@ -1,8 +1,9 @@
 package com.nimblemind.autoplus;
 
-import android.net.Uri;
 import android.os.Parcel;
-import com.google.firebase.database.Exclude;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -12,37 +13,41 @@ import com.google.firebase.database.Exclude;
 class Ticket extends Request
 {
 	public final String partType;
-	public final String photo;	// Assign in Database
 	public final String comment;
-	@Exclude
-	public final Uri photoUri;	// For internal usage only
+	public List<String> partPhotos;
 
 	public Ticket()
 	{
 		super();
 		partType = null;
 		comment = null;
-		photo = null;
-		photoUri = null;
+		partPhotos = null;
 	}
 
 	public Ticket(String uid, String autoName, String vin, int year,
-				  String comment, String partType, Uri photoUri)
+				  String partType, String comment, List<String> partPhotos)
 	{
 		super(uid, autoName, vin, year);
 		this.partType = partType;
-		this.photoUri = photoUri;
 		this.comment = comment;
-		photo = null;
+		this.partPhotos = partPhotos;
+	}
+
+	public Ticket(String uid, List<String> pstPhotos, String partType, String comment, List<String> partPhotos)
+	{
+		super(uid, pstPhotos);
+		this.partType = partType;
+		this.comment = comment;
+		this.partPhotos = partPhotos;
 	}
 
 	protected Ticket(Parcel in)
 	{
 		super(in);
 		partType = in.readString();
-		photo = in.readString();
 		comment = in.readString();
-		photoUri = in.readParcelable(Uri.class.getClassLoader());
+		partPhotos = new ArrayList<>();
+		in.readStringList(partPhotos);
 	}
 
 	@Override
@@ -50,9 +55,8 @@ class Ticket extends Request
 	{
 		super.writeToParcel(dest, flags);
 		dest.writeString(partType);
-		dest.writeString(photo);
 		dest.writeString(comment);
-		dest.writeParcelable(photoUri, flags);
+		dest.writeStringList(partPhotos);
 	}
 
 	public static final Creator<Ticket> CREATOR = new Creator<Ticket>()

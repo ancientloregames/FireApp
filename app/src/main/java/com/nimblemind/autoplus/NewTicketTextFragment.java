@@ -17,8 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
@@ -30,8 +28,7 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 
 public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 {
-	private static final int INTENT_AUTO_NAME = 101;
-	private static final int INTENT_SPARE_PART = 102;
+	private static final int INTENT_AUTO_NAME = 102;
 
 	private TextInputLayout nameContainer;
 	private TextInputLayout vinContainer;
@@ -40,15 +37,13 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 	private TextInputLayout commentContainer;
 
 	private ViewGroup partsListContainer;
-	private ViewGroup photosListContainer;
+	private ViewGroup partPhotosContainer;
 
 	private TextView nameView;
 	private TextView vinView;
 	private TextView yearView;
 	private TextView partView;
 	private TextView commentView;
-
-	protected Set<Uri> imageUris = new LinkedHashSet<>();
 
 	public NewTicketTextFragment()
 	{
@@ -68,7 +63,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 			commentContainer = view.findViewById(R.id.containerComment);
 
 			partsListContainer = view.findViewById(R.id.containerPartsList);
-			photosListContainer = view.findViewById(R.id.containerPhotosList);
+			partPhotosContainer = view.findViewById(R.id.containerPhotosList);
 
 			nameView = view.findViewById(R.id.textName);
 			vinView = view.findViewById(R.id.textVin);
@@ -126,16 +121,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 
 		if (resultCode == RESULT_OK)
 		{
-			if (requestCode == INTENT_ADD_PART_PHOTO)
-			{
-				Uri imageUri = data.getData();
-				if (imageUri != null)
-				{
-					imageUris.add(imageUri);
-					onPartPhotoRecieved(imageUri);
-				}
-			}
-			else if (requestCode == INTENT_AUTO_NAME)
+			if (requestCode == INTENT_AUTO_NAME)
 			{
 				nameView.setText(data.getStringExtra("result"));
 			}
@@ -144,6 +130,12 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 				partView.setText(data.getStringExtra("result"));
 			}
 		}
+	}
+
+	@Override
+	protected int getLayoutId()
+	{
+		return R.layout.new_ticket_text_fragment;
 	}
 
 	@Override
@@ -167,12 +159,12 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 	protected void onPartPhotoRecieved(Uri uri)
 	{
 		ImageView imageView = new ImageView(getContext());
-		imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+		imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, photoMaxSize));
 		imageView.setPadding(30,30,30,30);
 		imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		imageView.setAdjustViewBounds(true);
 		imageView.setImageURI(uri);
-		photosListContainer.addView(imageView);
+		partPhotosContainer.addView(imageView);
 	}
 
 	@Override
@@ -228,8 +220,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 			valid = false;
 		}
 
-		Uri imageUri = imageUris.iterator().next();
-		if (imageUri == null)
+		if (partPhotosContainer.getChildCount() < 1)
 		{
 			Toast.makeText(getActivity(), getString(R.string.errorPhotoRequered), Toast.LENGTH_SHORT).show();
 			valid = false;
@@ -237,13 +228,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 
 		if (valid)
 		{
-			listener.onSubmit(new Ticket(uid, name, vin, year, comment, part, imageUri));
+			listener.onSubmit(new Ticket(uid, name, vin, year, comment, part, partPhotosNames), partPhotos);
 		}
-	}
-
-	@Override
-	protected int getLayoutId()
-	{
-		return R.layout.new_ticket_text_fragment;
 	}
 }

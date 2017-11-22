@@ -1,7 +1,6 @@
 package com.nimblemind.autoplus;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import com.nimblemind.autoplus.swipereveallayout.SwipeRevealLayout;
 
@@ -37,7 +36,9 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 	{
 		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm"));
 		sparePartView.setText(ticket.partType);
-		autoNameView.setText(ticket.autoName);
+		autoNameView.setText(ticket.autoName != null
+				? ticket.autoName
+				: itemView.getResources().getString(R.string.textPhotoPTS));
 		notificationView.setText(itemView.getResources().getString(R.string.textNoNewMessages));
 	}
 

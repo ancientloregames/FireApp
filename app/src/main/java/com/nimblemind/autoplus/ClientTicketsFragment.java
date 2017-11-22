@@ -5,6 +5,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
+import java.util.ArrayList;
+
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/11/2017.
@@ -17,13 +19,13 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	}
 
 	@Override
-	protected String sendRequest(Ticket ticket)
+	protected String sendRequest(Ticket ticket, ArrayList<TitledUri> images)
 	{
-		String ticketId = super.sendRequest(ticket);
+		String ticketId = super.sendRequest(ticket, images);
 
 		getActivity().startService(new Intent(getActivity(), ImageUploadService.class)
-				.putExtra(ImageUploadService.EXTRA_FILE_URI, ticket.photoUri)
-				.putExtra(ImageUploadService.EXTRA_FILE_PATH, new String[] {uid, ticketId})
+				.putParcelableArrayListExtra(ImageUploadService.EXTRA_IMAGES, images)
+				.putExtra(ImageUploadService.EXTRA_PATH, new String[] {uid, ticketId})
 				.setAction(ImageUploadService.ACTION_UPLOAD));
 		return ticketId;
 	}

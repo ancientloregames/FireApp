@@ -63,6 +63,7 @@
 	<string name="textRequestInfo">Request №%1$d of %2$s</string>
 	<string name="textListTimestamp">Request №%1$d of %2$s</string>
 	<string name="textNoNewMessages">No new messages</string>
+	<string name="textPhotoPTS">PTS photo granted</string>
 	
 	<string name="textTickets">Tickets</string>
 	<string name="textOffers">Offers</string>
@@ -88,7 +89,8 @@
 	<string name="hintAutoVin">vin</string>
 	<string name="hintAutoPart">spare part</string>
 	<string name="hintComment">comment</string>
-	<string name="hintImage">Add image:</string>
+	<string name="hintImage">Add image</string>
+	<string name="hintPTSPhoto">Certificate photo or PTS</string>
 
 	<string name="buttonAddRequest">Add</string>
 

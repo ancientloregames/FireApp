@@ -3,6 +3,9 @@ package com.nimblemind.autoplus;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/12/2017.
@@ -12,12 +15,14 @@ public abstract class Request implements Parcelable
 {
 	public final int id;			// Set on server
 	public final String uid;
-	public final String sid;		// Id of support member
+	public final String sid;		// Id of support member. Do it empty String for support search of open Requests!
 	public final long timestamp;	// Set on server
 	public final String autoName;
 	public final String vin;
 	public final int year;
 	public final String type;
+	public final String storageFolder;	// Set on server
+	public List<String> ptsPhotos;
 
 	public Request()
 	{
@@ -28,8 +33,9 @@ public abstract class Request implements Parcelable
 		timestamp = 0;
 		vin = null;
 		year = 0;
-
 		type = getClass().getSimpleName();
+		storageFolder = null;
+		ptsPhotos = null;
 	}
 
 	public Request(String uid, String autoName, String vin, int year)
@@ -41,8 +47,23 @@ public abstract class Request implements Parcelable
 		this.timestamp = 0;
 		this.vin = vin;
 		this.year = year;
-
 		this.type = getClass().getSimpleName();
+		this.storageFolder = null;
+		this.ptsPhotos = null;
+	}
+
+	public Request(String uid, List<String> ptsPhotos)
+	{
+		this.id = 0;
+		this.uid = uid;
+		this.sid = "";
+		this.autoName = null;
+		this.timestamp = 0;
+		this.vin = null;
+		this.year = 0;
+		this.type = getClass().getSimpleName();
+		this.storageFolder = null;
+		this.ptsPhotos = ptsPhotos;
 	}
 
 	protected Request(Parcel in)
@@ -55,6 +76,9 @@ public abstract class Request implements Parcelable
 		vin = in.readString();
 		year = in.readInt();
 		type = in.readString();
+		storageFolder = in.readString();
+		ptsPhotos = new ArrayList<>();
+		in.readStringList(ptsPhotos);
 	}
 
 	@Override
@@ -74,5 +98,7 @@ public abstract class Request implements Parcelable
 		dest.writeString(vin);
 		dest.writeInt(year);
 		dest.writeString(type);
+		dest.writeString(storageFolder);
+		dest.writeStringList(ptsPhotos);
 	}
 }

@@ -11,8 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
 
-public abstract class NewRequestActivity extends AppCompatActivity implements NewRequestFragment.Listener
+
+public abstract class NewRequestActivity extends AppCompatActivity implements NewRequestFragment.Listener<Request>
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -48,10 +50,11 @@ public abstract class NewRequestActivity extends AppCompatActivity implements Ne
 	}
 
 	@Override
-	public void onSubmit(Request request)
+	public void onSubmit(Request request, ArrayList<TitledUri> images)
 	{
 		Intent resultIntent = new Intent();
 		resultIntent.putExtra("request", request);
+		resultIntent.putParcelableArrayListExtra("images", images);
 		setResult(RESULT_OK, resultIntent);
 		finish();
 	}

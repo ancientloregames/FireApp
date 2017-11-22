@@ -19,6 +19,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -33,9 +34,8 @@ public class ImageUploadService extends BasicService
 	public static final String UPLOAD_COMPLETED = "upload_completed";
 	public static final String UPLOAD_ERROR = "upload_error";
 
-	public static final String EXTRA_FILE_URI = "extra_file_uri";
-	public static final String EXTRA_FILE_NAME = "extra_file_name";
-	public static final String EXTRA_FILE_PATH = "extra_file_path";
+	public static final String EXTRA_IMAGES = "extra_images";
+	public static final String EXTRA_PATH = "extra_path";
 	public static final String EXTRA_DOWNLOAD_URL = "extra_download_url";
 
 	private StorageReference storagePhotoRef;
@@ -63,18 +63,15 @@ public class ImageUploadService extends BasicService
 		Log.d(TAG, "onStartCommand:" + intent + ":" + startId);
 		if (ACTION_UPLOAD.equals(intent.getAction()))
 		{
-			Uri fileUri = intent.getParcelableExtra(EXTRA_FILE_URI);
-			String name = intent.hasExtra(EXTRA_FILE_NAME)
-					? intent.getStringExtra(EXTRA_FILE_NAME)
-					: String.valueOf(System.currentTimeMillis());
-			String[] path = intent.getStringArrayExtra(EXTRA_FILE_PATH);
-			try
+			ArrayList<TitledUri> images = intent.getParcelableArrayListExtra(EXTRA_IMAGES);
+			String[] path = intent.getStringArrayExtra(EXTRA_PATH);
+			for (TitledUri image : images)
 			{
-				uploadFromUri(fileUri, name, path);
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
+				try {
+					uploadFromUri(image.uri, image.title, path);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -148,7 +145,7 @@ public class ImageUploadService extends BasicService
 
 		Intent broadcast = new Intent(action)
 				.putExtra(EXTRA_DOWNLOAD_URL, downloadUrl)
-				.putExtra(EXTRA_FILE_URI, fileUri);
+				.putExtra(EXTRA_IMAGES, fileUri);
 		return LocalBroadcastManager.getInstance(getApplicationContext())
 				.sendBroadcast(broadcast);
 	}
@@ -179,7 +176,7 @@ public class ImageUploadService extends BasicService
 
 		Intent intent = new Intent(this, MainActivity.class)
 				.putExtra(EXTRA_DOWNLOAD_URL, downloadUrl)
-				.putExtra(EXTRA_FILE_URI, fileUri)
+				.putExtra(EXTRA_IMAGES, fileUri)
 				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
 		boolean success = downloadUrl != null;
