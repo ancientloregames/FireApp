@@ -24,7 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -96,6 +95,14 @@ public class ListActivity extends AppCompatActivity
 		});
 
 		recycler.setAdapter(adapter);
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		future.cancel(true);
+		adapter.clean();
+		super.onDestroy();
 	}
 
 	private void onFirstCreate()
@@ -210,14 +217,19 @@ public class ListActivity extends AppCompatActivity
 			void onItemSelected(String selected);
 		}
 
-		private WeakReference<Listener> listener;
+		private List<String> items = new ArrayList<>();
+
+		private Listener listener;
 
 		ListAdapter(Listener listener)
 		{
-			this.listener = new WeakReference<>(listener);
+			this.listener = listener;
 		}
 
-		private List<String> items = new ArrayList<>();
+		void clean()
+		{
+			this.listener = null;
+		}
 
 		@UiThread
 		void setItems(List<String> newItems)
@@ -244,10 +256,7 @@ public class ListActivity extends AppCompatActivity
 				@Override
 				public void onClick(View v)
 				{
-					if (listener.get() != null)
-					{
-						listener.get().onItemSelected(text);
-					}
+					listener.onItemSelected(text);
 				}
 			});
 		}
