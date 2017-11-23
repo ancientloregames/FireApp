@@ -22,7 +22,7 @@ public abstract class Request implements Parcelable
 	public final int year;
 	public final String type;
 	public final String storageFolder;	// Set on server
-	public List<String> ptsPhotos;
+	public ArrayList<String> ptsPhotos;
 
 	public Request()
 	{
@@ -52,7 +52,7 @@ public abstract class Request implements Parcelable
 		this.ptsPhotos = null;
 	}
 
-	public Request(String uid, List<String> ptsPhotos)
+	public Request(String uid, ArrayList<String> ptsPhotos)
 	{
 		this.id = 0;
 		this.uid = uid;

@@ -3,7 +3,6 @@ package com.nimblemind.autoplus;
 import android.os.Parcel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -14,7 +13,7 @@ class Ticket extends Request
 {
 	public final String partType;
 	public final String comment;
-	public List<String> partPhotos;
+	public ArrayList<String> partPhotos;
 
 	public Ticket()
 	{
@@ -25,7 +24,7 @@ class Ticket extends Request
 	}
 
 	public Ticket(String uid, String autoName, String vin, int year,
-				  String partType, String comment, List<String> partPhotos)
+				  String partType, String comment, ArrayList<String> partPhotos)
 	{
 		super(uid, autoName, vin, year);
 		this.partType = partType;
@@ -33,7 +32,7 @@ class Ticket extends Request
 		this.partPhotos = partPhotos;
 	}
 
-	public Ticket(String uid, List<String> pstPhotos, String partType, String comment, List<String> partPhotos)
+	public Ticket(String uid, ArrayList<String> pstPhotos, String partType, String comment, ArrayList<String> partPhotos)
 	{
 		super(uid, pstPhotos);
 		this.partType = partType;

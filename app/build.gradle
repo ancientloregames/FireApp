@@ -43,7 +43,8 @@ dependencies {
     compile "com.google.firebase:firebase-messaging:${rootProject.ext.FIREBASE_VERSION}"
     compile "com.google.firebase:firebase-invites:${rootProject.ext.FIREBASE_VERSION}"
 
-    compile 'com.firebaseui:firebase-ui-database:3.0.0'
+    compile "com.firebaseui:firebase-ui-database:${rootProject.ext.FIREBASE_UI_VERSION}"
+    compile "com.firebaseui:firebase-ui-storage:${rootProject.ext.FIREBASE_UI_VERSION}"
 
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
 

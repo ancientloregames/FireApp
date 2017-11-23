@@ -116,7 +116,8 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 
 	protected void showRequestDetails(@NonNull Request request)
 	{
-		Intent intent = new Intent(getActivity(), ClientTicketActivity.class);
+		Intent intent = new Intent(getActivity(), DetailTicketActivity.class);
+		intent.putExtra("uid", uid);
 		intent.putExtra("request", request);
 		startActivityForResult(intent, INTENT_REQUEST_DETAILS);
 	}
