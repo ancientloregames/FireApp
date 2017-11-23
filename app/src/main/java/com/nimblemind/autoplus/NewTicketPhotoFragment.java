@@ -164,6 +164,9 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 	{
 		boolean valid = true;
 
+		partContainer.setError(null);
+		commentContainer.setError(null);
+
 		if (ptsPhotos.isEmpty())
 		{
 			valid = false;

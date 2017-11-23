@@ -172,6 +172,12 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 	{
 		boolean valid = true;
 
+		yearContainer.setError(null);
+		nameContainer.setError(null);
+		vinContainer.setError(null);
+		partContainer.setError(null);
+		commentContainer.setError(null);
+
 		String name = nameView.getText().toString();
 		String vin = vinView.getText().toString();
 		String part = partView.getText().toString();
