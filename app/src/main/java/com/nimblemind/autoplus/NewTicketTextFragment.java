@@ -228,7 +228,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 
 		if (valid)
 		{
-			listener.onSubmit(new Ticket(uid, name, vin, year, comment, part, partPhotosNames), partPhotos);
+			listener.onSubmit(new Ticket(uid, name, vin, year, part, comment, partPhotosNames), partPhotos);
 		}
 	}
 }
