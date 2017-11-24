@@ -71,8 +71,8 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		}
 
 		final RecyclerView recycler = getView().findViewById(R.id.recycler);
-		LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-		layoutManager.setReverseLayout(true);
+		LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, true);
+		layoutManager.setStackFromEnd(true);
 		recycler.setLayoutManager(layoutManager);
 
 		SnapshotParser<MODEL> parser = new SnapshotParser<MODEL>() {
