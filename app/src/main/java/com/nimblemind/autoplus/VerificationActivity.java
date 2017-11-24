@@ -3,14 +3,12 @@ package com.nimblemind.autoplus;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.ActionCodeSettings;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
@@ -20,8 +18,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class VerificationActivity extends AuthBaseActivity
 {
-	private FirebaseUser user;
-
 	private TextView infoView;
 	private View repeatButton;
 
@@ -30,13 +26,13 @@ public class VerificationActivity extends AuthBaseActivity
 	{
 		super.onCreate(savedInstanceState);
 
-		user = FirebaseAuth.getInstance().getCurrentUser();
+		final FirebaseUser user = auth.getCurrentUser();
 
 		if (user != null)
 		{
 			final ActionCodeSettings settings = ActionCodeSettings.newBuilder()
 					.setUrl("https://plus-auto.firebaseapp.com/verify?uid=" + user.getUid())
-					.setAndroidPackageName("com.nimblemind.autoplus", false, null)
+					.setAndroidPackageName(getPackageName(), false, null)
 					.setHandleCodeInApp(true)
 					.build();
 
@@ -88,10 +84,8 @@ public class VerificationActivity extends AuthBaseActivity
 
 	private void sendEmailVerification(final FirebaseUser user, ActionCodeSettings settings)
 	{
-		mainContent.setVisibility(View.GONE);
-		progressBar.setVisibility(View.VISIBLE);
-		user.sendEmailVerification(settings)
-				.addOnCompleteListener(this, new OnCompleteListener<Void>()
+		showInterface(false);
+		user.sendEmailVerification(settings).addOnCompleteListener(this, new OnCompleteListener<Void>()
 				{
 					@Override
 					public void onComplete(@NonNull final Task<Void> task)
@@ -110,10 +104,9 @@ public class VerificationActivity extends AuthBaseActivity
 								{
 									infoView.setText(getString(R.string.textVerificationFailedMessage));
 									repeatButton.setVisibility(View.VISIBLE);
-									Log.e("VerficationActivity", "sendEmailVerification", task.getException());
+									Utils.trySendFabricReport("sendEmailVerification:onFailure", task.getException());
 								}
-								progressBar.setVisibility(View.GONE);
-								mainContent.setVisibility(View.VISIBLE);
+								showInterface(true);
 							}
 						});
 					}

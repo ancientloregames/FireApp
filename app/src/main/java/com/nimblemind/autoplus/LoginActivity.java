@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.ActionCodeResult;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -101,54 +102,82 @@ public class LoginActivity extends AuthActivity
 	{
 		super.onNewIntent(intent);
 		firstStart = false;
-		handleDeepLink();
+		handleDeepLink(intent);
 	}
 
-	private void handleDeepLink()
+	private void handleDeepLink(Intent intent)
 	{
-		FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent())
+		FirebaseDynamicLinks.getInstance().getDynamicLink(intent)
 				.addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>()
 				{
 					@Override
 					public void onSuccess(PendingDynamicLinkData data)
 					{
-						if (data == null)
-							return;
-						Uri link = data.getLink();
-						FirebaseUser user = auth.getCurrentUser();
-						if (link != null && user != null)
+						Uri link = data != null ? data.getLink() : null;
+						if (link != null)
 						{
-							String strLink = link.toString();
-							if (strLink.matches(".+verify\\?uid.+"))
+							String actionCode = link.getQueryParameter("oobCode");
+							if (actionCode != null && !actionCode.isEmpty())
 							{
-								setUserVerified(user.getUid());
+								applyActionCode(actionCode);
 							}
 						}
-						/* TODO find out, how to manually verify user */
 					}
 				})
 				.addOnFailureListener(this, new OnFailureListener()
 				{
 					@Override
-					public void onFailure(@NonNull Exception e) {
-						Log.w(TAG, "getDynamicLink:onFailure", e);
+					public void onFailure(@NonNull Exception e)
+					{
+						Utils.trySendFabricReport("getDynamicLink:onFailure", e);
 					}
 				});
 	}
 
-	private void setUserVerified(@NonNull final String uid)
+	private void applyActionCode(final String actionCode)
 	{
-		dbUsers.child(uid).child("verified").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>()
+		auth.checkActionCode(actionCode).addOnSuccessListener(new OnSuccessListener<ActionCodeResult>()
 		{
 			@Override
-			public void onComplete(@NonNull Task<Void> task)
+			public void onSuccess(final ActionCodeResult actionCodeResult)
 			{
-				showVerifiedDialog(uid);
+				auth.applyActionCode(actionCode).addOnSuccessListener(new OnSuccessListener<Void>()
+				{
+					@Override
+					public void onSuccess(Void aVoid)
+					{
+						switch (actionCodeResult.getOperation())
+						{
+							case ActionCodeResult.VERIFY_EMAIL:
+								showVerifiedDialog();
+								break;
+							default:
+								showInterface(true);
+								Log.w(TAG, "applyActionCode: Unknown action code!");
+						}
+					}
+				})
+				.addOnFailureListener(new OnFailureListener()
+				{
+					@Override
+					public void onFailure(@NonNull Exception e)
+					{
+						Utils.trySendFabricReport("verifyEmail:applyActionCode:onFailure", e);
+					}
+				});
+			}
+		})
+		.addOnFailureListener(new OnFailureListener()
+		{
+			@Override
+			public void onFailure(@NonNull Exception e)
+			{
+				Utils.trySendFabricReport("verifyEmail:checkActionCode:onFailure", e);
 			}
 		});
 	}
 
-	private void showVerifiedDialog(final String uid)
+	private void showVerifiedDialog()
 	{
 		AlertDialog dialog = new AlertDialog.Builder(LoginActivity.this)
 				.setTitle(getString(R.string.dialogVerificationSuccessTitle))
@@ -158,7 +187,7 @@ public class LoginActivity extends AuthActivity
 					@Override
 					public void onClick(DialogInterface dialog, int which)
 					{
-						findUserAndEnter(uid);
+						tryAutoLogin();
 					}
 				})
 				.setCancelable(false)
@@ -170,10 +199,17 @@ public class LoginActivity extends AuthActivity
 	{
 		boolean result = true;
 
-		FirebaseUser currentUser = auth.getCurrentUser();
+		final FirebaseUser currentUser = auth.getCurrentUser();
 		if (currentUser != null)
 		{
-			findUserAndEnter(currentUser.getUid());
+			currentUser.reload().addOnCompleteListener(new OnCompleteListener<Void>()
+			{
+				@Override
+				public void onComplete(@NonNull Task<Void> task)
+				{
+					findUserAndEnter(currentUser);
+				}
+			});
 		}
 		else
 		{
@@ -207,46 +243,44 @@ public class LoginActivity extends AuthActivity
 						if (task.isSuccessful())
 						{
 							Log.d(TAG, "logIn: success");
-							findUserAndEnter(task.getResult().getUser().getUid());
+							findUserAndEnter(task.getResult().getUser());
 						}
 						else
 						{
-							Log.e(TAG, "logIn: failure");
-							handleAuthError(task.getException());
+							Utils.handleFirebaseErrorWithToast(LoginActivity.this, "getUserData: failure", task.getException());
 							showInterface(true);
 						}
 					}
 				});
 	}
 
-	private void findUserAndEnter(@NonNull final String uid)
+	private void findUserAndEnter(@NonNull final FirebaseUser firebaseUser)
 	{
+		if (!firebaseUser.isEmailVerified() && !"t1@g.com".equals(firebaseUser.getEmail()))//TODO убрать в релизной!
+		{
+			Toast.makeText(LoginActivity.this, getString(R.string.errorNotVerified), Toast.LENGTH_SHORT).show();
+			showInterface(true);
+			return;
+		}
+		final String uid = firebaseUser.getUid();
 		Log.d(TAG, "findUserAndEnter. Uid: " + uid);
 		dbUsers.child(uid).addListenerForSingleValueEvent(new ValueEventListener()
 		{
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot)
 			{
-				User user = null;
+				User user;
 				try {
 					user = dataSnapshot.getValue(User.class);
 				} catch (DatabaseException e) {
+					user = null;
 					// User data in database was somehow corrupted
 				}
 				if (user != null)
 				{
-					if (user.verified)
-					{
-						Log.d(TAG, "findUserAndEnter: success");
-						saveCredentials(user.email, null);
-						enter(uid, user);
-					}
-					else
-					{
-						Toast.makeText(LoginActivity.this, getString(R.string.errorNotVerified),
-								Toast.LENGTH_SHORT).show();
-						showInterface(true);
-					}
+					Log.d(TAG, "findUserAndEnter: success");
+					saveCredentials(user.email, null);
+					enter(uid, user);
 				}
 				else
 				{
@@ -260,8 +294,7 @@ public class LoginActivity extends AuthActivity
 			@Override
 			public void onCancelled(DatabaseError databaseError)
 			{
-				Log.e(TAG, "getUserData: failure");
-				handleAuthError(databaseError.toException());
+				Utils.handleFirebaseErrorWithToast(LoginActivity.this, "getUserData: failure", databaseError.toException());
 				showInterface(true);
 			}
 		});

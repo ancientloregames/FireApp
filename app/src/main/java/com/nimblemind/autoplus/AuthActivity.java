@@ -4,19 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
-import com.crashlytics.android.Crashlytics;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthEmailException;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.securepreferences.SecurePreferences;
-import io.fabric.sdk.android.Fabric;
 
 
 /**
@@ -26,16 +16,12 @@ import io.fabric.sdk.android.Fabric;
 public abstract class AuthActivity extends AuthBaseActivity
 {
 	protected final String TAG = "AuthActivity";
-
-	protected FirebaseAuth auth;
 	protected DatabaseReference dbUsers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
-		auth = FirebaseAuth.getInstance();
 
 		dbUsers = FirebaseDatabase.getInstance().getReference("users");
 	}
@@ -69,47 +55,5 @@ public abstract class AuthActivity extends AuthBaseActivity
 		if(password != null) editor.putString("pass", password);
 
 		editor.apply();
-	}
-
-	protected void handleAuthError(Exception exception)
-	{
-		if (exception == null) return;
-
-		if (Fabric.isInitialized())
-		{
-			Crashlytics.logException(exception);
-		}
-
-		exception.printStackTrace();
-		String message;
-		if (exception instanceof FirebaseAuthUserCollisionException)
-		{
-			message = getString(R.string.errorAuthCollision);
-		}
-		else if (exception instanceof FirebaseAuthInvalidUserException)
-		{
-			message = getString(R.string.errorAuthInvalidUser);
-		}
-		else if (exception instanceof FirebaseAuthRecentLoginRequiredException)
-		{
-			message = getString(R.string.errorAuthRecentLogin);
-		}
-		else if (exception instanceof FirebaseAuthEmailException)
-		{
-			message = getString(R.string.errorAuthEmail);
-		}
-		else if (exception instanceof FirebaseAuthInvalidCredentialsException)
-		{
-			message = getString(R.string.errorAuthInvalidCredentials);
-		}
-		else if (exception instanceof DatabaseException)
-		{
-			message = getString(R.string.errorAythDatabase);
-		}
-		else
-		{
-			message = getString(R.string.errorAuthGeneral);
-		}
-		Toast.makeText(AuthActivity.this, message, Toast.LENGTH_SHORT).show();
 	}
 }

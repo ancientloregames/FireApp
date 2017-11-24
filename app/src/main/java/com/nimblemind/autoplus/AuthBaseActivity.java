@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 /**
@@ -21,11 +22,15 @@ public abstract class AuthBaseActivity extends AppCompatActivity
 	protected View progressBar;
 	protected View mainContent;
 
+	protected FirebaseAuth auth;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(getLayoutRes());
+
+		auth = FirebaseAuth.getInstance();
 
 		if (withToolbar())
 		{

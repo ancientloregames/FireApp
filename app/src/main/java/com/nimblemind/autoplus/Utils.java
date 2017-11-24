@@ -5,16 +5,29 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.Toast;
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DatabaseException;
+import io.fabric.sdk.android.Fabric;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Locale;
+
+import static io.fabric.sdk.android.Fabric.TAG;
 
 
 /**
@@ -45,6 +58,55 @@ public class Utils
 			result = (int)(24 * metrics.density); // 24dp - standard status bar height
 		}
 		return result;
+	}
+
+	public static void trySendFabricReport(@NonNull String message, @Nullable Throwable exception)
+	{
+		if (Fabric.isInitialized())
+		{
+			Crashlytics.logException(new Exception(message, exception));
+		}
+		Log.w(TAG, message, exception);
+	}
+
+	protected static void handleFirebaseErrorWithToast(@NonNull Context context, @NonNull String message, @Nullable Throwable exception)
+	{
+		if (Fabric.isInitialized())
+		{
+			Crashlytics.logException(new Exception(message, exception));
+		}
+		Log.w(TAG, message, exception);
+
+		String text;
+		if (exception instanceof FirebaseAuthUserCollisionException)
+		{
+			text = context.getString(R.string.errorAuthCollision);
+		}
+		else if (exception instanceof FirebaseAuthInvalidUserException)
+		{
+			text = context.getString(R.string.errorAuthInvalidUser);
+		}
+		else if (exception instanceof FirebaseAuthRecentLoginRequiredException)
+		{
+			text = context.getString(R.string.errorAuthRecentLogin);
+		}
+		else if (exception instanceof FirebaseAuthEmailException)
+		{
+			text = context.getString(R.string.errorAuthEmail);
+		}
+		else if (exception instanceof FirebaseAuthInvalidCredentialsException)
+		{
+			text = context.getString(R.string.errorAuthInvalidCredentials);
+		}
+		else if (exception instanceof DatabaseException)
+		{
+			text = context.getString(R.string.errorAythDatabase);
+		}
+		else
+		{
+			text = context.getString(R.string.errorAuthGeneral);
+		}
+		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 	}
 
 	public static boolean checkInternetConnection(Activity activity, boolean withFailToast)

@@ -101,13 +101,12 @@ public class SignupActivity extends AuthActivity
 							Log.d(TAG, "onSignUp: success");
 							saveCredentials(email, password);
 							setUserName(name);
-							addUserToDb(auth.getCurrentUser().getUid(), new User(name, email));
+							addUserToDb(task.getResult().getUser().getUid(), new User(name, email));
 							verifyUserData();
 						}
 						else
 						{
-							Log.e(TAG, "onSignUp: failure");
-							handleAuthError(task.getException());
+							Utils.handleFirebaseErrorWithToast(SignupActivity.this, "onSignUp: failure", task.getException());
 							showInterface(true);
 						}
 					}
