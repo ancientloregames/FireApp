@@ -4,6 +4,7 @@
 	<!-- Common -->
 	<string name="textOK">OK</string>
 	<string name="textClose">Close</string>
+	<string name="textSearch">Search</string>
 
 	<!-- Auth Activities -->
 	<string name="activitySignup">Sign Up</string>

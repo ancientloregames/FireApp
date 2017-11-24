@@ -136,6 +136,8 @@ public class ListActivity extends AppCompatActivity
 		MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
 		final SearchView searchView = (SearchView) myActionMenuItem.getActionView();
 		searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+		searchView.setFocusable(true);
+		searchView.setIconified(false);
 		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
 		{
 			@Override
