@@ -41,7 +41,7 @@ public class ListActivity extends AppCompatActivity
 
 	private DatabaseReference dbRef;
 
-	private ScheduledFuture future;
+	private ScheduledFuture searchTask;
 
 	private View progressBar;
 
@@ -100,7 +100,7 @@ public class ListActivity extends AppCompatActivity
 	@Override
 	protected void onDestroy()
 	{
-		future.cancel(true);
+		cancelCurrentSearchTask(true);
 		adapter.clean();
 		super.onDestroy();
 	}
@@ -149,11 +149,8 @@ public class ListActivity extends AppCompatActivity
 			{
 				if (!TextUtils.isEmpty(newText) && newText.length() > 2)
 				{
-					if (future != null)
-					{
-						future.cancel(false);
-					}
-					future = Executors.newSingleThreadScheduledExecutor().schedule(new Runnable()
+					cancelCurrentSearchTask(false);
+					searchTask = Executors.newSingleThreadScheduledExecutor().schedule(new Runnable()
 					{
 						@Override
 						public void run()
@@ -208,6 +205,11 @@ public class ListActivity extends AppCompatActivity
 				databaseError.toException().printStackTrace();
 			}
 		});
+	}
+
+	private boolean cancelCurrentSearchTask(boolean forced)
+	{
+		return searchTask != null && searchTask.cancel(forced);
 	}
 
 	static final class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
