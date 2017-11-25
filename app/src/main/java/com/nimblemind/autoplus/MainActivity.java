@@ -79,10 +79,7 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 		{
 			drawer.closeDrawer(GravityCompat.START);
 		}
-		else
-		{
-			moveTaskToBack(true);
-		}
+		else super.onBackPressed();
 	}
 
 	@Override
