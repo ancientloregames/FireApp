@@ -244,14 +244,14 @@ public class ListActivity extends AppCompatActivity
 		@Override
 		public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
 		{
-			return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, parent, false));
+			return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_activity_item, parent, false));
 		}
 
 		@Override
 		public void onBindViewHolder(ViewHolder holder, int position)
 		{
 			final String text = items.get(position);
-			((TextView)holder.itemView).setText(text);
+			holder.textView.setText(text);
 
 			holder.itemView.setOnClickListener(new View.OnClickListener()
 			{
@@ -271,9 +271,13 @@ public class ListActivity extends AppCompatActivity
 
 		static final class ViewHolder extends RecyclerView.ViewHolder
 		{
+			TextView textView;
+
 			ViewHolder(View itemView)
 			{
 				super(itemView);
+
+				textView = itemView.findViewById(R.id.text);
 			}
 		}
 	}
