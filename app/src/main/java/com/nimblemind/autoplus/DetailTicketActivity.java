@@ -30,7 +30,7 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 	protected void populateForm(Ticket ticket)
 	{
 		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm"));
-		partView.setText(ticket.partType);
+		partView.setText(ticket.spareParts.get(0));
 		commentView.setText(ticket.comment);
 
 		Fragment fragment;

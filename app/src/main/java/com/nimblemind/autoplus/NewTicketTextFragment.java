@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import static android.app.Activity.RESULT_OK;
@@ -234,7 +235,8 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 
 		if (valid)
 		{
-			listener.onSubmit(new Ticket(uid, name, vin, year, part, comment, partPhotosNames), partPhotos);
+			listener.onSubmit(new Ticket(uid, name, vin, year,
+					Arrays.asList(part), comment, partPhotosNames), partPhotos);
 		}
 	}
 }

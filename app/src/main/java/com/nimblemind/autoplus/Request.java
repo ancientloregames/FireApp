@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -22,7 +21,7 @@ public abstract class Request implements Parcelable
 	public final int year;
 	public final String type;
 	public final String storageFolder;	// Set on server
-	public ArrayList<String> ptsPhotos;
+	public final ArrayList<String> ptsPhotos;
 
 	public Request()
 	{
@@ -77,8 +76,7 @@ public abstract class Request implements Parcelable
 		year = in.readInt();
 		type = in.readString();
 		storageFolder = in.readString();
-		ptsPhotos = new ArrayList<>();
-		in.readStringList(ptsPhotos);
+		in.readStringList(ptsPhotos = new ArrayList<>());
 	}
 
 	@Override

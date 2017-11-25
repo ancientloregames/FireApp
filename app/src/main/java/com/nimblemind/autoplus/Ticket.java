@@ -3,6 +3,7 @@ package com.nimblemind.autoplus;
 import android.os.Parcel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -11,31 +12,32 @@ import java.util.ArrayList;
 
 class Ticket extends Request
 {
-	public final String partType;
+	public final List<String> spareParts;
 	public final String comment;
-	public ArrayList<String> partPhotos;
+	public final ArrayList<String> partPhotos;
 
 	public Ticket()
 	{
 		super();
-		partType = null;
+		spareParts = null;
 		comment = null;
 		partPhotos = null;
 	}
 
 	public Ticket(String uid, String autoName, String vin, int year,
-				  String partType, String comment, ArrayList<String> partPhotos)
+				  List<String> spareParts, String comment, ArrayList<String> partPhotos)
 	{
 		super(uid, autoName, vin, year);
-		this.partType = partType;
+		this.spareParts = spareParts;
 		this.comment = comment;
 		this.partPhotos = partPhotos;
 	}
 
-	public Ticket(String uid, ArrayList<String> pstPhotos, String partType, String comment, ArrayList<String> partPhotos)
+	public Ticket(String uid, ArrayList<String> pstPhotos,
+				  List<String> spareParts, String comment, ArrayList<String> partPhotos)
 	{
 		super(uid, pstPhotos);
-		this.partType = partType;
+		this.spareParts = spareParts;
 		this.comment = comment;
 		this.partPhotos = partPhotos;
 	}
@@ -43,17 +45,16 @@ class Ticket extends Request
 	protected Ticket(Parcel in)
 	{
 		super(in);
-		partType = in.readString();
+		in.readStringList(spareParts = new ArrayList<>());
 		comment = in.readString();
-		partPhotos = new ArrayList<>();
-		in.readStringList(partPhotos);
+		in.readStringList(partPhotos = new ArrayList<>());
 	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags)
 	{
 		super.writeToParcel(dest, flags);
-		dest.writeString(partType);
+		dest.writeStringList(spareParts);
 		dest.writeString(comment);
 		dest.writeStringList(partPhotos);
 	}

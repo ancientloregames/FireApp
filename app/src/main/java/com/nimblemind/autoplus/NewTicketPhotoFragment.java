@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -203,7 +204,8 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 		{
 			ArrayList<TitledUri> allPhotos = new ArrayList<>(ptsPhotos);
 			allPhotos.addAll(partPhotos);
-			listener.onSubmit(new Ticket(uid, ptsPhotosNames, part, comment, partPhotosNames), allPhotos);
+			listener.onSubmit(new Ticket(uid, ptsPhotosNames,
+					Arrays.asList(part), comment, partPhotosNames), allPhotos);
 		}
 	}
 }
