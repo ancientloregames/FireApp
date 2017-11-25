@@ -34,10 +34,10 @@ import com.securepreferences.SecurePreferences;
 
 public class LoginActivity extends AuthActivity
 {
+	static final String EXTRA_NO_AUTOLOGIN = "extra_no_autologin";
+
 	private TextInputLayout emailContainer;
 	private TextInputLayout passwordContainer;
-
-	private static boolean firstStart = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -86,9 +86,10 @@ public class LoginActivity extends AuthActivity
 			}
 		});
 
-		if (firstStart && Utils.checkInternetConnection(this, true))
+		boolean noAutologin = getIntent().getBooleanExtra(EXTRA_NO_AUTOLOGIN, false);
+
+		if (!noAutologin && Utils.checkInternetConnection(this, true))
 		{
-			firstStart = false;
 			if (!tryAutoLogin())
 			{
 				showInterface(true);
@@ -101,7 +102,6 @@ public class LoginActivity extends AuthActivity
 	protected void onNewIntent(Intent intent)
 	{
 		super.onNewIntent(intent);
-		firstStart = false;
 		handleDeepLink(intent);
 	}
 

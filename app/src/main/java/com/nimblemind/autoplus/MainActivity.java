@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static com.nimblemind.autoplus.LoginActivity.EXTRA_NO_AUTOLOGIN;
+
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/4/2017.
@@ -63,13 +65,6 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 		});
 
 		Log.d(TAG, user.toString() + " uid: " + uid);
-
-//		new AlertDialog.Builder(this)
-//				.setTitle("Successful enter")
-//				.setMessage("uid: " + uid + "\n" + user.toString())
-//				.setPositiveButton("OK", null)
-//				.create()
-//				.show();
 
 		if (savedInstanceState == null)
 		{
@@ -134,6 +129,7 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 	{
 		FirebaseAuth.getInstance().signOut();
 		Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+		intent.putExtra(EXTRA_NO_AUTOLOGIN, true);
 		startActivity(intent);
 		finish();
 	}
