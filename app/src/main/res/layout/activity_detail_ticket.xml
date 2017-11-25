@@ -59,7 +59,7 @@
 				<ImageView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:src="@drawable/ic_car_black_24dp"
+					android:src="@drawable/asset_car"
 					android:paddingRight="@dimen/textDrawableDefaultIndent"
 					/>
 			</LinearLayout>

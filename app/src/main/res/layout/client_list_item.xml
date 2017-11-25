@@ -80,6 +80,7 @@
 					android:textStyle="bold"
 					android:textColor="@android:color/black"
 					android:textSize="18sp"
+					android:maxLines="1"
 					android:ellipsize="end"
 					android:paddingBottom="5dp"
 					/>
@@ -89,8 +90,9 @@
 					android:layout_height="wrap_content"
 					android:textColor="@android:color/black"
 					android:textSize="16sp"
-					android:drawableLeft="@drawable/ic_car_black_24dp"
-					tools:text="@string/hintAutoName"
+					android:drawableLeft="@drawable/asset_car"
+					android:drawablePadding="@dimen/textDrawableDefaultIndent"
+					tools:text="@string/hintAutoBrand"
 					/>
 				<com.nimblemind.autoplus.IconTextView
 					android:id="@+id/notificationView"
@@ -98,7 +100,8 @@
 					android:layout_height="wrap_content"
 					android:textColor="@android:color/black"
 					android:textSize="16sp"
-					android:drawableLeft="@drawable/ic_chat_empty_24dp"
+					android:drawableLeft="@drawable/asset_message_empty"
+					android:drawablePadding="@dimen/textDrawableDefaultIndent"
 					tools:text="@string/textNoNewMessages"
 					/>
 			</LinearLayout>
