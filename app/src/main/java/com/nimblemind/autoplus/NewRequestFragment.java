@@ -105,10 +105,11 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 		super.onDestroy();
 	}
 
-	protected void openList(String dbNodeName, int requestCode)
+	protected void openList(String[] dbPath, int requestCode, int searchCount)
 	{
 		Intent intent = new Intent(getActivity(), ListActivity.class);
-		intent.putExtra("dbNodeName", dbNodeName);
+		intent.putExtra(ListActivity.EXTRA_DB_PATH, dbPath);
+		intent.putExtra(ListActivity.EXTRA_SEARCH_COUNT, searchCount);
 		startActivityForResult(intent, requestCode);
 	}
 

@@ -16,7 +16,8 @@ public abstract class Request implements Parcelable
 	public final String uid;
 	public final String sid;		// Id of support member. Do it empty String for support search of open Requests!
 	public final long timestamp;	// Set on server
-	public final String autoName;
+	public final String autoBrand;
+	public final String autoModel;
 	public final String vin;
 	public final int year;
 	public final String type;
@@ -28,7 +29,8 @@ public abstract class Request implements Parcelable
 		id = 0;
 		uid = null;
 		sid = null;
-		autoName = null;
+		autoBrand = null;
+		autoModel = null;
 		timestamp = 0;
 		vin = null;
 		year = 0;
@@ -37,12 +39,13 @@ public abstract class Request implements Parcelable
 		ptsPhotos = null;
 	}
 
-	public Request(String uid, String autoName, String vin, int year)
+	public Request(String uid, String autoBrand, String autoModel, String vin, int year)
 	{
 		this.id = 0;
 		this.uid = uid;
 		this.sid = "";
-		this.autoName = autoName;
+		this.autoBrand = autoBrand;
+		this.autoModel = autoModel;
 		this.timestamp = 0;
 		this.vin = vin;
 		this.year = year;
@@ -56,7 +59,8 @@ public abstract class Request implements Parcelable
 		this.id = 0;
 		this.uid = uid;
 		this.sid = "";
-		this.autoName = null;
+		this.autoBrand = null;
+		this.autoModel = null;
 		this.timestamp = 0;
 		this.vin = null;
 		this.year = 0;
@@ -71,7 +75,8 @@ public abstract class Request implements Parcelable
 		uid = in.readString();
 		sid = in.readString();
 		timestamp = in.readLong();
-		autoName = in.readString();
+		autoBrand = in.readString();
+		autoModel = in.readString();
 		vin = in.readString();
 		year = in.readInt();
 		type = in.readString();
@@ -92,7 +97,8 @@ public abstract class Request implements Parcelable
 		dest.writeString(uid);
 		dest.writeString(sid);
 		dest.writeLong(timestamp);
-		dest.writeString(autoName);
+		dest.writeString(autoBrand);
+		dest.writeString(autoModel);
 		dest.writeString(vin);
 		dest.writeInt(year);
 		dest.writeString(type);

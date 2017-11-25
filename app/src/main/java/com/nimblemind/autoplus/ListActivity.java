@@ -37,6 +37,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ListActivity extends AppCompatActivity
 {
+	public final static String EXTRA_DB_PATH = "extra_db_path";
+	public final static String EXTRA_SEARCH_COUNT = "extra_search_count";
+
 	private ListAdapter adapter;
 
 	private DatabaseReference dbRef;
@@ -44,6 +47,8 @@ public class ListActivity extends AppCompatActivity
 	private ScheduledFuture searchTask;
 
 	private View progressBar;
+
+	private int searchCount;
 
 	private final Runnable1<List<String>> dbResultCallback = new Runnable1<List<String>>()
 	{
@@ -67,10 +72,18 @@ public class ListActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 
-		if (savedInstanceState == null)
+		Intent intent = getIntent();
+		String[] dbPath = intent.getStringArrayExtra(EXTRA_DB_PATH);
+		if (dbPath != null)
 		{
-			onFirstCreate();
+			dbRef = FirebaseDatabase.getInstance().getReference();
+			for (String segment : dbPath)
+			{
+				dbRef = dbRef.child(segment);
+			}
+			searchCount = intent.getIntExtra(EXTRA_SEARCH_COUNT, 3);
 		}
+		else throw new RuntimeException("You have to pass the dbPath to this activity!");
 
 		setContentView(R.layout.activity_list);
 
@@ -105,21 +118,6 @@ public class ListActivity extends AppCompatActivity
 		super.onDestroy();
 	}
 
-	private void onFirstCreate()
-	{
-		Intent intent = getIntent();
-		if (intent != null)
-		{
-			String dbNodeName = intent.getStringExtra("dbNodeName");
-			if (dbNodeName != null)
-			{
-				dbRef = FirebaseDatabase.getInstance().getReference().child(dbNodeName);
-			}
-			else throw new RuntimeException("You have to pass the dbNodeName to this activity!");
-		}
-		else throw new RuntimeException("You have to pass the dbNodeName to this activity!");
-	}
-
 	private void finishWithResult(String selected)
 	{
 		Intent intent = new Intent();
@@ -149,7 +147,7 @@ public class ListActivity extends AppCompatActivity
 			@Override
 			public boolean onQueryTextChange(final String newText)
 			{
-				if (!TextUtils.isEmpty(newText) && newText.length() > 2)
+				if (!TextUtils.isEmpty(newText) && newText.length() >= searchCount)
 				{
 					cancelCurrentSearchTask(false);
 					searchTask = Executors.newSingleThreadScheduledExecutor().schedule(new Runnable()
@@ -165,7 +163,7 @@ public class ListActivity extends AppCompatActivity
 									progressBar.setVisibility(View.VISIBLE);
 								}
 							});
-							populateList(dbRef, newText, dbResultCallback);
+							populateList(dbRef, newText.toUpperCase(), dbResultCallback);
 						}
 					}, 500, TimeUnit.MILLISECONDS);
 				}

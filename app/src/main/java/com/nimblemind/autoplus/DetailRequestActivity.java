@@ -109,8 +109,10 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 			Bundle args = getArguments();
 			if (args != null)
 			{
-				((TextView)view.findViewById(R.id.textAutoInfo))
-						.setText(getString(R.string.textAutoInfo, args.getString("name"), args.getInt("year")));
+				((TextView)view.findViewById(R.id.textAutoInfo)).setText(getString(R.string.textAutoInfo,
+						args.getString("autoBrand"),
+						args.getString("autoModel"),
+						args.getInt("year")));
 				((TextView)view.findViewById(R.id.textVin)).setText(args.getString("vin"));
 			}
 			else throw new RuntimeException("Auto info must be passed!");

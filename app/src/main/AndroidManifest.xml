@@ -15,6 +15,7 @@
 		android:icon="@mipmap/ic_launcher"
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:theme="@style/AppTheme"
+		android:supportsRtl="false"
 		>
 		<meta-data
 			android:name="io.fabric.ApiKey"
@@ -60,19 +61,25 @@
 
 		<activity android:name=".ClientMainActivity"
 				  android:label="@string/app_name"
+				  android:theme="@style/MainTheme"
 			/>
 		<activity android:name=".NewTicketActivity"
 				  android:label="@string/activityNewTicket"
+				  android:theme="@style/MainTheme"
 				  android:parentActivityName=".ClientMainActivity"
 			/>
 		<activity android:name=".DetailTicketActivity"
 				  android:label="@string/activityDetailTicket"
+				  android:theme="@style/MainTheme"
 				  android:parentActivityName=".ClientMainActivity"
 			/>
 		<activity android:name=".GalleryActivity"
 				  android:label="@string/activityGallery"
+				  android:theme="@style/MainTheme"
 			/>
-		<activity android:name=".ListActivity"/>
+		<activity android:name=".ListActivity"
+				  android:theme="@style/MainTheme"
+			/>
 
 		<service
 			android:name=".ImageUploadService"

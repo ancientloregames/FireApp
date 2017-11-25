@@ -1,9 +1,13 @@
 <resources>
 	<style name="SplashTheme" parent="AppTheme">
 		<item name="android:windowBackground">@drawable/splashscreen</item>
-		<item name="android:screenOrientation">portrait</item>
 		<item name="android:textColorSecondary">@color/authHint</item>
 		<!--<item name="android:windowAnimationStyle">@null</item> - Works, but stability is unknown. Use overridePendingTransition(0, 0) -->
+	</style>
+
+	<style name="MainTheme" parent="AppTheme">
+		<item name="android:textColorSecondary">@color/defaultTextHint</item>
+		<item name="colorAccent">@color/floatingButton</item>
 	</style>
 
 	<style name="AppTheme" parent="AppTheme.NoActionBar">
@@ -20,4 +24,17 @@
 	<style name="AppTheme.AppBarOverlay" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 	<style name="AppTheme.PopupOverlay" parent="Base.ThemeOverlay.AppCompat.Light"/>
+	
+	<style name="AppTheme.DefaultTextInputLayout">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginLeft">@dimen/globalActivityPadding</item>
+		<item name="android:layout_marginRight">@dimen/globalActivityPadding</item>
+	</style>
+
+	<style name="AppTheme.DefaultTextInputView">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textSize">@dimen/newRequestEditTextSize</item>
+	</style>
 </resources>

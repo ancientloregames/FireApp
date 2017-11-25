@@ -17,4 +17,7 @@
 	<!-- Main Activity -->
 	<color name="recyclerBackground">@android:color/white</color>
 	<color name="recyclerItem">#e8f1f0</color>
+
+	<color name="defaultText">#252525</color>
+	<color name="defaultTextHint">#8c8c8c</color>
 </resources>

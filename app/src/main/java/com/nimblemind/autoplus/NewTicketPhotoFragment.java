@@ -64,7 +64,7 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 				@Override
 				public void onClick(View v)
 				{
-					openList("parts", INTENT_SPARE_PART);
+					openList(new String[] { "parts" }, INTENT_SPARE_PART, 3);
 				}
 			});
 

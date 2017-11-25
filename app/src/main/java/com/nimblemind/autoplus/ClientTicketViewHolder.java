@@ -38,8 +38,8 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 				? Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm")
 				: "");
 		sparePartView.setText(ticket.spareParts.get(0));
-		autoNameView.setText(ticket.autoName != null
-				? ticket.autoName
+		autoNameView.setText(ticket.autoBrand != null
+				? ticket.autoBrand
 				: itemView.getResources().getString(R.string.textPhotoPTS));
 		notificationView.setText(itemView.getResources().getString(R.string.textNoNewMessages));
 	}

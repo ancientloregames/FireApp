@@ -24,10 +24,10 @@ class Ticket extends Request
 		partPhotos = null;
 	}
 
-	public Ticket(String uid, String autoName, String vin, int year,
+	public Ticket(String uid, String autoBrand, String autoModel, String vin, int year,
 				  List<String> spareParts, String comment, ArrayList<String> partPhotos)
 	{
-		super(uid, autoName, vin, year);
+		super(uid, autoBrand, autoModel, vin, year);
 		this.spareParts = spareParts;
 		this.comment = comment;
 		this.partPhotos = partPhotos;

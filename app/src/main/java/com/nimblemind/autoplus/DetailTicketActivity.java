@@ -35,10 +35,11 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 
 		Fragment fragment;
 		Bundle args = new Bundle();
-		if (request.autoName != null)
+		if (request.autoBrand != null)
 		{
 			fragment = new AutoTextFragment();
-			args.putString("name", request.autoName);
+			args.putString("autoBrand", request.autoBrand);
+			args.putString("autoModel", request.autoModel);
 			args.putInt("year", request.year);
 			args.putString("vin", request.vin);
 		}

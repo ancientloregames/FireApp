@@ -29,9 +29,11 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_DONE;
 
 public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 {
-	private static final int INTENT_AUTO_NAME = 102;
+	private static final int INTENT_AUTO_BRAND = 102;
+	private static final int INTENT_AUTO_MODEL = 103;
 
-	private TextInputLayout nameContainer;
+	private TextInputLayout brandContainer;
+	private TextInputLayout modelContainer;
 	private TextInputLayout vinContainer;
 	private TextInputLayout yearContainer;
 	private TextInputLayout partContainer;
@@ -40,7 +42,8 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 	private ViewGroup partsListContainer;
 	private ViewGroup partPhotosContainer;
 
-	private TextView nameView;
+	private TextView brandView;
+	private TextView modelView;
 	private TextView vinView;
 	private TextView yearView;
 	private TextView partView;
@@ -57,7 +60,8 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 
 		if (view != null)
 		{
-			nameContainer = view.findViewById(R.id.containerName);
+			brandContainer = view.findViewById(R.id.containerBrand);
+			modelContainer = view.findViewById(R.id.containerModel);
 			vinContainer = view.findViewById(R.id.containerVin);
 			yearContainer = view.findViewById(R.id.containerYear);
 			partContainer = view.findViewById(R.id.containerPart);
@@ -66,21 +70,36 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 			partsListContainer = view.findViewById(R.id.containerPartsList);
 			partPhotosContainer = view.findViewById(R.id.containerPhotosList);
 
-			nameView = view.findViewById(R.id.textName);
+			brandView = view.findViewById(R.id.textBrand);
+			modelView = view.findViewById(R.id.textModel);
 			vinView = view.findViewById(R.id.textVin);
 			yearView = view.findViewById(R.id.textYear);
 			partView = view.findViewById(R.id.textPart);
 			commentView = view.findViewById(R.id.textComment);
 
-			nameView.setInputType(InputType.TYPE_NULL);
+			brandView.setInputType(InputType.TYPE_NULL);
+			modelView.setInputType(InputType.TYPE_NULL);
 			partView.setInputType(InputType.TYPE_NULL);
 
-			nameView.setOnClickListener(new View.OnClickListener()
+			brandView.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					openList("AutoNames", INTENT_AUTO_NAME);
+					openList(new String[]{ "autoBrands" }, INTENT_AUTO_BRAND, 3);
+				}
+			});
+
+			modelView.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					String brand = brandView.getText().toString();
+					if (!brand.isEmpty())
+					{
+						openList(new String[]{ "autoModels", brand }, INTENT_AUTO_MODEL, 1);
+					}
 				}
 			});
 
@@ -89,7 +108,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 				@Override
 				public void onClick(View v)
 				{
-					openList("parts", INTENT_SPARE_PART);
+					openList(new String[]{ "parts" }, INTENT_SPARE_PART, 3);
 				}
 			});
 
@@ -120,15 +139,23 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 	{
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (resultCode == RESULT_OK)
+		if (resultCode == RESULT_OK && data != null)
 		{
-			if (requestCode == INTENT_AUTO_NAME)
+			String result = data.getStringExtra("result");
+			if (result != null)
 			{
-				nameView.setText(data.getStringExtra("result"));
-			}
-			else if (requestCode == INTENT_SPARE_PART)
-			{
-				partView.setText(data.getStringExtra("result"));
+				switch (requestCode)
+				{
+					case INTENT_AUTO_BRAND:
+						brandView.setText(result);
+						break;
+					case INTENT_AUTO_MODEL:
+						modelView.setText(result);
+						break;
+					case INTENT_SPARE_PART:
+						partView.setText(result);
+						break;
+				}
 			}
 		}
 	}
@@ -142,9 +169,12 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 	@Override
 	protected void populateWithTemplate(@NonNull Ticket template)
 	{
-		nameView.setText(template.autoName);
-		nameView.setInputType(InputType.TYPE_NULL);
-		nameView.setOnClickListener(null);
+		brandView.setText(template.autoBrand);
+		brandView.setInputType(InputType.TYPE_NULL);
+		brandView.setOnClickListener(null);
+		modelView.setText(template.autoBrand);
+		modelView.setInputType(InputType.TYPE_NULL);
+		modelView.setOnClickListener(null);
 		vinView.setText(String.valueOf(template.vin));
 		vinView.setInputType(InputType.TYPE_NULL);
 		yearView.setText(String.valueOf(template.year));
@@ -174,12 +204,14 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 		boolean valid = true;
 
 		yearContainer.setError(null);
-		nameContainer.setError(null);
+		brandContainer.setError(null);
+		modelContainer.setError(null);
 		vinContainer.setError(null);
 		partContainer.setError(null);
 		commentContainer.setError(null);
 
-		String name = nameView.getText().toString();
+		String brand = brandView.getText().toString();
+		String model = modelView.getText().toString();
 		String vin = vinView.getText().toString();
 		String part = partView.getText().toString();
 		String comment = commentView.getText().toString();
@@ -188,13 +220,18 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 		try {
 			year = Integer.valueOf(yearView.getText().toString());
 		} catch(NumberFormatException | NullPointerException e) {
-			yearContainer.setError(getString(R.string.errorInvalidField));
-			return;
+			year = 0;
 		}
 
-		if (name.isEmpty())
+		if (brand.isEmpty())
 		{
-			nameContainer.setError(getString(R.string.errorFieldRequired));
+			brandContainer.setError(getString(R.string.errorFieldRequired));
+			valid = false;
+		}
+
+		if (model.isEmpty())
+		{
+			modelContainer.setError(getString(R.string.errorFieldRequired));
 			valid = false;
 		}
 
@@ -235,7 +272,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 
 		if (valid)
 		{
-			listener.onSubmit(new Ticket(uid, name, vin, year,
+			listener.onSubmit(new Ticket(uid, brand, model, vin, year,
 					Arrays.asList(part), comment, partPhotosNames), partPhotos);
 		}
 	}

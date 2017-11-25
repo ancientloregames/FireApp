@@ -19,15 +19,6 @@
 		android:background="@color/recyclerItem"
 		>
 
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingTop="@dimen/globalActivityPadding"
-			android:paddingLeft="@dimen/globalActivityPadding"
-			android:textSize="20sp"
-			android:text="@string/textInputSwitcher"
-			/>
-
 		<android.support.design.widget.TabLayout
 			android:id="@+id/tabs"
 			android:layout_width="match_parent"
