@@ -108,10 +108,10 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	}
 
 	@Override
-	public void onPause()
+	public void onStop()
 	{
 		adapter.stopListening();
-		super.onPause();
+		super.onStop();
 	}
 
 	protected void showRequestDetails(@NonNull Request request)
