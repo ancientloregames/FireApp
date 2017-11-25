@@ -34,7 +34,9 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 
 	public void bindToData(Ticket ticket)
 	{
-		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm"));
+		infoView.setText(ticket.timestamp > 0
+				? Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm")
+				: "");
 		sparePartView.setText(ticket.partType);
 		autoNameView.setText(ticket.autoName != null
 				? ticket.autoName
