@@ -10,12 +10,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
 
 public abstract class NewRequestActivity extends AppCompatActivity implements NewRequestFragment.Listener<Request>
 {
+	protected enum Mode{ DEFAULT, PHOTO_BASED, TEXT_BASED }
+	protected Mode mode = Mode.DEFAULT;
+
+	protected String uid;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -26,6 +32,18 @@ public abstract class NewRequestActivity extends AppCompatActivity implements Ne
 		setSupportActionBar(toolbar);
 		setTitle(getActivityTitle());
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+		Intent intent = getIntent();
+		if (intent.hasExtra("uid"))
+		{
+			uid = intent.getStringExtra("uid");
+			if (intent.hasExtra("template"))
+			{
+				Ticket template = intent.getParcelableExtra("template");
+				mode = template.autoBrand != null ? Mode.TEXT_BASED : Mode.PHOTO_BASED;
+			}
+		}
+		else throw new RuntimeException("The Uid must be passed in order to create new ticket");
 
 		FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
 			private final TitledFragment[] fragments = getFragments();
@@ -46,7 +64,11 @@ public abstract class NewRequestActivity extends AppCompatActivity implements Ne
 		ViewPager pager = findViewById(R.id.container);
 		pager.setAdapter(adapter);
 		TabLayout tabLayout = findViewById(R.id.tabs);
-		tabLayout.setupWithViewPager(pager);
+		if (mode == Mode.DEFAULT)
+		{
+			tabLayout.setupWithViewPager(pager);
+		}
+		else tabLayout.setVisibility(View.GONE);
 	}
 
 	@Override

@@ -19,6 +19,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
+import static com.nimblemind.autoplus.RequestsFragment.INTENT_NEW_REQUEST;
+
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/25/2017.
@@ -26,6 +28,8 @@ import java.util.List;
 
 public abstract class DetailRequestActivity<MODEL extends Request> extends AppCompatActivity
 {
+	public final static String ACTION_NEW_REQUEST = "action_new_request";
+
 	protected String uid;
 
 	protected MODEL request;
@@ -64,6 +68,14 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 				.getReference("photos").child(uid).child(request.storageFolder);
 
 		populateForm(request);
+	}
+
+	protected void createNewOnThis()
+	{
+		Intent intent = new Intent();
+		intent.putExtra("request", request);
+		setResult(RESULT_OK, intent);
+		finish();
 	}
 
 	protected abstract void populateForm(MODEL request);
@@ -113,7 +125,8 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 						args.getString("autoBrand"),
 						args.getString("autoModel"),
 						args.getInt("year")));
-				((TextView)view.findViewById(R.id.textVin)).setText(args.getString("vin"));
+				((TextView)view.findViewById(R.id.textVin)).setText(getString(R.string.textAutoVin,
+					args.getString("vin")));
 			}
 			else throw new RuntimeException("Auto info must be passed!");
 		}

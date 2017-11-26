@@ -10,10 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -33,6 +37,8 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 
 	private ViewGroup partPhotosContainer;
 	private ViewGroup ptsPhotosContainer;
+
+	private View ptsPhotoButton;
 
 	private TextView partView;
 	private TextView commentView;
@@ -68,7 +74,8 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 				}
 			});
 
-			view.findViewById(R.id.buttonAddPTSPhoto).setOnClickListener(new View.OnClickListener()
+			ptsPhotoButton = view.findViewById(R.id.buttonAddPTSPhoto);
+			ptsPhotoButton.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View view)
@@ -108,14 +115,7 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 		{
 			if (requestCode == INTENT_ADD_PTS_PHOTO)
 			{
-				Uri imageUri = data.getData();
-				if (imageUri != null)
-				{
-					String name = String.valueOf(System.currentTimeMillis());
-					ptsPhotos.add(new TitledUri(name, imageUri));
-					ptsPhotosNames.add(name);
-					onPtsPhotoRecieved(imageUri);
-				}
+				onPtsPhotoRecieved(data.getData());
 			}
 			else if (requestCode == INTENT_SPARE_PART)
 			{
@@ -133,29 +133,44 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 	@Override
 	protected void populateWithTemplate(@NonNull Ticket template)
 	{
-		// TODO compile 'com.firebaseui:firebase-ui-storage:3.1.0'
-		// FirebaseStorage.getInstance().getReference("photos").child(uid).child(template.ptsFolder);
+		ptsPhotoButton.setOnClickListener(null);
+		StorageReference requestStorageRef = FirebaseStorage.getInstance()
+				.getReference("photos").child(uid).child(template.storageFolder);
+		for (String image : template.ptsPhotos)
+		{
+			GlideApp.with(this)
+					.asFile()
+					.load(requestStorageRef.child(image))
+					.into(new SimpleTarget<File>()
+					{
+						@Override
+						public void onResourceReady(File file, Transition<? super File> transition)
+						{
+							onPtsPhotoRecieved(Uri.fromFile(file));
+						}
+					});
+		}
 	}
 
 	private void onPtsPhotoRecieved(Uri uri)
 	{
-		ImageView imageView = new ImageView(getContext());
-		imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, photoMaxSize));
-		imageView.setPadding(30,30,30,30);
-		imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		imageView.setAdjustViewBounds(true);
+		if (uri == null)
+			return;
+
+		final ImageView imageView = (ImageView) getLayoutInflater()
+				.inflate(R.layout.horizontal_gallery_item, ptsPhotosContainer,false);
+		String name = String.valueOf(System.currentTimeMillis());
 		imageView.setImageURI(uri);
 		ptsPhotosContainer.addView(imageView);
+		ptsPhotos.add(new TitledUri(name, uri));
+		ptsPhotosNames.add(name);
 	}
 
 	@Override
 	protected void onPartPhotoRecieved(Uri uri)
 	{
-		ImageView imageView = new ImageView(getContext());
-		imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, photoMaxSize));
-		imageView.setPadding(30,30,30,30);
-		imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		imageView.setAdjustViewBounds(true);
+		final ImageView imageView = (ImageView) getLayoutInflater()
+				.inflate(R.layout.horizontal_gallery_item, partPhotosContainer,false);
 		imageView.setImageURI(uri);
 		partPhotosContainer.addView(imageView);
 	}

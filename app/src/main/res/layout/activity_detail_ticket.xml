@@ -80,6 +80,8 @@
 					android:paddingBottom="@dimen/recyclerItemPadding"
 					android:textSize="14sp"
 					android:ellipsize="end"
+					android:visibility="gone"
+					tools:visibility="visible"
 					tools:text="@string/hintComment"
 					/>
 

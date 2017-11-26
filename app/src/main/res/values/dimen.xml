@@ -33,6 +33,8 @@
 	<dimen name="newRequestFormItemVerticalIndent">10dp</dimen>
 	
 	<dimen name="newRequestEditTextSize">16sp</dimen>
-	
+
+	<dimen name="detailRequestTextSize">17sp</dimen>
+
 	<dimen name="defaultDividerSize">3dp</dimen>
 </resources>

@@ -18,6 +18,7 @@
 			android:text="@string/hintPTSPhoto"
 			android:focusable="false"
 			android:drawableRight="@drawable/ic_camera"
+			android:textSize="@dimen/newRequestEditTextSize"
 			android:hint="@string/hintImage"
 			style="@style/AppTheme.DefaultTextInputLayout"
 			/>
@@ -70,6 +71,7 @@
 			android:text="@string/hintImage"
 			android:focusable="false"
 			android:drawableRight="@drawable/ic_camera"
+			android:textSize="@dimen/newRequestEditTextSize"
 			android:hint="@string/hintImage"
 			style="@style/AppTheme.DefaultTextInputLayout"
 			/>

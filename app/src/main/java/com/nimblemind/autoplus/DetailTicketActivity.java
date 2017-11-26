@@ -2,6 +2,7 @@ package com.nimblemind.autoplus;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,15 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 		partView = findViewById(R.id.textAutoPart);
 		commentView = findViewById(R.id.textComment);
 		partPhotosContainer = findViewById(R.id.partPhotoContainer);
+
+		findViewById(R.id.newRequestButton).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				createNewOnThis();
+			}
+		});
 	}
 
 	@Override
@@ -31,7 +41,11 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 	{
 		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm"));
 		partView.setText(ticket.spareParts.get(0));
-		commentView.setText(ticket.comment);
+		if (!ticket.comment.isEmpty())
+		{
+			commentView.setText(ticket.comment);
+			commentView.setVisibility(View.VISIBLE);
+		}
 
 		Fragment fragment;
 		Bundle args = new Bundle();

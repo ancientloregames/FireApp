@@ -172,16 +172,13 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 		brandView.setText(template.autoBrand);
 		brandView.setInputType(InputType.TYPE_NULL);
 		brandView.setOnClickListener(null);
-		modelView.setText(template.autoBrand);
+		modelView.setText(template.autoModel);
 		modelView.setInputType(InputType.TYPE_NULL);
 		modelView.setOnClickListener(null);
 		vinView.setText(String.valueOf(template.vin));
 		vinView.setInputType(InputType.TYPE_NULL);
 		yearView.setText(String.valueOf(template.year));
 		yearView.setInputType(InputType.TYPE_NULL);
-		commentView.setText(template.comment);
-		commentView.setInputType(InputType.TYPE_NULL);
-		commentView.setFocusable(false);
 		partView.setImeOptions(IME_ACTION_DONE);
 	}
 

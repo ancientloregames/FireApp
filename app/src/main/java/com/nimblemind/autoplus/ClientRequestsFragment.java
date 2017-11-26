@@ -63,6 +63,14 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 				ArrayList<TitledUri> images = data.getParcelableArrayListExtra("images");
 				sendRequest(newRequest, images);
 			}
+			else if (requestCode == INTENT_REQUEST_DETAILS)
+			{
+				MODEL request = data.getParcelableExtra("request");
+				if (request != null)
+				{
+					createNewRequest(request);
+				}
+			}
 		}
 	}
 

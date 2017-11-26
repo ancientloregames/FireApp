@@ -109,6 +109,7 @@
 			android:focusable="false"
 			android:drawableRight="@drawable/ic_camera"
 			android:hint="@string/hintImage"
+			android:textSize="@dimen/newRequestEditTextSize"
 			style="@style/AppTheme.DefaultTextInputLayout"
 			/>
 		<HorizontalScrollView

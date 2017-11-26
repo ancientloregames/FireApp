@@ -112,6 +112,7 @@
 	<string name="activityDetailTicket">Ticket Answers</string>
 	
 	<string name="textAutoInfo">%1$s %2$s, %3$d</string>
+	<string name="textAutoVin">VIN: %s</string>
 
 	<!-- Gallery Activity -->
 	<string name="activityGallery">Gallery</string>
