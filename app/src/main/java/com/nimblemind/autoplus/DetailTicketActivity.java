@@ -1,11 +1,16 @@
 package com.nimblemind.autoplus;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+
+import java.io.File;
 
 
 public class DetailTicketActivity extends DetailRequestActivity<Ticket>
@@ -72,12 +77,28 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 
 		for (String image : ticket.partPhotos)
 		{
-			ImageView imageView = (ImageView) getLayoutInflater()
+			final ImageView imageView = (ImageView) getLayoutInflater()
 					.inflate(R.layout.horizontal_gallery_item, partPhotosContainer,false);
 			partPhotosContainer.addView(imageView);
 			GlideApp.with(this)
+					.asFile()
 					.load(requestStorageRef.child(image))
-					.into(imageView);
+					.into(new SimpleTarget<File>()
+					{
+						@Override
+						public void onResourceReady(final File file, Transition<? super File> transition)
+						{
+							imageView.setImageURI(Uri.fromFile(file));
+							imageView.setOnClickListener(new View.OnClickListener()
+							{
+								@Override
+								public void onClick(View v)
+								{
+									Utils.openImage(DetailTicketActivity.this, file);
+								}
+							});
+						}
+					});
 		}
 	}
 

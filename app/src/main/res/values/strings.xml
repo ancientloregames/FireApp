@@ -114,6 +114,8 @@
 	<string name="textAutoInfo">%1$s %2$s, %3$d</string>
 	<string name="textAutoVin">VIN: %s</string>
 
+	<string name="textNoImageViewer">You don\'t have any App to open image</string>
+
 	<!-- Gallery Activity -->
 	<string name="activityGallery">Gallery</string>
 	<string name="activityCamera">Camera</string>

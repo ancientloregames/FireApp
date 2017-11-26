@@ -1,6 +1,7 @@
 package com.nimblemind.autoplus;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -14,12 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.List;
-
-import static com.nimblemind.autoplus.RequestsFragment.INTENT_NEW_REQUEST;
 
 
 /**
@@ -162,12 +164,28 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 				List<String> images = args.getStringArrayList("images");
 				for (String image : images)
 				{
-					ImageView imageView = (ImageView) getLayoutInflater()
+					final ImageView imageView = (ImageView) getLayoutInflater()
 							.inflate(R.layout.horizontal_gallery_item, container, false);
 					container.addView(imageView);
 					GlideApp.with(getContext())
+							.asFile()
 							.load(requestStorageRef.child(image))
-							.into(imageView);
+							.into(new SimpleTarget<File>()
+							{
+								@Override
+								public void onResourceReady(final File file, Transition<? super File> transition)
+								{
+									imageView.setImageURI(Uri.fromFile(file));
+									imageView.setOnClickListener(new View.OnClickListener()
+									{
+										@Override
+										public void onClick(View v)
+										{
+											Utils.openImage(getActivity(), file);
+										}
+									});
+								}
+							});
 				}
 			}
 			else throw new RuntimeException("Auto info must be passed (uid, requestId, images)!");
