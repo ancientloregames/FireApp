@@ -30,8 +30,6 @@ import java.util.List;
 
 public abstract class DetailRequestActivity<MODEL extends Request> extends AppCompatActivity
 {
-	public final static String ACTION_NEW_REQUEST = "action_new_request";
-
 	protected String uid;
 
 	protected MODEL request;
@@ -46,7 +44,6 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		setTitle(getActivityTitle());
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
@@ -69,6 +66,7 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 		requestStorageRef = FirebaseStorage.getInstance()
 				.getReference("photos").child(uid).child(request.storageFolder);
 
+		setTitle(getString(R.string.activityDetailTicketTitle, request.id));
 		populateForm(request);
 	}
 

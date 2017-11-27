@@ -1,10 +1,10 @@
 <resources>
-	<string name="app_name">Auto+</string>
+	<string name="app_name" translatable="false">Auto+</string>
 
 	<!-- Common -->
-	<string name="textOK">OK</string>
+	<string name="textOK" translatable="false">OK</string>
 	<string name="textClose">Close</string>
-	<string name="textSearch">Search</string>
+	<string name="textSearch">Search…</string>
 	<string name="textUploading">Uploading…</string>
 
 	<!-- Auth Activities -->
@@ -27,8 +27,7 @@
 	<string name="dialogVerificationButtonEnter">Enter</string>
 
 	<string name="dialogAgreementTitle">User agreement</string>
-	<string name="dialogAgreementMessage">DUMMY</string>
-	<string name="dialogAgreementButtonOk">Close</string>
+	<string name="dialogAgreementMessage" translatable="false">DUMMY</string>
 
 	<string name="hintEmail">Email</string>
 	<string name="hintName">Name</string>
@@ -39,7 +38,6 @@
 	<string name="buttonLogin">Log In</string>
 	<string name="buttonLogOut">Log Out</string>
 	<string name="buttonGotoSignup">I don\'t have an account</string>
-	<string name="buttonGotoLogin">I have an account</string>
 	
 	<string name="buttonSendResetEmail">Send reset email</string>
 
@@ -62,8 +60,6 @@
 	<string name="fragmentClientRequestListName">My requests</string>
 	<string name="fragmentClientTicketListName">My tickets</string>
 
-	<string name="textRequestInfo">Request №%1$d of %2$s</string>
-	<string name="textListTimestamp">Request №%1$d of %2$s</string>
 	<string name="textNoNewMessages">No new messages</string>
 	<string name="textPhotoPTS">PTS photo granted</string>
 	
@@ -84,8 +80,6 @@
 	<string name="activityNewRequest">New Request</string>
 	<string name="activityNewTicket">New Ticket</string>
 
-	<string name="textInputSwitcher">Input type:</string>
-
 	<string name="hintAutoBrand">auto brand</string>
 	<string name="hintAutoModel">auto model</string>
 	<string name="hintAutoYear">year</string>
@@ -101,7 +95,6 @@
 	<string name="errorPhotoRequered">Photo must be uploaded</string>
 	<string name="errorPhotoNotRecieved">Taking picture failed</string>
 
-	<string name="textUnloading">Uploading…</string>
 	<string name="textUploadSuccess">Upload finished</string>
 	<string name="textUploadFailure">Upload failed</string>
 	
@@ -109,11 +102,11 @@
 	<string name="textNewRequestPhotoMode">With Photo</string>
 
 	<!-- Request Details Activity -->
-	<string name="activityRequestDetails">Request Answers</string>
-	<string name="activityDetailTicket">Ticket Answers</string>
-	
-	<string name="textAutoInfo">%1$s %2$s, %3$d</string>
-	<string name="textAutoVin">VIN: %s</string>
+	<string name="activityDetailTicket">Ticket</string>
+	<string name="activityDetailTicketTitle">Ticket №%d</string>
+
+	<string name="textAutoInfo" translatable="false">%1$s %2$s, %3$d</string>
+	<string name="textAutoVin" translatable="false">VIN: %s</string>
 
 	<string name="textNoImageViewer">You don\'t have any App to open image</string>
 
@@ -123,10 +116,10 @@
 
 	<string name="textTakePhoto">Take Photo</string>
 
-	<string name="photoPrefix">Auto_plus</string>
+	<string name="photoPrefix" translatable="false">Auto_plus</string>
 
 	<!-- Permissions -->
 	<string name="textRationaleTitle">Permission requered</string>
-	<string name="textRationaleMessageCamera">To take photos, the app needs your permission to use camera and write the result to Pictures folder</string>
+	<string name="textRationaleMessageCamera" translatable="false">To take photos, the app needs your permission to use camera and write the result to Pictures folder</string>
 	<string name="textRationaleMessageStorage">To pick image from you gallery, the app needs your permission to read storage</string>
 </resources>

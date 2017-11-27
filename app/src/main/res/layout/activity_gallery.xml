@@ -3,6 +3,7 @@
 			  xmlns:tools="http://schemas.android.com/tools"
 			  android:layout_width="match_parent"
 			  android:layout_height="match_parent"
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
 			  android:orientation="vertical"
 			  android:fitsSystemWindows="true"
 			  android:background="@color/colorPrimary"
@@ -18,11 +19,15 @@
 		android:background="@android:color/white"
 		>
 
-		<Button
+		<android.support.v7.widget.AppCompatButton
 			android:id="@+id/buttonTakePhoto"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_gravity="center"
 			android:text="@string/textTakePhoto"
+			android:textStyle="bold"
+			android:textColor="@android:color/white"
+			app:backgroundTint="@color/floatingButton"
 			/>
 
 		<android.support.v7.widget.RecyclerView

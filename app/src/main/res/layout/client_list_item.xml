@@ -110,7 +110,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:gravity="right"
-				tools:text="@string/textRequestInfo"
+				tools:text="01 January, 12:00"
 				android:textColor="@color/mainNewRequestButton"
 				/>
 		</LinearLayout>

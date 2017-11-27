@@ -188,7 +188,7 @@ public class SignupActivity extends AuthActivity
 		new AlertDialog.Builder(SignupActivity.this)
 				.setTitle(getString(R.string.dialogAgreementTitle))
 				.setMessage(getString(R.string.dialogAgreementMessage))
-				.setPositiveButton(getString(R.string.dialogAgreementButtonOk), null)
+				.setPositiveButton(getString(R.string.textClose), null)
 				.create()
 				.show();
 	}

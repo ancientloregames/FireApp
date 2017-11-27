@@ -83,7 +83,7 @@ public class ImageUploadService extends BasicService
 		Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
 		taskStarted();
-		showProgressNotification(getString(R.string.textUnloading), 0, 0);
+		showProgressNotification(getString(R.string.textUploading), 0, 0);
 
 		Bitmap bitmap = resizeImage(MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri));
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -104,7 +104,7 @@ public class ImageUploadService extends BasicService
 					@Override
 					public void onProgress(UploadTask.TaskSnapshot taskSnapshot)
 					{
-						showProgressNotification(getString(R.string.textUnloading),
+						showProgressNotification(getString(R.string.textUploading),
 								taskSnapshot.getBytesTransferred(),
 								taskSnapshot.getTotalByteCount());
 					}
