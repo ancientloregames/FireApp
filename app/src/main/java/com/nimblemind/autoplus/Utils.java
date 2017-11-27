@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
+import android.support.media.ExifInterface;
 import android.support.v4.content.FileProvider;
 import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
@@ -94,6 +97,43 @@ public class Utils
 		}
 
 		return inSampleSize;
+	}
+
+	public static Bitmap fixImageRotation(ContentResolver resolver, Bitmap img, Uri selectedImage) throws IOException
+	{
+		InputStream input = resolver.openInputStream(selectedImage);
+		ExifInterface ei;
+		if (Build.VERSION.SDK_INT > 23)
+		{
+			ei = new ExifInterface(input);
+		}
+		else
+		{
+			ei = new ExifInterface(selectedImage.getPath());
+		}
+
+		int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+		switch (orientation)
+		{
+			case ExifInterface.ORIENTATION_ROTATE_90:
+				return rotateImage(img, 90);
+			case ExifInterface.ORIENTATION_ROTATE_180:
+				return rotateImage(img, 180);
+			case ExifInterface.ORIENTATION_ROTATE_270:
+				return rotateImage(img, 270);
+			default:
+				return img;
+		}
+	}
+
+	public static Bitmap rotateImage(Bitmap img, int degree)
+	{
+		Matrix matrix = new Matrix();
+		matrix.postRotate(degree);
+		Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+		img.recycle();
+		return rotatedImg;
 	}
 
 	public static String getDate(long time, String format)

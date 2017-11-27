@@ -82,6 +82,7 @@ public class ImageUploadService extends BasicService
 		taskStarted();
 		showProgressNotification(getString(R.string.textUploading), 0, 0);
 		Bitmap bitmap = Utils.decodeSampledBitmapFromUri(getContentResolver(), fileUri, 1024 , 1024);
+		bitmap = Utils.fixImageRotation(getContentResolver(), bitmap, fileUri);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
 
