@@ -5,6 +5,7 @@
 	<string name="textOK">OK</string>
 	<string name="textClose">Close</string>
 	<string name="textSearch">Search</string>
+	<string name="textUploading">Uploading…</string>
 
 	<!-- Auth Activities -->
 	<string name="activitySignup">Sign Up</string>

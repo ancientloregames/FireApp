@@ -1,5 +1,6 @@
 package com.nimblemind.autoplus;
 
+import android.content.res.Resources;
 import android.view.View;
 import android.widget.TextView;
 import com.nimblemind.autoplus.swipereveallayout.SwipeRevealLayout;
@@ -19,9 +20,18 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 	View cancelDeletionButton;
 	View itemLayout;
 
+	private static String textUploading;
+	private static String textPtsPhoto;
+	private static String textNoNewMessages;
+
 	public ClientTicketViewHolder(View itemView)
 	{
 		super(itemView);
+
+		Resources res = itemView.getContext().getResources();
+		textUploading = res.getString(R.string.textUploading);
+		textPtsPhoto = res.getString(R.string.textPhotoPTS);
+		textNoNewMessages = res.getString(R.string.textNoNewMessages);
 
 		itemLayout = itemView.findViewById(R.id.itemLayout);
 		infoView = itemView.findViewById(R.id.infoView);
@@ -36,12 +46,12 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 	{
 		infoView.setText(ticket.timestamp > 0
 				? Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm")
-				: "");
+				: textUploading);
 		sparePartView.setText(ticket.spareParts.get(0));
 		autoNameView.setText(ticket.autoBrand != null
 				? ticket.autoBrand
-				: itemView.getResources().getString(R.string.textPhotoPTS));
-		notificationView.setText(itemView.getResources().getString(R.string.textNoNewMessages));
+				: textPtsPhoto);
+		notificationView.setText(textNoNewMessages);
 	}
 
 	public SwipeRevealLayout getView()

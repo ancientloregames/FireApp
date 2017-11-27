@@ -29,8 +29,10 @@ abstract class RequestsAdapter<MODEL extends Request, HOLDER extends RequestView
 	protected void onBindViewHolder(HOLDER holder, int position, MODEL model)
 	{
 		holder.bindToData(model);
-
-		bindItem(holder, model);
+		if(model.timestamp != 0)
+		{
+			bindItem(holder, model);
+		}
 	}
 
 	@Override
