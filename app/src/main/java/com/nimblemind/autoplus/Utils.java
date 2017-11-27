@@ -1,9 +1,12 @@
 package com.nimblemind.autoplus;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -26,6 +29,7 @@ import io.fabric.sdk.android.Fabric;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
@@ -51,6 +55,45 @@ public class Utils
 			context.startActivity(intent);
 		}
 		else Toast.makeText(context, context.getString(R.string.textNoImageViewer) , Toast.LENGTH_SHORT).show();
+	}
+
+	public static Bitmap decodeSampledBitmapFromUri(ContentResolver resolver, Uri uri, int reqWidth, int reqHeight) throws IOException
+	{
+		InputStream input = resolver.openInputStream(uri);
+		// First decode with inJustDecodeBounds=true to check dimensions
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeStream(input, null, options);
+		input.close();
+		// Calculate inSampleSize
+		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+		// Decode bitmap with inSampleSize set
+		options.inJustDecodeBounds = false;
+		input = resolver.openInputStream(uri);
+		Bitmap bitmap = BitmapFactory.decodeStream(input, null, options);
+		input.close();
+		return bitmap;
+	}
+
+	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)
+	{
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
+
+		if (height > reqHeight || width > reqWidth)
+		{
+			final int halfHeight = height / 2;
+			final int halfWidth = width / 2;
+			// Calculate the largest inSampleSize value that is a power of 2 and keeps both
+			// height and width larger than the requested height and width.
+			while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth)
+			{
+				inSampleSize *= 2;
+			}
+		}
+
+		return inSampleSize;
 	}
 
 	public static String getDate(long time, String format)

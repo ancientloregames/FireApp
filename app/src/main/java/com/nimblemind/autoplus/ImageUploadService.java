@@ -5,7 +5,6 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -39,8 +38,6 @@ public class ImageUploadService extends BasicService
 	public static final String EXTRA_DOWNLOAD_URL = "extra_download_url";
 
 	private StorageReference storagePhotoRef;
-
-	private final int maxSize = 1270;
 
 	@Override
 	public void onCreate()
@@ -84,8 +81,7 @@ public class ImageUploadService extends BasicService
 
 		taskStarted();
 		showProgressNotification(getString(R.string.textUploading), 0, 0);
-
-		Bitmap bitmap = resizeImage(MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri));
+		Bitmap bitmap = Utils.decodeSampledBitmapFromUri(getContentResolver(), fileUri, 1024 , 1024);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
 
@@ -148,26 +144,6 @@ public class ImageUploadService extends BasicService
 				.putExtra(EXTRA_IMAGES, fileUri);
 		return LocalBroadcastManager.getInstance(getApplicationContext())
 				.sendBroadcast(broadcast);
-	}
-
-	private Bitmap resizeImage(Bitmap bitmap)
-	{
-		Bitmap result = bitmap;
-		if (bitmap.getHeight() > maxSize || bitmap.getWidth() > maxSize)
-		{
-			if (bitmap.getHeight() > bitmap.getWidth())
-			{
-				float aspectRatio = bitmap.getWidth() / (float) bitmap.getHeight();
-				result = Bitmap.createScaledBitmap(bitmap, (int) (maxSize * aspectRatio), maxSize, false);
-			}
-			else
-			{
-				float aspectRatio = bitmap.getHeight() / (float) bitmap.getWidth();
-				result = Bitmap.createScaledBitmap(bitmap, maxSize, (int) (maxSize * aspectRatio), false);
-			}
-		}
-
-		return result;
 	}
 
 	private void showUploadFinishedNotification(@Nullable Uri downloadUrl, @Nullable Uri fileUri)

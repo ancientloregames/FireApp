@@ -229,7 +229,7 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 	private void launchCamera()
 	{
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		File file = new File(getCacheDir().getPath(),
+		File file = new File(getFilesDir().getPath(),
 				String.valueOf(System.currentTimeMillis()) +".jpg");
 		photoUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, file);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
