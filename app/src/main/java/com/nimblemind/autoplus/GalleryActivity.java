@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,7 +41,9 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 	private final int CODE_REQUEST_STORAGE = 101;
 	private final int CODE_REQUEST_CAMERA = 102;
 
-	GalleryAdapter adapter;
+	private GalleryAdapter adapter;
+
+	private Uri photoUri;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -91,7 +94,7 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 		if (requestCode == CODE_INTENT_CAMERA && resultCode == RESULT_OK)
 		{
 			Intent intent = new Intent();
-			intent.setData(data.getData());
+			intent.setData(photoUri);
 			setResult(RESULT_OK, intent);
 			finish();
 		}
@@ -226,8 +229,14 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 	private void launchCamera()
 	{
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		startActivityForResult(intent, CODE_INTENT_CAMERA);
-//		Intent intent = new Intent(this, CameraActivity.class);
-//		startActivityForResult(intent, CODE_INTENT_CAMERA);
+		File file = new File(getCacheDir().getPath(),
+				String.valueOf(System.currentTimeMillis()) +".jpg");
+		photoUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, file);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+		intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		if (intent.resolveActivity(getPackageManager()) != null)
+		{
+			startActivityForResult(intent, CODE_INTENT_CAMERA);
+		}
 	}
 }
