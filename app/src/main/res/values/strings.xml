@@ -101,6 +101,10 @@
 	<string name="textNewRequestTextMode">With Text</string>
 	<string name="textNewRequestPhotoMode">With Photo</string>
 
+	<!-- List Activity -->
+	<string name="textEmptyResult">No matches were found in the database</string>
+	<string name="textAddSparePart">Use entered data</string>
+
 	<!-- Request Details Activity -->
 	<string name="activityDetailTicket">Ticket</string>
 	<string name="activityDetailTicketTitle">Ticket №%d</string>

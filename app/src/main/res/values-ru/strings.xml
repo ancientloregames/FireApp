@@ -78,4 +78,6 @@
 	<string name="errorAuthEmail">Ошибка при отправке письма</string>
 	<string name="activityDetailTicket">Заявки</string>
 	<string name="activityDetailTicketTitle">Заявка №%d</string>
+	<string name="textEmptyResult">Совпадений в базе не найдено</string>
+	<string name="textAddSparePart">Использовать введенные данные</string>
 </resources>

@@ -48,7 +48,11 @@ public class ListActivity extends AppCompatActivity
 
 	private View progressBar;
 
+	private View emptyResultView;
+
 	private int searchCount;
+
+	private String searchText;
 
 	private final Runnable1<List<String>> dbResultCallback = new Runnable1<List<String>>()
 	{
@@ -60,6 +64,7 @@ public class ListActivity extends AppCompatActivity
 				@Override
 				public void run()
 				{
+					emptyResultView.setVisibility(View.GONE);
 					progressBar.setVisibility(View.GONE);
 					adapter.setItems(list);
 				}
@@ -92,6 +97,15 @@ public class ListActivity extends AppCompatActivity
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		progressBar = findViewById(R.id.progressBarContainer);
+		emptyResultView = findViewById(R.id.addButtonContainer);
+		emptyResultView.findViewById(R.id.buttonAdd).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				finishWithResult(searchText);
+			}
+		});
 
 		RecyclerView recycler = findViewById(R.id.recycler);
 
@@ -163,7 +177,8 @@ public class ListActivity extends AppCompatActivity
 									progressBar.setVisibility(View.VISIBLE);
 								}
 							});
-							populateList(dbRef, newText.toUpperCase(), dbResultCallback);
+							searchText = newText.toUpperCase();
+							populateList(dbRef, searchText, dbResultCallback);
 						}
 					}, 500, TimeUnit.MILLISECONDS);
 				}
@@ -196,13 +211,25 @@ public class ListActivity extends AppCompatActivity
 			public void onDataChange(DataSnapshot dataSnapshot)
 			{
 				List<String> items = FirebaseUtils.snapshotToList(dataSnapshot, String.class);
-				callback.run(items);
+				if (!items.isEmpty())
+				{
+					callback.run(items);
+				}
+				else runOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						emptyResultView.setVisibility(View.VISIBLE);
+						progressBar.setVisibility(View.GONE);
+					}
+				});
 			}
 
 			@Override
 			public void onCancelled(DatabaseError databaseError)
 			{
-				databaseError.toException().printStackTrace();
+				Utils.trySendFabricReport("ListActivity.populateList(): filter = " + filter, databaseError.toException());
 			}
 		});
 	}

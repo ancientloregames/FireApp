@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
 			  android:layout_width="match_parent"
 			  android:layout_height="match_parent"
 			  android:fitsSystemWindows="true"
@@ -21,11 +22,40 @@
 			android:layout_height="match_parent"
 			/>
 
+		<LinearLayout
+			android:id="@+id/addButtonContainer"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:gravity="center_horizontal"
+			android:background="@color/recyclerItem"
+			android:visibility="gone"
+			>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingTop="@dimen/newRequestFormItemVerticalIndent"
+				android:text="@string/textEmptyResult"
+				/>
+
+			<android.support.v7.widget.AppCompatButton
+				android:id="@+id/buttonAdd"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/newRequestFormItemVerticalIndent"
+				android:text="@string/textAddSparePart"
+				android:textStyle="bold"
+				android:textColor="@android:color/white"
+				app:backgroundTint="@color/floatingButton"
+				/>
+		</LinearLayout>
+
 		<FrameLayout
 			android:id="@+id/progressBarContainer"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:background="@android:color/white"
+			android:background="@color/recyclerItem"
 			android:clickable="true"
 			android:focusable="true"
 			android:visibility="gone"
