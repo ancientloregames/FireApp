@@ -86,7 +86,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 				@Override
 				public void onClick(View v)
 				{
-					openList(new String[]{ "autoBrands" }, INTENT_AUTO_BRAND, 3);
+					openList(new String[]{ "autoBrands" }, INTENT_AUTO_BRAND, 2);
 				}
 			});
 

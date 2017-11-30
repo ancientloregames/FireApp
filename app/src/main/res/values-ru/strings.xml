@@ -9,8 +9,8 @@
 	<string name="buttonSignup">Зарегистрироваться</string>
 	<string name="buttonPassRecovery">Забыли пароль?</string>
 	<string name="activityVerification">Подтверждение почты</string>
-	<string name="textVerificationSuccessMessage">Письмо с подтвержданием было отправлено на E-Mail адрес:</string>
-	<string name="textVerificationFailedMessage">Не удалось отпрвить письмо с подтвеждением на E-Mail адрес:</string>
+	<string name="textVerificationSuccessMessage">Письмо с подтверждением было отправлено на E-Mail адрес:</string>
+	<string name="textVerificationFailedMessage">Не удалось отправить письмо с подтверждением на E-Mail адрес:</string>
 	<string name="buttonVerificationRepeat">Выслать еще раз</string>
 	<string name="buttonVerificationFinish">Завершить</string>
 	<string name="dialogVerificationSuccessTitle">Поздравляем!</string>
@@ -80,4 +80,7 @@
 	<string name="activityDetailTicketTitle">Заявка №%d</string>
 	<string name="textEmptyResult">Совпадений в базе не найдено</string>
 	<string name="textAddSparePart">Использовать введенные данные</string>
+	<string name="app_name">ПлюсАвто</string>
+	<string name="textSendResetPassSuccess">Ссылка для сброса пароля была отправлена на E-Mail адрес:\n%s</string>
+	<string name="textSendResetPassFailure">Не удалось отправить ссылку для сброса пароля на E-Mail адрес:\n%s</string>
 </resources>

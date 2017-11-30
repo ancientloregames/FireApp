@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name" translatable="false">Auto+</string>
+	<string name="app_name">PlusAuto</string>
 
 	<!-- Common -->
 	<string name="textOK" translatable="false">OK</string>
@@ -21,6 +21,9 @@
 	<string name="textVerificationFailedMessage">Failed to sent verification link on the email:</string>
 	<string name="buttonVerificationRepeat">Send new link</string>
 	<string name="buttonVerificationFinish">Finish</string>
+
+	<string name="textSendResetPassSuccess">Reset password link has been sent on the email:\n%s</string>
+	<string name="textSendResetPassFailure">Failed to sent reset password link on the email:\n%s</string>
 
 	<string name="dialogVerificationSuccessTitle">Congratulations!</string>
 	<string name="dialogVerificationMessage">You have been verified</string>

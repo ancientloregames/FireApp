@@ -86,7 +86,7 @@ public class ListActivity extends AppCompatActivity
 			{
 				dbRef = dbRef.child(segment);
 			}
-			searchCount = intent.getIntExtra(EXTRA_SEARCH_COUNT, 3);
+			searchCount = intent.getIntExtra(EXTRA_SEARCH_COUNT, 1);
 		}
 		else throw new RuntimeException("You have to pass the dbPath to this activity!");
 

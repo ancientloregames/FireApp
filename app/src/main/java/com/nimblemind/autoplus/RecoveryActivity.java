@@ -1,15 +1,17 @@
 package com.nimblemind.autoplus;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -20,8 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class RecoveryActivity extends AuthBaseActivity
 {
 	private TextInputLayout emailContainer;
-
-	protected FirebaseAuth auth;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -69,7 +69,7 @@ public class RecoveryActivity extends AuthBaseActivity
 		}
 	}
 
-	private void sendResetEmail(String email)
+	private void sendResetEmail(final String email)
 	{
 		if (!Utils.checkInternetConnection(this, true))
 			return;
@@ -77,20 +77,47 @@ public class RecoveryActivity extends AuthBaseActivity
 		showInterface(false);
 		Log.d("RecoveryActivity", "Sending reset email.");
 		auth.sendPasswordResetEmail(email)
-				.addOnCompleteListener(new OnCompleteListener<Void>() {
+				.addOnSuccessListener(new OnSuccessListener<Void>()
+				{
 					@Override
-					public void onComplete(@NonNull Task<Void> task) {
-						if (task.isSuccessful()) {
-							Log.d("RecoveryActivity", "Email sent.");
+					public void onSuccess(Void aVoid)
+					{
+						Log.d("RecoveryActivity", "Email sent.");
+						showCompleteDialog(true, email);
+					}
+				})
+				.addOnFailureListener(new OnFailureListener()
+				{
+					@Override
+					public void onFailure(@NonNull Exception e)
+					{
+						Utils.trySendFabricReport("sendResetEmail:failure. Email: " + email, e);
+						showCompleteDialog(true, email);
+					}
+				});
+	}
+
+	private void showCompleteDialog(final boolean success, String email)
+	{
+		new AlertDialog.Builder(this)
+				.setMessage(getString(success
+					? R.string.textSendResetPassSuccess
+					: R.string.textSendResetPassFailure, email))
+				.setOnDismissListener(new DialogInterface.OnDismissListener()
+				{
+					@Override
+					public void onDismiss(DialogInterface dialog)
+					{
+						if (success)
+						{
 							setResult(RESULT_OK);
 							finish();
 						}
-						else
-						{
-							showInterface(true);
-						}
+						else showInterface(true);
 					}
-				});
+				})
+				.create()
+				.show();
 	}
 
 	private boolean validate(String email)

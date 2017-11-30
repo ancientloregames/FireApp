@@ -1,12 +1,15 @@
 package com.nimblemind.autoplus;
 
 import android.Manifest;
+import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -233,7 +236,21 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 				String.valueOf(System.currentTimeMillis()) +".jpg");
 		photoUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, file);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-		intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+		{
+			ClipData clip = ClipData.newUri(getContentResolver(), "A photo", photoUri);
+			intent.setClipData(clip);
+
+			List<ResolveInfo> resInfoList = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+
+			for (ResolveInfo resolveInfo : resInfoList)
+			{
+				String packageName = resolveInfo.activityInfo.packageName;
+				grantUriPermission(packageName, photoUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+			}
+		}
+
 		if (intent.resolveActivity(getPackageManager()) != null)
 		{
 			startActivityForResult(intent, CODE_INTENT_CAMERA);

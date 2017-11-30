@@ -20,11 +20,12 @@
 
 	<android.support.design.widget.FloatingActionButton
 		android:id="@+id/buttonNewRequest"
-		android:layout_width="@dimen/floatingButtonSize"
-		android:layout_height="@dimen/floatingButtonSize"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_gravity="bottom|end"
 		android:layout_margin="@dimen/globalActivityPadding"
 		app:backgroundTint="@color/floatingButton"
 		app:srcCompat="@drawable/ic_plus_white_24dp"
+		app:fabSize="normal"
 		/>
 </FrameLayout>

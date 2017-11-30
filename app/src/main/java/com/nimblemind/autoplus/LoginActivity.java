@@ -227,7 +227,7 @@ public class LoginActivity extends AuthActivity
 		return result;
 	}
 
-	private void logIn(@NonNull String email, @NonNull String password)
+	private void logIn(@NonNull final String email, @NonNull final String password)
 	{
 		if (!Utils.checkInternetConnection(this, true))
 			return;
@@ -243,6 +243,7 @@ public class LoginActivity extends AuthActivity
 						if (task.isSuccessful())
 						{
 							Log.d(TAG, "logIn: success");
+							saveCredentials(email, password);
 							findUserAndEnter(task.getResult().getUser());
 						}
 						else
@@ -256,7 +257,7 @@ public class LoginActivity extends AuthActivity
 
 	private void findUserAndEnter(@NonNull final FirebaseUser firebaseUser)
 	{
-		if (!firebaseUser.isEmailVerified() && !"t1@g.com".equals(firebaseUser.getEmail()))//TODO убрать в релизной!
+		if (!firebaseUser.isEmailVerified() && !firebaseUser.getEmail().contains(debugDomain))
 		{
 			Toast.makeText(LoginActivity.this, getString(R.string.errorNotVerified), Toast.LENGTH_SHORT).show();
 			showInterface(true);
@@ -279,7 +280,6 @@ public class LoginActivity extends AuthActivity
 				if (user != null)
 				{
 					Log.d(TAG, "findUserAndEnter: success");
-					saveCredentials(user.email, null);
 					enter(uid, user);
 				}
 				else
