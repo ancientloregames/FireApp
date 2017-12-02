@@ -49,14 +49,19 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 	private Uri photoUri;
 
 	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState)
+	protected void onCreate(@Nullable Bundle prevState)
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(prevState);
 		setContentView(R.layout.activity_gallery);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		setTitle(R.string.activityGallery);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+		if (prevState != null)
+		{
+			photoUri = prevState.getParcelable("photoUri");
+		}
 
 		final RecyclerView recycler = findViewById(R.id.recycler);
 		final Button cameraButton = findViewById(R.id.buttonTakePhoto);
@@ -87,6 +92,13 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 
 		recycler.setLayoutManager(layoutManager);
 		recycler.setAdapter(adapter);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		outState.putParcelable("photoUri", photoUri);
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override

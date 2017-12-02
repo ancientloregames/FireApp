@@ -35,11 +35,9 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 
 	protected String uid;
 
-	protected final int maxPartPhotoCount = 1;
+	protected final ArrayList<TitledUri> partPhotos = new ArrayList<>();
 
-	protected final ArrayList<TitledUri> partPhotos = new ArrayList<>(maxPartPhotoCount);
-
-	protected final ArrayList<String> partPhotosNames = new ArrayList<>(maxPartPhotoCount);
+	protected final ArrayList<String> partPhotosNames = new ArrayList<>();
 
 	protected int photoMaxSize;
 
@@ -78,24 +76,40 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 			Uri imageUri = data.getData();
 			if (imageUri != null)
 			{
-				String name = String.valueOf(System.currentTimeMillis());
-				partPhotos.add(new TitledUri(name, imageUri));
-				partPhotosNames.add(name);
-				onPartPhotoRecieved(imageUri);
+				addPartPhoto(imageUri);
 			}
 		}
 	}
 
 	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+	public void onViewCreated(View view, @Nullable Bundle prevState)
 	{
-		super.onViewCreated(view, savedInstanceState);
+		super.onViewCreated(view, prevState);
 
 		Bundle args = getArguments();
 		if (args.containsKey("template"))
 		{
 			populateWithTemplate((MODEL) args.getParcelable("template"));
 		}
+
+		if (prevState != null)
+		{
+			ArrayList<TitledUri> tmpPartPhotos = prevState.getParcelableArrayList("partPhotos");
+			partPhotos.addAll(tmpPartPhotos);
+			partPhotosNames.addAll(prevState.getStringArrayList("partPhotosNames"));
+			for (TitledUri photo : partPhotos)
+			{
+				addPartPhotoView(photo.uri);
+			}
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState)
+	{
+		outState.putParcelableArrayList("partPhotos", partPhotos);
+		outState.putStringArrayList("partPhotosNames",partPhotosNames);
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -103,6 +117,14 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 	{
 		listener = null;
 		super.onDestroy();
+	}
+
+	private void addPartPhoto(Uri uri)
+	{
+		String name = String.valueOf(System.currentTimeMillis());
+		partPhotos.add(new TitledUri(name, uri));
+		partPhotosNames.add(name);
+		addPartPhotoView(uri);
 	}
 
 	protected void openList(String[] dbPath, int requestCode, int searchCount)
@@ -124,7 +146,7 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 
 	protected abstract void populateWithTemplate(@NonNull MODEL template);
 
-	protected abstract void onPartPhotoRecieved(Uri uri);
+	protected abstract void addPartPhotoView(Uri uri);
 
 	protected abstract void tryCreateRequest();
 }

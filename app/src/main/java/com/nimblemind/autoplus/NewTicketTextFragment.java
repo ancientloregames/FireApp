@@ -5,14 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -182,15 +180,11 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 		partView.setImeOptions(IME_ACTION_DONE);
 	}
 
-	@UiThread
 	@Override
-	protected void onPartPhotoRecieved(Uri uri)
+	protected void addPartPhotoView(Uri uri)
 	{
-		ImageView imageView = new ImageView(getContext());
-		imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, photoMaxSize));
-		imageView.setPadding(30,30,30,30);
-		imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-		imageView.setAdjustViewBounds(true);
+		final ImageView imageView = (ImageView) getLayoutInflater()
+				.inflate(R.layout.horizontal_gallery_item, partPhotosContainer,false);
 		imageView.setImageURI(uri);
 		partPhotosContainer.addView(imageView);
 	}

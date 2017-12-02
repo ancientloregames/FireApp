@@ -43,11 +43,9 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 	private TextView partView;
 	private TextView commentView;
 
-	protected final int maxPtsPhotoCount = 1;
+	protected final ArrayList<TitledUri> ptsPhotos = new ArrayList<>();
 
-	protected ArrayList<TitledUri> ptsPhotos = new ArrayList<>(maxPtsPhotoCount);
-
-	protected ArrayList<String> ptsPhotosNames = new ArrayList<>(maxPtsPhotoCount);
+	protected final ArrayList<String> ptsPhotosNames = new ArrayList<>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -107,6 +105,31 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 	}
 
 	@Override
+	public void onViewCreated(View view, @Nullable Bundle prevState)
+	{
+		super.onViewCreated(view, prevState);
+
+		if (prevState != null)
+		{
+			ArrayList<TitledUri> tmpPtsPhotos = prevState.getParcelableArrayList("ptsPhotos");
+			ptsPhotos.addAll(tmpPtsPhotos);
+			ptsPhotosNames.addAll(prevState.getStringArrayList("ptsPhotosNames"));
+			for (TitledUri photo : ptsPhotos)
+			{
+				addPtsPhotoView(photo.uri);
+			}
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState)
+	{
+		outState.putParcelableArrayList("ptsPhotos", ptsPhotos);
+		outState.putStringArrayList("ptsPhotosNames", ptsPhotosNames);
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
@@ -115,7 +138,11 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 		{
 			if (requestCode == INTENT_ADD_PTS_PHOTO)
 			{
-				onPtsPhotoRecieved(data.getData());
+				Uri imageUri = data.getData();
+				if (imageUri != null)
+				{
+					addPtsPhoto(imageUri);
+				}
 			}
 			else if (requestCode == INTENT_SPARE_PART)
 			{
@@ -146,28 +173,30 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 						@Override
 						public void onResourceReady(File file, Transition<? super File> transition)
 						{
-							onPtsPhotoRecieved(Uri.fromFile(file));
+							addPtsPhoto(Uri.fromFile(file));
 						}
 					});
 		}
 	}
 
-	private void onPtsPhotoRecieved(Uri uri)
+	private void addPtsPhoto(Uri uri)
 	{
-		if (uri == null)
-			return;
-
-		final ImageView imageView = (ImageView) getLayoutInflater()
-				.inflate(R.layout.horizontal_gallery_item, ptsPhotosContainer,false);
 		String name = String.valueOf(System.currentTimeMillis());
-		imageView.setImageURI(uri);
-		ptsPhotosContainer.addView(imageView);
 		ptsPhotos.add(new TitledUri(name, uri));
 		ptsPhotosNames.add(name);
+		addPtsPhotoView(uri);
+	}
+
+	private void addPtsPhotoView(Uri uri)
+	{
+		ImageView imageView = (ImageView) getLayoutInflater()
+				.inflate(R.layout.horizontal_gallery_item, ptsPhotosContainer,false);
+		imageView.setImageURI(uri);
+		ptsPhotosContainer.addView(imageView);
 	}
 
 	@Override
-	protected void onPartPhotoRecieved(Uri uri)
+	protected void addPartPhotoView(Uri uri)
 	{
 		final ImageView imageView = (ImageView) getLayoutInflater()
 				.inflate(R.layout.horizontal_gallery_item, partPhotosContainer,false);
