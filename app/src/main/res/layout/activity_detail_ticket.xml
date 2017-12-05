@@ -26,8 +26,7 @@
 				android:id="@+id/textRequestInfo"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:paddingTop="@dimen/globalActivityPadding"
-				android:paddingLeft="@dimen/globalActivityPadding"
+				android:padding="@dimen/globalActivityPadding"
 				tools:text="01 January, 12:00"
 				/>
 
@@ -35,7 +34,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical"
-				android:padding="@dimen/globalActivityPadding"
+				android:paddingBottom="@dimen/globalActivityPadding"
+				android:paddingLeft="@dimen/globalActivityPadding"
 				>
 				<TextView
 					android:id="@+id/textAutoPart"

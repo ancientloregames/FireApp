@@ -45,7 +45,14 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 	protected void populateForm(Ticket ticket)
 	{
 		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm"));
-		partView.setText(ticket.spareParts.get(0));
+
+		String sparePart = ticket.spareParts.get(0);
+		if (!sparePart.isEmpty())
+		{
+			partView.setText(sparePart);
+		}
+		else ((View)partView.getParent()).setVisibility(View.GONE);
+
 		if (!ticket.comment.isEmpty())
 		{
 			commentView.setText(ticket.comment);

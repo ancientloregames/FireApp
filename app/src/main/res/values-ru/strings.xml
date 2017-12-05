@@ -83,4 +83,6 @@
 	<string name="app_name">ПлюсАвто</string>
 	<string name="textSendResetPassSuccess">Ссылка для сброса пароля была отправлена на E-Mail адрес:\n%s</string>
 	<string name="textSendResetPassFailure">Не удалось отправить ссылку для сброса пароля на E-Mail адрес:\n%s</string>
+	<string name="errorTextOrPhoto">Необходимо название запчасти или фото</string>
+	<string name="textPhotoPart">Предоставлено фото запчасти</string>
 </resources>

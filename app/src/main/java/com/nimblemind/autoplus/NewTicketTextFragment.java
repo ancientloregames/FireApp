@@ -243,21 +243,15 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 			valid = false;
 		}
 
-		if (part.isEmpty())
+		if (part.isEmpty() && partPhotosContainer.getChildCount() < 1)
 		{
-			partContainer.setError(getString(R.string.errorFieldRequired));
+			partContainer.setError(getString(R.string.errorTextOrPhoto));
 			valid = false;
 		}
 
 		if (comment.length() > 500)
 		{
 			commentContainer.setError(getString(R.string.errorInvalidField));
-			valid = false;
-		}
-
-		if (partPhotosContainer.getChildCount() < 1)
-		{
-			Toast.makeText(getActivity(), getString(R.string.errorPhotoRequered), Toast.LENGTH_SHORT).show();
 			valid = false;
 		}
 

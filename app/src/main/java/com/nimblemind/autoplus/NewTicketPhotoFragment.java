@@ -212,35 +212,24 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 		partContainer.setError(null);
 		commentContainer.setError(null);
 
-		if (ptsPhotos.isEmpty())
-		{
-			valid = false;
-		}
-
 		String part = partView.getText().toString();
 		String comment = commentView.getText().toString();
 
-		if (part.isEmpty())
+		if (ptsPhotos.isEmpty())
 		{
-			partContainer.setError(getString(R.string.errorFieldRequired));
+			Toast.makeText(getActivity(), getString(R.string.errorPhotoRequered), Toast.LENGTH_SHORT).show();
+			valid = false;
+		}
+
+		if (part.isEmpty() && partPhotosContainer.getChildCount() < 1)
+		{
+			partContainer.setError(getString(R.string.errorTextOrPhoto));
 			valid = false;
 		}
 
 		if (comment.length() > 500)
 		{
 			commentContainer.setError(getString(R.string.errorInvalidField));
-			valid = false;
-		}
-
-		if (partPhotos.isEmpty())
-		{
-			Toast.makeText(getActivity(), getString(R.string.errorPhotoRequered), Toast.LENGTH_SHORT).show();
-			valid = false;
-		}
-
-		if (ptsPhotos.isEmpty())
-		{
-			Toast.makeText(getActivity(), getString(R.string.errorPhotoRequered), Toast.LENGTH_SHORT).show();
 			valid = false;
 		}
 

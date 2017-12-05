@@ -49,6 +49,7 @@
 	<string name="errorInvalidEmail">This email address is invalid</string>
 	<string name="errorInvalidPassword">This password is too short (miminum 6 letters)</string>
 	<string name="errorConfirmPassFailure">Passwords do not match</string>
+	<string name="errorTextOrPhoto">Add either spare part or photo of it</string>
 
 	<string name="errorAuthGeneral">Authentification failed</string>
 	<string name="errorAuthCollision">User with this email already exist</string>
@@ -65,6 +66,7 @@
 
 	<string name="textNoNewMessages">No new messages</string>
 	<string name="textPhotoPTS">PTS photo granted</string>
+	<string name="textPhotoPart">Part photo granted</string>
 	
 	<string name="textTickets">Tickets</string>
 	<string name="textOffers">Offers</string>

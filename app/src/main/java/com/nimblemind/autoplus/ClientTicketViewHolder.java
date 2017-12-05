@@ -22,6 +22,7 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 
 	private static String textUploading;
 	private static String textPtsPhoto;
+	private static String textPartPhoto;
 	private static String textNoNewMessages;
 
 	public ClientTicketViewHolder(View itemView)
@@ -31,6 +32,7 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 		Resources res = itemView.getContext().getResources();
 		textUploading = res.getString(R.string.textUploading);
 		textPtsPhoto = res.getString(R.string.textPhotoPTS);
+		textPartPhoto = res.getString(R.string.textPhotoPart);
 		textNoNewMessages = res.getString(R.string.textNoNewMessages);
 
 		itemLayout = itemView.findViewById(R.id.itemLayout);
@@ -47,7 +49,10 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 		infoView.setText(ticket.timestamp > 0
 				? Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm")
 				: textUploading);
-		sparePartView.setText(ticket.spareParts.get(0));
+		String sparePart = ticket.spareParts.get(0);
+		sparePartView.setText(!sparePart.isEmpty()
+				? sparePart
+				: textPartPhoto);
 		autoNameView.setText(ticket.autoBrand != null
 				? ticket.autoBrand
 				: textPtsPhoto);
