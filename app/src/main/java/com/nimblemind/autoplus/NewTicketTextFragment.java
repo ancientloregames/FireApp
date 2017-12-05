@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -84,7 +83,9 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 				@Override
 				public void onClick(View v)
 				{
-					openList(new String[]{ "autoBrands" }, INTENT_AUTO_BRAND, 2, Utils.FORMAT_UPPER_CASE);
+					modelView.setText("");
+					openList(new String[]{ "autoBrands" }, INTENT_AUTO_BRAND, 2,
+							Utils.FORMAT_UPPER_CASE, getString(R.string.textSearchBrand));
 				}
 			});
 
@@ -96,7 +97,8 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 					String brand = brandView.getText().toString();
 					if (!brand.isEmpty())
 					{
-						openList(new String[]{ "autoModels", brand }, INTENT_AUTO_MODEL, 1, Utils.FORMAT_LOWER_CASE);
+						openList(new String[]{ "autoModels", brand }, INTENT_AUTO_MODEL, 1,
+								Utils.FORMAT_LOWER_CASE, getString(R.string.textSearchModel));
 					}
 				}
 			});
@@ -106,7 +108,8 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 				@Override
 				public void onClick(View v)
 				{
-					openList(new String[]{ "parts" }, INTENT_SPARE_PART, 3, Utils.FORMAT_CAP_SENTENCE);
+					openList(new String[]{ "parts" }, INTENT_SPARE_PART, 3,
+							Utils.FORMAT_CAP_SENTENCE, getString(R.string.textSearchPart));
 				}
 			});
 

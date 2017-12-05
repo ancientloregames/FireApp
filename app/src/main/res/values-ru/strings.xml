@@ -85,4 +85,8 @@
 	<string name="textSendResetPassFailure">Не удалось отправить ссылку для сброса пароля на E-Mail адрес:\n%s</string>
 	<string name="errorTextOrPhoto">Необходимо название запчасти или фото</string>
 	<string name="textPhotoPart">Предоставлено фото запчасти</string>
+	<string name="textSearchInstruction">Введите название %s</string>
+	<string name="textSearchModel">модели</string>
+	<string name="textSearchBrand">марки</string>
+	<string name="textSearchPart">запчасти</string>
 </resources>

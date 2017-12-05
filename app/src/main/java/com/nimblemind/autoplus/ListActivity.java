@@ -40,6 +40,7 @@ public class ListActivity extends AppCompatActivity
 	public final static String EXTRA_DB_PATH = "extra_db_path";
 	public final static String EXTRA_SEARCH_COUNT = "extra_search_count";
 	public final static String EXTRA_TEXT_FORMAT = "extra_text_format";
+	public final static String EXTRA_SEARCH_TARGET = "extra_search_target";
 
 	private ListAdapter adapter;
 
@@ -107,6 +108,10 @@ public class ListActivity extends AppCompatActivity
 				finishWithResult(searchText);
 			}
 		});
+
+		String searchTarget = intent.getStringExtra(EXTRA_SEARCH_TARGET);
+		TextView searchInstruction = findViewById(R.id.textInstruction);
+		searchInstruction.setText(getString(R.string.textSearchInstruction, searchTarget));
 
 		RecyclerView recycler = findViewById(R.id.recycler);
 

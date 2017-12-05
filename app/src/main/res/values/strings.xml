@@ -110,6 +110,12 @@
 	<string name="textEmptyResult">No matches were found in the database</string>
 	<string name="textAddSparePart">Use entered data</string>
 
+	<string name="textSearchInstruction">Enter the name of %s</string>
+
+	<string name="textSearchModel">auto model</string>
+	<string name="textSearchBrand">auto brand</string>
+	<string name="textSearchPart">auto spare part</string>
+
 	<!-- Request Details Activity -->
 	<string name="activityDetailTicket">Ticket</string>
 	<string name="activityDetailTicketTitle">Ticket №%d</string>

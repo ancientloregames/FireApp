@@ -68,7 +68,8 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 				@Override
 				public void onClick(View v)
 				{
-					openList(new String[] { "parts" }, INTENT_SPARE_PART, 3, Utils.FORMAT_CAP_SENTENCE);
+					openList(new String[] { "parts" }, INTENT_SPARE_PART, 3,
+							Utils.FORMAT_CAP_SENTENCE, getString(R.string.textSearchPart));
 				}
 			});
 
