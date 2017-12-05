@@ -39,6 +39,7 @@ public class ListActivity extends AppCompatActivity
 {
 	public final static String EXTRA_DB_PATH = "extra_db_path";
 	public final static String EXTRA_SEARCH_COUNT = "extra_search_count";
+	public final static String EXTRA_TEXT_FORMAT = "extra_text_format";
 
 	private ListAdapter adapter;
 
@@ -120,6 +121,7 @@ public class ListActivity extends AppCompatActivity
 				finishWithResult(selected);
 			}
 		});
+		adapter.setItemTextFormat(intent.getIntExtra(EXTRA_TEXT_FORMAT, 1));
 
 		recycler.setAdapter(adapter);
 	}
@@ -248,6 +250,8 @@ public class ListActivity extends AppCompatActivity
 
 		private List<String> items = new ArrayList<>();
 
+		private int itemTextFormat;
+
 		private Listener listener;
 
 		ListAdapter(Listener listener)
@@ -277,7 +281,7 @@ public class ListActivity extends AppCompatActivity
 		@Override
 		public void onBindViewHolder(ViewHolder holder, int position)
 		{
-			final String text = items.get(position);
+			final String text = Utils.formatText(items.get(position), itemTextFormat);
 			holder.textView.setText(text);
 
 			holder.itemView.setOnClickListener(new View.OnClickListener()
@@ -306,6 +310,11 @@ public class ListActivity extends AppCompatActivity
 
 				textView = itemView.findViewById(R.id.text);
 			}
+		}
+
+		public void setItemTextFormat(int itemTextFormat)
+		{
+			this.itemTextFormat = itemTextFormat;
 		}
 	}
 }

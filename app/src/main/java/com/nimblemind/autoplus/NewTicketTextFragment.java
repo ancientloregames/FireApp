@@ -84,7 +84,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 				@Override
 				public void onClick(View v)
 				{
-					openList(new String[]{ "autoBrands" }, INTENT_AUTO_BRAND, 2);
+					openList(new String[]{ "autoBrands" }, INTENT_AUTO_BRAND, 2, Utils.FORMAT_UPPER_CASE);
 				}
 			});
 
@@ -96,7 +96,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 					String brand = brandView.getText().toString();
 					if (!brand.isEmpty())
 					{
-						openList(new String[]{ "autoModels", brand }, INTENT_AUTO_MODEL, 1);
+						openList(new String[]{ "autoModels", brand }, INTENT_AUTO_MODEL, 1, Utils.FORMAT_LOWER_CASE);
 					}
 				}
 			});
@@ -106,7 +106,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 				@Override
 				public void onClick(View v)
 				{
-					openList(new String[]{ "parts" }, INTENT_SPARE_PART, 3);
+					openList(new String[]{ "parts" }, INTENT_SPARE_PART, 3, Utils.FORMAT_CAP_SENTENCE);
 				}
 			});
 

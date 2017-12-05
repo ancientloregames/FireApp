@@ -47,6 +47,10 @@ import static io.fabric.sdk.android.Fabric.TAG;
 
 public class Utils
 {
+	public final static int FORMAT_UPPER_CASE = 1;
+	public final static int FORMAT_LOWER_CASE = 2;
+	public final static int FORMAT_CAP_SENTENCE = 3;
+
 	public static void openImage(@NonNull Context context, File file)
 	{
 		Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -142,6 +146,23 @@ public class Utils
 		cal.setTimeInMillis(time);
 		String date = DateFormat.format(format, cal).toString();
 		return date;
+	}
+
+	public static String formatText(@NonNull String text, int format)
+	{
+		if (text.isEmpty())
+			return text;
+
+		switch (format)
+		{
+			case FORMAT_UPPER_CASE:
+				return text.toUpperCase();
+			case FORMAT_LOWER_CASE:
+				return text.toLowerCase();
+			case FORMAT_CAP_SENTENCE:
+				return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
+			default: return text;
+		}
 	}
 
 	public static int getStatusBarHeight(Resources resources)

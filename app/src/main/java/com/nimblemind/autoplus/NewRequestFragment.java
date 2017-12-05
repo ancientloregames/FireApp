@@ -127,11 +127,12 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 		addPartPhotoView(uri);
 	}
 
-	protected void openList(String[] dbPath, int requestCode, int searchCount)
+	protected void openList(String[] dbPath, int requestCode, int searchCount, int textFormat)
 	{
 		Intent intent = new Intent(getActivity(), ListActivity.class);
 		intent.putExtra(ListActivity.EXTRA_DB_PATH, dbPath);
 		intent.putExtra(ListActivity.EXTRA_SEARCH_COUNT, searchCount);
+		intent.putExtra(ListActivity.EXTRA_TEXT_FORMAT, textFormat);
 		startActivityForResult(intent, requestCode);
 	}
 
