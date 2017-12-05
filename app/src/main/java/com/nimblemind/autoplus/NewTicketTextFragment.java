@@ -186,10 +186,11 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 	@Override
 	protected void addPartPhotoView(Uri uri)
 	{
-		final ImageView imageView = (ImageView) getLayoutInflater()
-				.inflate(R.layout.horizontal_gallery_item, partPhotosContainer,false);
+		final View imageLayout = getLayoutInflater()
+				.inflate(R.layout.horizontal_gallery_item, partPhotosContainer, false);
+		final ImageView imageView = imageLayout.findViewById(R.id.image);
 		imageView.setImageURI(uri);
-		partPhotosContainer.addView(imageView);
+		partPhotosContainer.addView(imageLayout);
 	}
 
 	@Override

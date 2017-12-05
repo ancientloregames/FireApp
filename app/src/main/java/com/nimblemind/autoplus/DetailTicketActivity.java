@@ -84,9 +84,10 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 
 		for (String image : ticket.partPhotos)
 		{
-			final ImageView imageView = (ImageView) getLayoutInflater()
-					.inflate(R.layout.horizontal_gallery_item, partPhotosContainer,false);
-			partPhotosContainer.addView(imageView);
+			final View imageLayout = getLayoutInflater()
+					.inflate(R.layout.horizontal_gallery_item, partPhotosContainer, false);
+			final ImageView imageView = imageLayout.findViewById(R.id.image);
+			partPhotosContainer.addView(imageLayout);
 			GlideApp.with(this)
 					.asFile()
 					.load(requestStorageRef.child(image))

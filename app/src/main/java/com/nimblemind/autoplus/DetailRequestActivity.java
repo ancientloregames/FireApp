@@ -162,9 +162,10 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 				List<String> images = args.getStringArrayList("images");
 				for (String image : images)
 				{
-					final ImageView imageView = (ImageView) getLayoutInflater()
+					final View imageLayout = getLayoutInflater()
 							.inflate(R.layout.horizontal_gallery_item, container, false);
-					container.addView(imageView);
+					final ImageView imageView = imageLayout.findViewById(R.id.image);
+					container.addView(imageLayout);
 					GlideApp.with(getContext())
 							.asFile()
 							.load(requestStorageRef.child(image))
