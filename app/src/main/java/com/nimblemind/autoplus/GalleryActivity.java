@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -244,8 +245,14 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 	private void launchCamera()
 	{
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		File file = new File(getFilesDir().getPath(),
-				String.valueOf(System.currentTimeMillis()) +".jpg");
+		File path = new File(getFilesDir().getPath());
+		File file = new File(path, String.valueOf(System.currentTimeMillis()) +".jpg");
+		try {
+			path.mkdirs();
+			file.createNewFile();
+		} catch (IOException e) {
+			Utils.trySendFabricReport("Error creating file: " + file.getPath(), e);
+		}
 		photoUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, file);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 		intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);

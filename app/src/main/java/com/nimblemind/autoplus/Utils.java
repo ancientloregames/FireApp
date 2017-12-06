@@ -11,7 +11,6 @@ import android.graphics.Matrix;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
@@ -30,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseException;
 import io.fabric.sdk.android.Fabric;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,19 +66,27 @@ public class Utils
 
 	public static Bitmap decodeSampledBitmapFromUri(ContentResolver resolver, Uri uri, int reqWidth, int reqHeight) throws IOException
 	{
-		InputStream input = resolver.openInputStream(uri);
-		// First decode with inJustDecodeBounds=true to check dimensions
 		final BitmapFactory.Options options = new BitmapFactory.Options();
+		// First decode with inJustDecodeBounds=true to check dimensions
 		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeStream(input, null, options);
-		input.close();
+		InputStream input = null;
+		try {
+			input = resolver.openInputStream(uri);
+			BitmapFactory.decodeStream(input, null, options);
+		} finally {
+			closeQuietly(input);
+		}
 		// Calculate inSampleSize
 		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;
-		input = resolver.openInputStream(uri);
-		Bitmap bitmap = BitmapFactory.decodeStream(input, null, options);
-		input.close();
+		Bitmap bitmap;
+		try {
+			input = resolver.openInputStream(uri);
+			bitmap = BitmapFactory.decodeStream(input, null, options);
+		} finally {
+			closeQuietly(input);
+		}
 		return bitmap;
 	}
 
@@ -103,21 +111,22 @@ public class Utils
 		return inSampleSize;
 	}
 
-	public static Bitmap fixImageRotation(ContentResolver resolver, Bitmap img, Uri selectedImage) throws IOException
+	public static int getExifOrientation(ContentResolver resolver, Uri selectedImage) throws IOException
 	{
-		InputStream input = resolver.openInputStream(selectedImage);
 		ExifInterface ei;
-		if (Build.VERSION.SDK_INT > 23)
-		{
+		InputStream input = null;
+		try {
+			input = resolver.openInputStream(selectedImage);
 			ei = new ExifInterface(input);
-		}
-		else
-		{
-			ei = new ExifInterface(selectedImage.getPath());
+		} finally {
+			closeQuietly(input);
 		}
 
-		int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+		return ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+	}
 
+	public static Bitmap fixImageRotation(Bitmap img, int orientation)
+	{
 		switch (orientation)
 		{
 			case ExifInterface.ORIENTATION_ROTATE_90:
@@ -138,6 +147,21 @@ public class Utils
 		Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
 		img.recycle();
 		return rotatedImg;
+	}
+
+	private static void closeQuietly(Closeable closeable)
+	{
+		if (closeable != null)
+		{
+			try
+			{
+				closeable.close();
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static String getDate(long time, String format)

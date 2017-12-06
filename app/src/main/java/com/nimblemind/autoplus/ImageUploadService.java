@@ -65,9 +65,11 @@ public class ImageUploadService extends BasicService
 			for (TitledUri image : images)
 			{
 				try {
+					taskStarted();
 					uploadFromUri(image.uri, image.title, path);
 				} catch (IOException e) {
 					e.printStackTrace();
+					taskCompleted();
 				}
 			}
 		}
@@ -79,10 +81,14 @@ public class ImageUploadService extends BasicService
 	{
 		Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
-		taskStarted();
-		showProgressNotification(getString(R.string.textUploading), 0, 0);
+		int orientation = 1;
+		try {
+			orientation = Utils.getExifOrientation(getContentResolver(), fileUri);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Bitmap bitmap = Utils.decodeSampledBitmapFromUri(getContentResolver(), fileUri, 1024 , 1024);
-		bitmap = Utils.fixImageRotation(getContentResolver(), bitmap, fileUri);
+		bitmap = Utils.fixImageRotation(bitmap, orientation);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
 
@@ -94,6 +100,7 @@ public class ImageUploadService extends BasicService
 		}
 		photoRef = photoRef.child(name);
 
+		showProgressNotification(getString(R.string.textUploading), 0, 0);
 		Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
 		photoRef.putBytes(out.toByteArray()).
 				addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>()
@@ -125,7 +132,7 @@ public class ImageUploadService extends BasicService
 					@Override
 					public void onFailure(@NonNull Exception exception)
 					{
-						Log.w(TAG, "uploadFromUri:onFailure", exception);
+						Utils.trySendFabricReport("uploadFromUri:onFailure. fileUri: " + fileUri, exception);
 
 						broadcastUploadFinished(null, fileUri);
 						showUploadFinishedNotification(null, fileUri);
