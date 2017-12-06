@@ -24,6 +24,7 @@
 			android:layout_gravity="center_horizontal"
 			android:padding="@dimen/newRequestFormItemVerticalIndent"
 			android:textSize="16sp"
+			android:textColor="@color/mainNewRequestButton"
 			tools:text="@string/textSearchInstruction"
 			/>
 
@@ -47,6 +48,8 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:paddingTop="@dimen/newRequestFormItemVerticalIndent"
+				android:textSize="16sp"
+				android:textColor="@color/mainNewRequestButton"
 				android:text="@string/textEmptyResult"
 				/>
 
