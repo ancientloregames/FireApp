@@ -54,7 +54,7 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 				? sparePart
 				: textPartPhoto);
 		autoNameView.setText(ticket.autoBrand != null
-				? String.format("%s %s \'%d", ticket.autoBrand, ticket.autoModel, ticket.year % 100)
+				? String.format("%s %s \'%s", ticket.autoBrand, ticket.autoModel, String.valueOf(ticket.year).substring(1,3))
 				: textPtsPhoto);
 		notificationView.setText(textNoNewMessages);
 	}

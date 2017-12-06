@@ -120,7 +120,7 @@
 	<string name="activityDetailTicket">Ticket</string>
 	<string name="activityDetailTicketTitle">Ticket №%d</string>
 
-	<string name="textAutoInfo" translatable="false">%1$s %2$s, %3$d</string>
+	<string name="textAutoInfo" translatable="false">%1$s %2$s \'%3$s</string>
 	<string name="textAutoVin" translatable="false">VIN: %s</string>
 
 	<string name="textNoImageViewer">You don\'t have any App to open image</string>
