@@ -34,6 +34,8 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 
 	protected RequestsAdapter adapter;
 
+	protected View progressBar;
+
 	public RequestsFragment()
 	{
 	}
@@ -44,6 +46,8 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		View rootView = inflater.inflate(getFragmentLayoutId(), container, false);
 
 		database = FirebaseDatabase.getInstance().getReference("requests");
+
+		progressBar = rootView.findViewById(R.id.progressBar);
 
 		return rootView;
 	}
@@ -104,6 +108,7 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	public void onResume()
 	{
 		super.onResume();
+		progressBar.setVisibility(View.VISIBLE);
 		adapter.startListening();
 	}
 
