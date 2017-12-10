@@ -8,8 +8,8 @@ android {
         applicationId "com.nimblemind.autoplus"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 13
-        versionName "0.5.3"
+        versionCode 14
+        versionName "0.5.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
