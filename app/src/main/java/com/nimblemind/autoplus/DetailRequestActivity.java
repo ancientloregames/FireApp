@@ -121,10 +121,10 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 			Bundle args = getArguments();
 			if (args != null)
 			{
-				((TextView)view.findViewById(R.id.textAutoInfo)).setText(getString(R.string.textAutoInfo,
+				((TextView)view.findViewById(R.id.textAutoInfo)).setText(String.format("%s %s, %d",
 						args.getString("autoBrand"),
 						args.getString("autoModel"),
-						String.valueOf(args.getInt("year")).substring(1,3)));
+						args.getInt("year")));
 				((TextView)view.findViewById(R.id.textVin)).setText(getString(R.string.textAutoVin,
 					args.getString("vin")));
 			}

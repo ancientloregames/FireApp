@@ -157,6 +157,7 @@ public class ListActivity extends AppCompatActivity
 		searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
 		searchView.setFocusable(true);
 		searchView.setIconified(false);
+		searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
 		{
 			@Override

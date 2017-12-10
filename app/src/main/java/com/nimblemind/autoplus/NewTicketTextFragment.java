@@ -98,7 +98,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 					if (!brand.isEmpty())
 					{
 						openList(new String[]{ "autoModels", brand }, INTENT_AUTO_MODEL, 1,
-								Utils.FORMAT_LOWER_CASE, getString(R.string.textSearchModel));
+								Utils.FORMAT_UPPER_CASE, getString(R.string.textSearchModel));
 					}
 				}
 			});
