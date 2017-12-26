@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +30,8 @@ import java.util.List;
 public abstract class DetailRequestActivity<MODEL extends Request> extends AppCompatActivity
 {
 	protected String uid;
+
+	protected String requestId;
 
 	protected MODEL request;
 
@@ -62,9 +63,10 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 		}
 
 		uid = intent.getStringExtra("uid");
+		requestId = intent.getStringExtra("requestId");
 		request = intent.getParcelableExtra("request");
 		requestStorageRef = FirebaseStorage.getInstance()
-				.getReference("photos").child(uid).child(request.storageFolder);
+				.getReference("photos").child(request.uid).child(request.storageFolder);
 
 		setTitle(getString(R.string.activityDetailTicketTitle, request.id));
 		populateForm(request);
@@ -96,9 +98,6 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 
 	@LayoutRes
 	protected abstract int getLayoutId();
-
-	@StringRes
-	protected abstract int getActivityTitle();
 
 	public final static class AutoTextFragment extends Fragment
 	{

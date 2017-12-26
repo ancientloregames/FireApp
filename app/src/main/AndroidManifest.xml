@@ -82,6 +82,20 @@
 				  android:theme="@style/MainTheme"
 			/>
 
+		<activity android:name=".SupportMainActivity"
+				  android:label="@string/app_name"
+				  android:theme="@style/MainTheme"
+			/>
+		<activity android:name=".SupportDetailTicketActivity"
+				  android:label="@string/activityDetailTicket"
+				  android:theme="@style/MainTheme"
+				  android:parentActivityName=".SupportMainActivity"
+			/>
+		<activity android:name=".ChatActivity"
+				  android:label="@string/activityChat"
+				  android:parentActivityName=".MainActivity"
+			/>
+
 		<service
 			android:name=".ImageUploadService"
 			android:exported="false" />

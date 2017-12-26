@@ -22,16 +22,22 @@
 
 	<dimen name="galleryItemSize">100dp</dimen>
 
+	<dimen name="chatMessageInnerIndent">5dp</dimen>
+
+	<dimen name="chatMessageOuterTopIndent">5dp</dimen>
+
+	<dimen name="chatMessageOuterEndIndent">35dp</dimen>
+
 	<dimen name="navigatorFooterIndent">15dp</dimen>
 
 	<dimen name="loginInputTextSize">25sp</dimen>
-	
+
 	<dimen name="newRequestPhotoSize">90dp</dimen>
-	
+
 	<dimen name="textDrawableDefaultIndent">5dp</dimen>
 
 	<dimen name="newRequestFormItemVerticalIndent">10dp</dimen>
-	
+
 	<dimen name="newRequestEditTextSize">16sp</dimen>
 
 	<dimen name="detailRequestTextSize">17sp</dimen>

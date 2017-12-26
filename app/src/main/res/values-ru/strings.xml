@@ -89,4 +89,10 @@
 	<string name="textSearchModel">модели</string>
 	<string name="textSearchBrand">марки</string>
 	<string name="textSearchPart">запчасти</string>
+	<string name="hintTextField">Начните набирать сообщение</string>
+	<string name="buttonSend">Отправить</string>
+	<string name="buttonOpenChat">Открыть чат</string>
+	<string name="buttonTakeRequest">Взять</string>
+	<string name="buttonAnswerRequest">Ответить</string>
+	<string name="fragmentSupportTicketList">Открытые запросы</string>
 </resources>

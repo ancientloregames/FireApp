@@ -44,7 +44,8 @@ class ClientTicketsAdapter extends ClientRequestsAdapter<Ticket, ClientTicketVie
 			{
 				if (listener.get() != null)
 				{
-					listener.get().onShowRequestClicked(ticket);
+					String key = getRef(holder.getAdapterPosition()).getKey();
+					listener.get().onShowRequestClicked(ticket, key);
 				}
 			}
 		});

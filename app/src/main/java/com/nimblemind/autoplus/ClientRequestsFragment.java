@@ -1,11 +1,9 @@
 package com.nimblemind.autoplus;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -25,14 +23,6 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 
 	public ClientRequestsFragment()
 	{
-	}
-
-	@Override
-	public void onAttach(Context context)
-	{
-		super.onAttach(context);
-
-		getActivity().setTitle(getActivityTitle());
 	}
 
 	@Override
@@ -109,7 +99,4 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 	}
 
 	protected abstract Class<? extends NewRequestActivity> getNewRequestActivityClass();
-
-	@StringRes
-	protected abstract int getActivityTitle();
 }

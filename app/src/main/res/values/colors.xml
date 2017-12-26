@@ -20,4 +20,7 @@
 
 	<color name="defaultText">#252525</color>
 	<color name="defaultTextHint">#8c8c8c</color>
+
+	<color name="chatUserMessage">#d4fffb</color>
+	<color name="chatCollocutorMessage">#eaeaea</color>
 </resources>

@@ -41,7 +41,7 @@
 	<string name="buttonLogin">Log In</string>
 	<string name="buttonLogOut">Log Out</string>
 	<string name="buttonGotoSignup">I don\'t have an account</string>
-	
+
 	<string name="buttonSendResetEmail">Send reset email</string>
 
 	<string name="errorNoInternetConnection">No internet connection</string>
@@ -63,11 +63,12 @@
 	<!-- Main Activity -->
 	<string name="fragmentClientRequestListName">My requests</string>
 	<string name="fragmentClientTicketListName">My tickets</string>
+	<string name="fragmentSupportTicketList">Opened tickets</string>
 
 	<string name="textNoNewMessages">No new messages</string>
 	<string name="textPhotoPTS">PTS photo granted</string>
 	<string name="textPhotoPart">Part photo granted</string>
-	
+
 	<string name="textTickets">Tickets</string>
 	<string name="textOffers">Offers</string>
 	<string name="textOrders">Orders</string>
@@ -80,6 +81,11 @@
 
 	<string name="buttonCancelDeletion">Cancel deletion</string>
 	<string name="buttonCreateRequestByTemplate">Create request based on this</string>
+
+	<!-- Support Fragments -->
+	<string name="buttonAnswerRequest">Answer</string>
+	<string name="buttonTakeRequest">Take Request</string>
+	<string name="buttonOpenChat">Open Chat</string>
 
 	<!-- New Request Activity -->
 	<string name="activityNewRequest">New Request</string>
@@ -125,6 +131,16 @@
 
 	<string name="textNoImageViewer">You don\'t have any App to open image</string>
 
+	<!-- Chat Activity -->
+	<string name="activityChat" translatable="false">Chat</string>
+
+	<string name="hintClientName" translatable="false">Client Name</string>
+	<string name="hintSupportName" translatable="false">Support Name</string>
+
+	<string name="textMessageInfo" translatable="false"><b>%1$s</b>  %2$s</string>
+
+	<string name="hintTextField">Type a message</string>
+	<string name="buttonSend">Send</string>
 	<!-- Gallery Activity -->
 	<string name="activityGallery">Gallery</string>
 	<string name="activityCamera">Camera</string>

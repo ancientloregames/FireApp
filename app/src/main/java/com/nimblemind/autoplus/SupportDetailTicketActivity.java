@@ -1,5 +1,6 @@
 package com.nimblemind.autoplus;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,11 @@ import com.bumptech.glide.request.transition.Transition;
 import java.io.File;
 
 
-public class DetailTicketActivity extends DetailRequestActivity<Ticket>
+/**
+ * com.nimblemind.autoplus. Created by nimblemind on 12/17/2017.
+ */
+
+public class SupportDetailTicketActivity extends DetailRequestActivity<Ticket>
 {
 	private TextView infoView;
 	private TextView partView;
@@ -31,12 +36,12 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 		commentView = findViewById(R.id.textComment);
 		partPhotosContainer = findViewById(R.id.partPhotoContainer);
 
-		findViewById(R.id.newRequestButton).setOnClickListener(new View.OnClickListener()
+		findViewById(R.id.buttonAnswerRequest).setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				createNewOnThis();
+				answerRequest();
 			}
 		});
 	}
@@ -102,7 +107,7 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 								@Override
 								public void onClick(View v)
 								{
-									Utils.openImage(DetailTicketActivity.this, file);
+									Utils.openImage(SupportDetailTicketActivity.this, file);
 								}
 							});
 						}
@@ -110,9 +115,17 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 		}
 	}
 
+	protected void answerRequest()
+	{
+		Intent resultIntent = new Intent();
+		resultIntent.putExtra("requestId", requestId);
+		setResult(RESULT_OK, resultIntent);
+		finish();
+	}
+
 	@Override
 	protected int getLayoutId()
 	{
-		return R.layout.activity_detail_ticket;
+		return R.layout.activity_deteil_ticket_support;
 	}
 }

@@ -33,6 +33,8 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 
 	private String uid;
 
+	private User user;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -51,7 +53,7 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 		navigationView.setNavigationItemSelectedListener(this);
 
 		uid = getIntent().getStringExtra("uid");
-		User user = (User) getIntent().getSerializableExtra("user");
+		user = (User) getIntent().getSerializableExtra("user");
 
 		((TextView)navigationView.findViewById(R.id.textEmail)).setText(user.email);
 		navigationView.findViewById(R.id.buttonLogOut).setOnClickListener(new View.OnClickListener()
@@ -112,6 +114,7 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 		{
 			Bundle arguments = new Bundle();
 			arguments.putString("uid", uid);
+			arguments.putString("userName", user.name);
 			fragment.setArguments(arguments);
 			getSupportFragmentManager()
 					.beginTransaction()

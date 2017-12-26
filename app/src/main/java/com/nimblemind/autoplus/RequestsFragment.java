@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,8 +28,10 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 {
 	public static final int INTENT_NEW_REQUEST = 101;
 	public static final int INTENT_REQUEST_DETAILS = 102;
+	public static final int INTENT_CHAT = 110;
 
 	protected String uid;
+	protected String userName;
 
 	protected DatabaseReference database;
 
@@ -57,7 +60,7 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	{
 		super.onAttach(context);
 
-		getActivity().setTitle(R.string.fragmentClientRequestListName);
+		getActivity().setTitle(getActivityTitle());
 	}
 
 	@Override
@@ -68,7 +71,10 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		Bundle arguments = getArguments();
 
 		if (arguments != null)
+		{
 			uid = arguments.getString("uid");
+			userName = arguments.getString("userName");
+		}
 		else
 		{
 			throw new RuntimeException("Uid was not passed to the list fragment!");
@@ -91,15 +97,6 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 				.build();
 
 		adapter = createAdapter(options);
-		adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver()
-		{
-			@Override
-			public void onItemRangeInserted(int positionStart, int itemCount)
-			{
-				super.onItemRangeInserted(positionStart, itemCount);
-				recycler.scrollToPosition(positionStart);
-			}
-		});
 
 		recycler.setAdapter(adapter);
 	}
@@ -108,23 +105,33 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	public void onResume()
 	{
 		super.onResume();
-		progressBar.setVisibility(View.VISIBLE);
 		adapter.startListening();
 	}
 
 	@Override
 	public void onStop()
 	{
+		progressBar.setVisibility(View.VISIBLE);
 		adapter.stopListening();
 		super.onStop();
 	}
 
-	protected void showRequestDetails(@NonNull Request request)
+	protected void showRequestDetails(@NonNull Request request, String requestId)
 	{
-		Intent intent = new Intent(getActivity(), DetailTicketActivity.class);
+		Intent intent = new Intent(getActivity(), getDetailRequestActivityClass());
 		intent.putExtra("uid", uid);
+		intent.putExtra("requestId", requestId);
 		intent.putExtra("request", request);
 		startActivityForResult(intent, INTENT_REQUEST_DETAILS);
+	}
+
+	protected void showChat(String requestKey)
+	{
+		Intent intent = new Intent(getActivity(), ChatActivity.class);
+		intent.putExtra("uid", uid);
+		intent.putExtra("userName", userName);
+		intent.putExtra("requestKey", requestKey);
+		startActivityForResult(intent, INTENT_CHAT);
 	}
 
 	@LayoutRes
@@ -135,4 +142,9 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	protected abstract Query getQuery(DatabaseReference databaseReference);
 
 	protected abstract RequestsAdapter createAdapter(FirebaseRecyclerOptions<MODEL> options);
+
+	protected abstract Class<? extends DetailRequestActivity> getDetailRequestActivityClass();
+
+	@StringRes
+	protected abstract int getActivityTitle();
 }

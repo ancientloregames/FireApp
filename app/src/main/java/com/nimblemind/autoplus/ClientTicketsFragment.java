@@ -1,7 +1,6 @@
 package com.nimblemind.autoplus;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseError;
@@ -82,9 +81,9 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	}
 
 	@Override
-	public void onShowRequestClicked(Ticket request)
+	public void onShowRequestClicked(Ticket request,String requstId)
 	{
-		showRequestDetails(request);
+		showRequestDetails(request, requstId);
 	}
 
 	@Override
@@ -103,5 +102,11 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	public void onCancelDeleteRequestClicked(String key)
 	{
 		deleteCandidates.remove(key);
+	}
+
+	@Override
+	protected Class<DetailTicketActivity> getDetailRequestActivityClass()
+	{
+		return DetailTicketActivity.class;
 	}
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * com.nimblemind.autoplus. Created by nimblemind on 10/4/2017.
  */
 
-class User implements Serializable
+final class User implements Serializable
 {// fields must be public for firebase database
 	public final String name;
 	public final String email;

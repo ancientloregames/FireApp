@@ -30,14 +30,14 @@ public abstract class AuthActivity extends AuthBaseActivity
 
 	protected void enter(@NonNull String uid, @NonNull User user)
 	{
-		Class mainActivityClass = null;
+		Class mainActivityClass;
 		switch (user.type)
 		{
 			case CLIENT:
 				mainActivityClass = ClientMainActivity.class;
 				break;
 			case SUPPORT:
-				// TODO
+				mainActivityClass = SupportMainActivity.class;
 				break;
 			default:
 				throw new RuntimeException("Wrong User Type!");
