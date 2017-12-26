@@ -13,14 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import static com.nimblemind.autoplus.LoginActivity.EXTRA_NO_AUTOLOGIN;
 
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/4/2017.
  */
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public abstract class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 	private final String TAG = MainActivity.class.getSimpleName();
 
@@ -28,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	private ActionBarDrawerToggle drawerToggle;
 
 	private String uid;
-	private UserType userType;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -49,16 +52,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 		uid = getIntent().getStringExtra("uid");
 		User user = (User) getIntent().getSerializableExtra("user");
-		userType = user.type;
+
+		((TextView)navigationView.findViewById(R.id.textEmail)).setText(user.email);
+		navigationView.findViewById(R.id.buttonLogOut).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				drawer.closeDrawer(GravityCompat.START, false);
+				gotoAuthActivity();
+			}
+		});
 
 		Log.d(TAG, user.toString() + " uid: " + uid);
-
-//		new AlertDialog.Builder(this)
-//				.setTitle("Successful enter")
-//				.setMessage("uid: " + uid + "\n" + user.toString())
-//				.setPositiveButton("OK", null)
-//				.create()
-//				.show();
 
 		if (savedInstanceState == null)
 		{
@@ -73,10 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		{
 			drawer.closeDrawer(GravityCompat.START);
 		}
-		else
-		{
-			super.onBackPressed();
-		}
+		else super.onBackPressed();
 	}
 
 	@Override
@@ -93,24 +96,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		switch (id)
 		{
 			case R.id.navTicketFragment:
-				if (userType == UserType.CLIENT)
-				{
-					fragment = new ClientTicketsFragment();
-				}
-				else if (userType == UserType.SUPPORT)
-				{
-					fragment = new SupportTicketsFragment();
-				}
+				fragment = getTicketsFragment();
 				break;
 			case R.id.navOfferFragment:
 				// TODO
 				break;
 			case R.id.navOrderFragment:
 				// TODO
-				break;
-			case R.id.navLogOut:
-				drawer.closeDrawer(GravityCompat.START, false);
-				gotoAuthActivity(true);
 				break;
 		}
 
@@ -130,12 +122,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		else return super.onOptionsItemSelected(item);
 	}
 
-	private void gotoAuthActivity(final boolean noAutologin)
+	private void gotoAuthActivity()
 	{
 		FirebaseAuth.getInstance().signOut();
-		Intent intent = new Intent(MainActivity.this, AuthActivity.class);
-		intent.putExtra(AuthActivity.EXTRA_NO_AUTOLOGIN, noAutologin);
+		Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+		intent.putExtra(EXTRA_NO_AUTOLOGIN, true);
 		startActivity(intent);
 		finish();
 	}
+
+	protected abstract RequestsFragment getTicketsFragment();
 }

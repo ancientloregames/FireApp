@@ -42,7 +42,7 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 
 		if (resultCode == RESULT_OK)
 		{
-			if (requestCode == INTENT_SUPPORT_REQUEST_DETAILS)
+			if (requestCode == INTENT_REQUEST_DETAILS)
 			{
 				assignRequest(data.getStringExtra("requestKey"));
 			}
@@ -56,10 +56,4 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 
 	@StringRes
 	protected abstract int getActivityTitle();
-
-	@Override
-	protected int getIntentCodeForRequestDetails()
-	{
-		return INTENT_SUPPORT_REQUEST_DETAILS;
-	}
 }

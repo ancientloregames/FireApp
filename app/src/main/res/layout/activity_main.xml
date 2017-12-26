@@ -30,5 +30,42 @@
 		android:fitsSystemWindows="true"
 		android:background="@android:color/white"
 		app:headerLayout="@layout/navigation_header"
-		app:menu="@menu/menu_drawer" />
+		app:menu="@menu/menu_drawer"
+		app:itemTextColor="@color/navigation_item_text_color"
+		app:itemBackground="@drawable/navigation_item_background"
+		>
+
+		<LinearLayout
+			android:id="@+id/buttonLogOut"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom"
+			android:orientation="vertical"
+			>
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="2dp"
+				android:background="@color/authMain"
+				/>
+
+			<TextView
+				android:id="@+id/textEmail"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/hintEmail"
+				android:textColor="@color/mainNewRequestButton"
+				android:paddingTop="@dimen/navigatorFooterIndent"
+				android:paddingLeft="@dimen/navigatorFooterIndent"
+				/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/buttonLogOut"
+				android:paddingLeft="@dimen/navigatorFooterIndent"
+				android:paddingBottom="@dimen/navigatorFooterIndent"
+				android:textColor="@android:color/black"
+				/>
+		</LinearLayout>
+	</android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

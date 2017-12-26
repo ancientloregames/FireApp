@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
+			  xmlns:tools="http://schemas.android.com/tools"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:fitsSystemWindows="true"
+			  android:orientation="vertical"
+			  android:background="@color/colorPrimary"
+	>
+
+	<include layout="@layout/topbar"/>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/recyclerItem"
+		>
+
+		<TextView
+			android:id="@+id/textInstruction"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:padding="@dimen/newRequestFormItemVerticalIndent"
+			android:textSize="16sp"
+			android:textColor="@color/mainNewRequestButton"
+			tools:text="@string/textSearchInstruction"
+			/>
+
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/recycler"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			/>
+
+		<LinearLayout
+			android:id="@+id/addButtonContainer"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:gravity="center_horizontal"
+			android:background="@color/recyclerItem"
+			android:visibility="gone"
+			>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingTop="@dimen/newRequestFormItemVerticalIndent"
+				android:textSize="16sp"
+				android:textColor="@color/mainNewRequestButton"
+				android:text="@string/textEmptyResult"
+				/>
+
+			<android.support.v7.widget.AppCompatButton
+				android:id="@+id/buttonAdd"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/newRequestFormItemVerticalIndent"
+				android:text="@string/textAddSparePart"
+				android:textStyle="bold"
+				android:textColor="@android:color/white"
+				app:backgroundTint="@color/floatingButton"
+				/>
+		</LinearLayout>
+
+		<FrameLayout
+			android:id="@+id/progressBarContainer"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="@color/recyclerItem"
+			android:clickable="true"
+			android:focusable="true"
+			android:visibility="gone"
+			>
+
+			<com.nimblemind.autoplus.TintedProgressBar
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="15dp"
+				android:layout_gravity="center_horizontal"
+				android:indeterminate="true"
+				/>
+		</FrameLayout>
+	</FrameLayout>
+</LinearLayout>

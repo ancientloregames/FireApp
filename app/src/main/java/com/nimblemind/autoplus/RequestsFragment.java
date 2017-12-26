@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,14 +26,15 @@ import com.google.firebase.database.Query;
 public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 {
 	public static final int INTENT_NEW_REQUEST = 101;
-	public static final int INTENT_CLIENT_REQUEST_DETAILS = 102;
-	public static final int INTENT_SUPPORT_REQUEST_DETAILS = 103;
+	public static final int INTENT_REQUEST_DETAILS = 102;
 
 	protected String uid;
 
 	protected DatabaseReference database;
 
 	protected RequestsAdapter adapter;
+
+	protected View progressBar;
 
 	public RequestsFragment()
 	{
@@ -47,6 +46,8 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		View rootView = inflater.inflate(getFragmentLayoutId(), container, false);
 
 		database = FirebaseDatabase.getInstance().getReference("requests");
+
+		progressBar = rootView.findViewById(R.id.progressBar);
 
 		return rootView;
 	}
@@ -74,8 +75,8 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		}
 
 		final RecyclerView recycler = getView().findViewById(R.id.recycler);
-		LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-		layoutManager.setReverseLayout(true);
+		LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, true);
+		layoutManager.setStackFromEnd(true);
 		recycler.setLayoutManager(layoutManager);
 
 		SnapshotParser<MODEL> parser = new SnapshotParser<MODEL>() {
@@ -90,15 +91,6 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 				.build();
 
 		adapter = createAdapter(options);
-		adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver()
-		{
-			@Override
-			public void onItemRangeInserted(int positionStart, int itemCount)
-			{
-				super.onItemRangeInserted(positionStart, itemCount);
-				recycler.scrollToPosition(positionStart);
-			}
-		});
 
 		recycler.setAdapter(adapter);
 	}
@@ -111,18 +103,20 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	}
 
 	@Override
-	public void onPause()
+	public void onStop()
 	{
+		progressBar.setVisibility(View.VISIBLE);
 		adapter.stopListening();
-		super.onPause();
+		super.onStop();
 	}
 
-	protected void showRequestDetails(@NonNull Request request, String requestKey)
+	protected void showRequestDetails(@NonNull Request request, String requestId)
 	{
-		Intent intent = new Intent(getActivity(), getDetailsRequestActivityClass());
+		Intent intent = new Intent(getActivity(), getDetailRequestActivityClass());
+		intent.putExtra("uid", uid);
+		intent.putExtra("requestId", requestId);
 		intent.putExtra("request", request);
-		intent.putExtra("requestKey", requestKey);
-		startActivityForResult(intent, getIntentCodeForRequestDetails());
+		startActivityForResult(intent, INTENT_REQUEST_DETAILS);
 	}
 
 	@LayoutRes
@@ -134,10 +128,5 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 
 	protected abstract RequestsAdapter createAdapter(FirebaseRecyclerOptions<MODEL> options);
 
-	protected abstract Class<? extends AppCompatActivity> getDetailsRequestActivityClass();
-
-	protected abstract int getIntentCodeForRequestDetails();
-
-	@StringRes
-	protected abstract int getActivityTitle();
+	protected abstract Class<? extends DetailRequestActivity> getDetailRequestActivityClass();
 }

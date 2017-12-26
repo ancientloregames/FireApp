@@ -5,7 +5,6 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -19,6 +18,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -33,14 +33,11 @@ public class ImageUploadService extends BasicService
 	public static final String UPLOAD_COMPLETED = "upload_completed";
 	public static final String UPLOAD_ERROR = "upload_error";
 
-	public static final String EXTRA_FILE_URI = "extra_file_uri";
-	public static final String EXTRA_FILE_NAME = "extra_file_name";
-	public static final String EXTRA_FILE_FOLDER = "extra_file_folder";
+	public static final String EXTRA_IMAGES = "extra_images";
+	public static final String EXTRA_PATH = "extra_path";
 	public static final String EXTRA_DOWNLOAD_URL = "extra_download_url";
 
 	private StorageReference storagePhotoRef;
-
-	private final int maxSize = 1270;
 
 	@Override
 	public void onCreate()
@@ -63,36 +60,47 @@ public class ImageUploadService extends BasicService
 		Log.d(TAG, "onStartCommand:" + intent + ":" + startId);
 		if (ACTION_UPLOAD.equals(intent.getAction()))
 		{
-			Uri fileUri = intent.getParcelableExtra(EXTRA_FILE_URI);
-			String name = intent.getStringExtra(EXTRA_FILE_NAME);
-			String folder = intent.getStringExtra(EXTRA_FILE_FOLDER);
-			try
+			ArrayList<TitledUri> images = intent.getParcelableArrayListExtra(EXTRA_IMAGES);
+			String[] path = intent.getStringArrayExtra(EXTRA_PATH);
+			for (TitledUri image : images)
 			{
-				uploadFromUri(fileUri, name, folder);
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
+				try {
+					taskStarted();
+					uploadFromUri(image.uri, image.title, path);
+				} catch (IOException e) {
+					e.printStackTrace();
+					taskCompleted();
+				}
 			}
 		}
 
 		return START_REDELIVER_INTENT;
 	}
 
-	private void uploadFromUri(final Uri fileUri, final String name, final String folder) throws IOException
+	private void uploadFromUri(final Uri fileUri, final String name, final String[] path) throws IOException
 	{
 		Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
-		taskStarted();
-		showProgressNotification(getString(R.string.textUnloading), 0, 0);
-
-		Bitmap bitmap = resizeImage(MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri));
+		int orientation = 1;
+		try {
+			orientation = Utils.getExifOrientation(getContentResolver(), fileUri);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Bitmap bitmap = Utils.decodeSampledBitmapFromUri(getContentResolver(), fileUri, 1024 , 1024);
+		bitmap = Utils.fixImageRotation(bitmap, orientation);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
 
 		// Get a reference to store file at photos/uid/{orderid}.jpg
-		final StorageReference photoRef = storagePhotoRef.child(folder).child(name);
+		StorageReference photoRef = storagePhotoRef;
+		for (String folder : path)
+		{
+			photoRef = photoRef.child(folder);
+		}
+		photoRef = photoRef.child(name);
 
+		showProgressNotification(getString(R.string.textUploading), 0, 0);
 		Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
 		photoRef.putBytes(out.toByteArray()).
 				addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>()
@@ -100,7 +108,7 @@ public class ImageUploadService extends BasicService
 					@Override
 					public void onProgress(UploadTask.TaskSnapshot taskSnapshot)
 					{
-						showProgressNotification(getString(R.string.textUnloading),
+						showProgressNotification(getString(R.string.textUploading),
 								taskSnapshot.getBytesTransferred(),
 								taskSnapshot.getTotalByteCount());
 					}
@@ -124,7 +132,7 @@ public class ImageUploadService extends BasicService
 					@Override
 					public void onFailure(@NonNull Exception exception)
 					{
-						Log.w(TAG, "uploadFromUri:onFailure", exception);
+						Utils.trySendFabricReport("uploadFromUri:onFailure. fileUri: " + fileUri, exception);
 
 						broadcastUploadFinished(null, fileUri);
 						showUploadFinishedNotification(null, fileUri);
@@ -141,29 +149,9 @@ public class ImageUploadService extends BasicService
 
 		Intent broadcast = new Intent(action)
 				.putExtra(EXTRA_DOWNLOAD_URL, downloadUrl)
-				.putExtra(EXTRA_FILE_URI, fileUri);
+				.putExtra(EXTRA_IMAGES, fileUri);
 		return LocalBroadcastManager.getInstance(getApplicationContext())
 				.sendBroadcast(broadcast);
-	}
-
-	private Bitmap resizeImage(Bitmap bitmap)
-	{
-		Bitmap result = bitmap;
-		if (bitmap.getHeight() > maxSize || bitmap.getWidth() > maxSize)
-		{
-			if (bitmap.getHeight() > bitmap.getWidth())
-			{
-				float aspectRatio = bitmap.getWidth() / (float) bitmap.getHeight();
-				result = Bitmap.createScaledBitmap(bitmap, (int) (maxSize * aspectRatio), maxSize, false);
-			}
-			else
-			{
-				float aspectRatio = bitmap.getHeight() / (float) bitmap.getWidth();
-				result = Bitmap.createScaledBitmap(bitmap, maxSize, (int) (maxSize * aspectRatio), false);
-			}
-		}
-
-		return result;
 	}
 
 	private void showUploadFinishedNotification(@Nullable Uri downloadUrl, @Nullable Uri fileUri)
@@ -172,7 +160,7 @@ public class ImageUploadService extends BasicService
 
 		Intent intent = new Intent(this, MainActivity.class)
 				.putExtra(EXTRA_DOWNLOAD_URL, downloadUrl)
-				.putExtra(EXTRA_FILE_URI, fileUri)
+				.putExtra(EXTRA_IMAGES, fileUri)
 				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
 		boolean success = downloadUrl != null;

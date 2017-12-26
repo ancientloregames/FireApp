@@ -9,10 +9,19 @@
 			 android:background="@color/recyclerBackground"
 	>
 
+	<com.nimblemind.autoplus.TintedProgressBar
+		android:id="@+id/progressBar"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="15dp"
+		android:layout_gravity="center_horizontal"
+		android:indeterminate="true"
+		/>
+
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycler"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:clipToPadding="false"
 		android:scrollbars="vertical"
 		tools:listitem="@layout/client_list_item"
@@ -20,10 +29,12 @@
 
 	<android.support.design.widget.FloatingActionButton
 		android:id="@+id/buttonNewRequest"
-		android:layout_width="@dimen/floatingButtonSize"
-		android:layout_height="@dimen/floatingButtonSize"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_gravity="bottom|end"
 		android:layout_margin="@dimen/globalActivityPadding"
-		app:srcCompat="@drawable/plus"
+		app:backgroundTint="@color/floatingButton"
+		app:srcCompat="@drawable/ic_plus_white_24dp"
+		app:fabSize="normal"
 		/>
 </FrameLayout>
