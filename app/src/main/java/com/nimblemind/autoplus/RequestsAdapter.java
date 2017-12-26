@@ -29,10 +29,10 @@ abstract class RequestsAdapter<MODEL extends Request, HOLDER extends RequestView
 	protected void onBindViewHolder(HOLDER holder, int position, MODEL model)
 	{
 		holder.bindToData(model);
-
-		String key = getRef(position).getKey();
-
-		bindItem(holder, model, key);
+		if(model.timestamp != 0)
+		{
+			bindItem(holder, model);
+		}
 	}
 
 	@Override
@@ -42,7 +42,7 @@ abstract class RequestsAdapter<MODEL extends Request, HOLDER extends RequestView
 		return createViewHolder(view);
 	}
 
-	protected abstract void bindItem(HOLDER holder, MODEL model, String key);
+	protected abstract void bindItem(HOLDER holder, MODEL model);
 
 	@LayoutRes
 	protected abstract int getModelLayoutId();

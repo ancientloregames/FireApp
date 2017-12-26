@@ -16,16 +16,17 @@ class SupportTicketsAdapter extends SupportRequestsAdapter<Ticket, SupportTicket
 	}
 
 	@Override
-	protected void bindItem(SupportTicketViewHolder holder, final Ticket ticket, final String key)
+	protected void bindItem(final SupportTicketViewHolder holder, final Ticket ticket)
 	{
-		holder.answerRequestButton.setOnClickListener(new View.OnClickListener()
+		holder.itemView.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)
 			{
 				if (listener.get() != null)
 				{
-					listener.get().onShowRequestClicked(ticket, key);
+					String requestId = getRef(holder.getAdapterPosition()).getKey();
+					listener.get().onShowRequestClicked(ticket, requestId);
 				}
 			}
 		});

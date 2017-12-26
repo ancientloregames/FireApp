@@ -120,6 +120,9 @@ public class SwipeRevealLayout extends ViewGroup {
 
 	private int mDragEdge = DRAG_EDGE_LEFT;
 
+	private float mX = -1.0f;
+	private float mY = -1.0f;
+
 	private ViewDragHelper mDragHelper;
 	private GestureDetectorCompat mGestureDetector;
 
@@ -191,8 +194,26 @@ public class SwipeRevealLayout extends ViewGroup {
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		if (isDragLocked()) {
+			return super.onInterceptTouchEvent(ev);
+		}
+
 		mDragHelper.processTouchEvent(ev);
 		mGestureDetector.onTouchEvent(ev);
+
+		switch (ev.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				mX = ev.getRawX();
+				mY = ev.getRawY();
+				break;
+		}
+
+		if (inMainView(ev)) {
+			boolean in = isInTouchSlop(ev);
+			if (in) {
+				return false;
+			}
+		}
 
 		boolean settling = mDragHelper.getViewDragState() == ViewDragHelper.STATE_SETTLING;
 		boolean idleAfterScrolled = mDragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE
@@ -244,9 +265,9 @@ public class SwipeRevealLayout extends ViewGroup {
 
 			if (childParams != null) {
 				matchParentHeight = (childParams.height == LayoutParams.MATCH_PARENT) ||
-						(childParams.height == LayoutParams.FILL_PARENT);
+						(childParams.height == LayoutParams.MATCH_PARENT);
 				matchParentWidth = (childParams.width == LayoutParams.MATCH_PARENT) ||
-						(childParams.width == LayoutParams.FILL_PARENT);
+						(childParams.width == LayoutParams.MATCH_PARENT);
 			}
 
 			if (matchParentHeight) {
@@ -1057,6 +1078,36 @@ public class SwipeRevealLayout extends ViewGroup {
 			default:
 				return "undefined";
 		}
+	}
+
+	private boolean inMainView(MotionEvent ev)
+	{
+		float x = ev.getX();
+		float y = ev.getY();
+		return x >= mMainView.getLeft() && x <= mMainView.getRight() && y >= mMainView.getTop() && y <= mMainView.getBottom();
+	}
+
+	private boolean isInTouchSlop(MotionEvent ev)
+	{
+		boolean in = false;
+		if (getDragEdge() == DRAG_EDGE_LEFT || getDragEdge() == DRAG_EDGE_RIGHT)
+		{
+			float distanceX = Math.abs(ev.getRawX() - mX);
+			if (distanceX < mDragHelper.getTouchSlop())
+			{
+				in = true;
+			}
+		}
+		else
+		{
+			float distanceY = Math.abs(ev.getRawY() - mY);
+			if (distanceY < mDragHelper.getTouchSlop())
+			{
+				in = true;
+			}
+		}
+
+		return in;
 	}
 
 	private int pxToDp(int px) {

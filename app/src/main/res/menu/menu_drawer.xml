@@ -4,24 +4,23 @@
 		android:checkableBehavior="single">
 		<item
 			android:id="@+id/navTicketFragment"
-			android:title="@string/textTicket"
+			android:title="@string/textTickets"
 			android:checked="true"
 			/>
 		<item
 			android:id="@+id/navOfferFragment"
-			android:title="@string/textOffer"
+			android:title="@string/textOffers"
+			android:enabled="false"
 			/>
 		<item
 			android:id="@+id/navOrderFragment"
-			android:title="@string/textOrder"
+			android:title="@string/textOrders"
+			android:enabled="false"
 			/>
-	</group>
-	<group android:id="@+id/group2"
-		android:checkableBehavior="single">
 		<item
-			android:id="@+id/navLogOut"
-			android:title="@string/buttonLogOut"
-			android:icon="@android:drawable/ic_lock_power_off"
+			android:id="@+id/navBranchesFragment"
+			android:title="@string/textBranchesAdresses"
+			android:enabled="false"
 			/>
 	</group>
 </menu>

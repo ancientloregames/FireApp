@@ -1,7 +1,7 @@
 package com.nimblemind.autoplus;
 
+import android.content.res.Resources;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import com.nimblemind.autoplus.swipereveallayout.SwipeRevealLayout;
 
@@ -16,13 +16,24 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 	TextView sparePartView;
 	TextView autoNameView;
 	TextView notificationView;
-	Button newRequestButton;
-	Button cancelDeletionButton;
+	View newRequestButton;
+	View cancelDeletionButton;
 	View itemLayout;
+
+	private static String textUploading;
+	private static String textPtsPhoto;
+	private static String textPartPhoto;
+	private static String textNoNewMessages;
 
 	public ClientTicketViewHolder(View itemView)
 	{
 		super(itemView);
+
+		Resources res = itemView.getContext().getResources();
+		textUploading = res.getString(R.string.textUploading);
+		textPtsPhoto = res.getString(R.string.textPhotoPTS);
+		textPartPhoto = res.getString(R.string.textPhotoPart);
+		textNoNewMessages = res.getString(R.string.textNoNewMessages);
 
 		itemLayout = itemView.findViewById(R.id.itemLayout);
 		infoView = itemView.findViewById(R.id.infoView);
@@ -35,11 +46,17 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 
 	public void bindToData(Ticket ticket)
 	{
-		infoView.setText(itemView.getResources()
-				.getString(R.string.textRequestInfo, ticket.id, Utils.getDate(ticket.timestamp)));
-		sparePartView.setText(ticket.partType);
-		autoNameView.setText(ticket.autoName);
-		notificationView.setText(itemView.getResources().getString(R.string.textNoNewMessages));
+		infoView.setText(ticket.timestamp > 0
+				? Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm")
+				: textUploading);
+		String sparePart = ticket.spareParts.get(0);
+		sparePartView.setText(!sparePart.isEmpty()
+				? sparePart
+				: textPartPhoto);
+		autoNameView.setText(ticket.autoBrand != null
+				? String.format("%s %s, %d", ticket.autoBrand, ticket.autoModel, ticket.year)
+				: textPtsPhoto);
+		notificationView.setText(textNoNewMessages);
 	}
 
 	public SwipeRevealLayout getView()

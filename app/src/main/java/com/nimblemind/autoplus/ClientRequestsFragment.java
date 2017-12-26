@@ -1,12 +1,13 @@
 package com.nimblemind.autoplus;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,14 +24,6 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 
 	public ClientRequestsFragment()
 	{
-	}
-
-	@Override
-	public void onAttach(Context context)
-	{
-		super.onAttach(context);
-
-		getActivity().setTitle(getActivityTitle());
 	}
 
 	@Override
@@ -57,9 +50,17 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 		{
 			if (requestCode == INTENT_NEW_REQUEST)
 			{
-				Request newRequest = (Request) data.getSerializableExtra("request");
-				Uri photoUri = data.getParcelableExtra("photo");
-				sendRequest(newRequest, photoUri);
+				MODEL newRequest = data.getParcelableExtra("request");
+				ArrayList<TitledUri> images = data.getParcelableArrayListExtra("images");
+				sendRequest(newRequest, images);
+			}
+			else if (requestCode == INTENT_REQUEST_DETAILS)
+			{
+				MODEL request = data.getParcelableExtra("request");
+				if (request != null)
+				{
+					createNewRequest(request);
+				}
 			}
 		}
 	}
@@ -68,8 +69,10 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 	{
 		Intent intent = new Intent(getActivity(), getNewRequestActivityClass());
 		intent.putExtra("uid", uid);
-		intent.putExtra("template", template);
-		intent.putExtra("type", getModelClass().getSimpleName());
+		if (template != null)
+		{
+			intent.putExtra("template", template);
+		}
 		startActivityForResult(intent, INTENT_NEW_REQUEST);
 	}
 
@@ -83,22 +86,12 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 		super.onDestroy();
 	}
 
-	@Override
-	protected int getIntentCodeForRequestDetails()
+	@CallSuper
+	protected String sendRequest(MODEL request, ArrayList<TitledUri> images)
 	{
-		return INTENT_CLIENT_REQUEST_DETAILS;
-	}
-
-	protected void sendRequest(Request request, Uri photoUri)
-	{
-		String key = database.push().getKey();
-		database.child(key).setValue(request);
-
-		getActivity().startService(new Intent(getActivity(), ImageUploadService.class)
-				.putExtra(ImageUploadService.EXTRA_FILE_URI, photoUri)
-				.putExtra(ImageUploadService.EXTRA_FILE_NAME, key)
-				.putExtra(ImageUploadService.EXTRA_FILE_FOLDER, uid)
-				.setAction(ImageUploadService.ACTION_UPLOAD));
+		String requestId = database.push().getKey();
+		database.child(requestId).setValue(request);
+		return requestId;
 	}
 
 	protected void deleteRequest(final String key)

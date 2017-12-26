@@ -13,8 +13,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 public class ChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, ChatMessageViewHolder>
 {
-	private final int VIEW_TYPE_USER = 1;
-	private final int VIEW_TYPE_COLLOCATOR = 2;
+	private static final int VIEW_TYPE_USER = 1;
+	private static final int VIEW_TYPE_COLLOCATOR = 2;
 
 	private final String uid;
 

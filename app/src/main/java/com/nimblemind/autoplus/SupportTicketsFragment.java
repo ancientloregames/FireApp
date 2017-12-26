@@ -1,6 +1,8 @@
 package com.nimblemind.autoplus;
 
+import android.view.View;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
@@ -42,13 +44,25 @@ public class SupportTicketsFragment extends SupportRequestsFragment<Ticket> impl
 	@Override
 	protected RequestsAdapter createAdapter(FirebaseRecyclerOptions<Ticket> options)
 	{
-		return new SupportTicketsAdapter(options, this);
+		return new SupportTicketsAdapter(options, this){
+			@Override
+			public void onDataChanged()
+			{
+				progressBar.setVisibility(View.GONE);
+			}
+			@Override
+			public void onError(DatabaseError error)
+			{
+				progressBar.setVisibility(View.GONE);
+				Utils.trySendFabricReport("SupportTicketsAdapter", error.toException());
+			}
+		};
 	}
 
 	@Override
-	protected Class<SupportTicketActivity> getDetailsRequestActivityClass()
+	protected Class<SupportDetailTicketActivity> getDetailRequestActivityClass()
 	{
-		return SupportTicketActivity.class;
+		return SupportDetailTicketActivity.class;
 	}
 
 	@Override

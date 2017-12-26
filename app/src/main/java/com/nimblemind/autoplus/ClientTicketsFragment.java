@@ -1,8 +1,13 @@
 package com.nimblemind.autoplus;
 
+import android.content.Intent;
+import android.view.View;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
+
+import java.util.ArrayList;
 
 
 /**
@@ -16,15 +21,21 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	}
 
 	@Override
-	protected Class<NewTicketActivity> getNewRequestActivityClass()
+	protected String sendRequest(Ticket ticket, ArrayList<TitledUri> images)
 	{
-		return NewTicketActivity.class;
+		String ticketId = super.sendRequest(ticket, images);
+
+		getActivity().startService(new Intent(getActivity(), ImageUploadService.class)
+				.putParcelableArrayListExtra(ImageUploadService.EXTRA_IMAGES, images)
+				.putExtra(ImageUploadService.EXTRA_PATH, new String[] {uid, ticketId})
+				.setAction(ImageUploadService.ACTION_UPLOAD));
+		return ticketId;
 	}
 
 	@Override
-	protected Class<ClientTicketActivity> getDetailsRequestActivityClass()
+	protected Class<NewTicketActivity> getNewRequestActivityClass()
 	{
-		return ClientTicketActivity.class;
+		return NewTicketActivity.class;
 	}
 
 	@Override
@@ -48,7 +59,19 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	@Override
 	protected RequestsAdapter createAdapter(FirebaseRecyclerOptions<Ticket> options)
 	{
-		return new ClientTicketsAdapter(options, this);
+		return new ClientTicketsAdapter(options, this){
+			@Override
+			public void onDataChanged()
+			{
+				progressBar.setVisibility(View.GONE);
+			}
+			@Override
+			public void onError(DatabaseError error)
+			{
+				progressBar.setVisibility(View.GONE);
+				Utils.trySendFabricReport("ClientTicketsAdapter", error.toException());
+			}
+		};
 	}
 
 	@Override
@@ -58,9 +81,9 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	}
 
 	@Override
-	public void onShowRequestClicked(Ticket request, String requestKey)
+	public void onShowRequestClicked(Ticket request,String requstId)
 	{
-		showRequestDetails(request, requestKey);
+		showRequestDetails(request, requstId);
 	}
 
 	@Override
@@ -79,5 +102,11 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	public void onCancelDeleteRequestClicked(String key)
 	{
 		deleteCandidates.remove(key);
+	}
+
+	@Override
+	protected Class<DetailTicketActivity> getDetailRequestActivityClass()
+	{
+		return DetailTicketActivity.class;
 	}
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:app="http://schemas.android.com/apk/res-auto"
 			  xmlns:tools="http://schemas.android.com/tools"
 			  android:layout_width="match_parent"
 			  android:layout_height="wrap_content"
@@ -11,45 +12,62 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal"
+		android:orientation="vertical"
 		>
 		<LinearLayout
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="vertical"
+			android:orientation="horizontal"
 			>
+			<TextView
+				android:id="@+id/sparePartView"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:textStyle="bold"
+				android:textSize="18sp"
+				android:maxLines="1"
+				android:ellipsize="end"
+				android:paddingBottom="5dp"
+				tools:text="@string/hintAutoPart"
+				/>
 			<TextView
 				android:id="@+id/infoView"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				tools:text="@string/textRequestInfo"
-				/>
-			<TextView
-				android:id="@+id/sparePartView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				tools:text="@string/hintAutoPart"
-				/>
-			<TextView
-				android:id="@+id/autoNameView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				tools:text="@string/hintAutoName"
+				tools:text="01 January, 12:00"
+				android:textColor="@color/mainNewRequestButton"
 				/>
 		</LinearLayout>
-		<TextView
+		<com.nimblemind.autoplus.IconTextView
+			android:id="@+id/autoNameView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="15sp"
+			android:maxLines="1"
+			android:ellipsize="end"
+			android:drawableLeft="@drawable/asset_car"
+			android:drawablePadding="@dimen/textDrawableDefaultIndent"
+			tools:text="@string/hintAutoBrand"
+			/>
+		<com.nimblemind.autoplus.IconTextView
 			android:id="@+id/notificationView"
-			android:layout_width="0dp"
-			android:layout_height="match_parent"
-			android:layout_weight="1"
-			android:gravity="right"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="15sp"
+			android:drawableLeft="@drawable/asset_message_empty"
+			android:drawablePadding="@dimen/textDrawableDefaultIndent"
 			tools:text="@string/textNoNewMessages"
 			/>
 	</LinearLayout>
-	<Button
+	<android.support.v7.widget.AppCompatButton
 		android:id="@+id/buttonAnswerRequest"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/buttonAnswerRequest"
+		android:textColor="@android:color/white"
+		android:drawableLeft="@drawable/message_bubble_white_empty"
+		android:drawablePadding="@dimen/textDrawableDefaultIndent"
+		app:backgroundTint="@color/colorPrimary"
 		/>
 </LinearLayout>
