@@ -34,12 +34,14 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 		{
 			if (requestCode == INTENT_REQUEST_DETAILS)
 			{
-				assignRequest(data.getStringExtra("requestKey"));
+				String requestId = data.getStringExtra("requestKey");
+				assignRequest(requestId);
+				openChat(requestId);
 			}
 		}
 	}
 
-	private void assignRequest(String requestKey)
+	protected void assignRequest(String requestKey)
 	{
 		database.child(requestKey).child("sid").setValue(uid);
 	}

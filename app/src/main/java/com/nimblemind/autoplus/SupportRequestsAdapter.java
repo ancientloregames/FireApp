@@ -12,6 +12,7 @@ abstract class SupportRequestsAdapter<MODEL extends Request, HOLDER extends Requ
 {
 	interface Listener<MODEL extends Request> extends AdapterListener<MODEL>
 	{
+		void onAnswerRequestClicked(MODEL request, String requestId);
 	}
 
 	SupportRequestsAdapter(FirebaseRecyclerOptions<MODEL> options, Listener<MODEL> listener)
