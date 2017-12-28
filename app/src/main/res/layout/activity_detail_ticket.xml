@@ -104,22 +104,25 @@
 			<include layout="@layout/default_divider"/>
 
 			<android.support.v7.widget.AppCompatButton
-				android:id="@+id/buttonAdd"
+				android:id="@+id/buttonOpenChat"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_margin="@dimen/globalActivityPadding"
+				android:layout_marginLeft="@dimen/globalActivityPadding"
+				android:layout_marginTop="@dimen/globalActivityPadding"
 				android:text="@string/textNoNewMessages"
 				android:textSize="18sp"
 				android:textColor="@android:color/white"
 				android:drawableLeft="@drawable/message_bubble_white_empty"
 				android:drawablePadding="@dimen/textDrawableDefaultIndent"
 				app:backgroundTint="@color/colorPrimary"
+				android:visibility="gone"
 				/>
 			<TextView
 				android:id="@+id/newRequestButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="@dimen/globalActivityPadding"
+				android:layout_marginTop="@dimen/globalActivityPadding"
 				android:layout_marginBottom="@dimen/globalActivityPadding"
 				android:text="@string/buttonCreateRequestByTemplate"
 				android:textColor="@color/mainNewRequestButton"

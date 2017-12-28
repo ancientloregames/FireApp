@@ -38,7 +38,7 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 		{
 			if (requestCode == INTENT_REQUEST_DETAILS)
 			{
-				String requestId = data.getStringExtra("requestKey");
+				String requestId = data.getStringExtra("requestId");
 				assignRequest(requestId);
 				openChat(requestId);
 			}

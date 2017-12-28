@@ -60,14 +60,4 @@
 			tools:text="@string/textNoNewMessages"
 			/>
 	</LinearLayout>
-	<android.support.v7.widget.AppCompatButton
-		android:id="@+id/buttonAnswerRequest"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/buttonAnswerRequest"
-		android:textColor="@android:color/white"
-		android:drawableLeft="@drawable/message_bubble_white_empty"
-		android:drawablePadding="@dimen/textDrawableDefaultIndent"
-		app:backgroundTint="@color/colorPrimary"
-		/>
 </LinearLayout>

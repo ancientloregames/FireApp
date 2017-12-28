@@ -45,9 +45,9 @@ public class ChatActivity extends AppCompatActivity
 		Intent intent = getIntent();
 		final String uid = intent.getStringExtra("uid");
 		final String userName = intent.getStringExtra("userName");
-		final String requestKey = intent.getStringExtra("requestKey");
+		final String requestId = intent.getStringExtra("requestId");
 
-		final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("chats").child(requestKey);
+		final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("chats").child(requestId);
 
 		SnapshotParser<ChatMessage> parser = new SnapshotParser<ChatMessage>() {
 			@Override

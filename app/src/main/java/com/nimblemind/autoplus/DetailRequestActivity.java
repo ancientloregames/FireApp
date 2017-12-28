@@ -29,6 +29,9 @@ import java.util.List;
 
 public abstract class DetailRequestActivity<MODEL extends Request> extends AppCompatActivity
 {
+	public final static String ACTION_OPEN_CHAT = "action_open_chat";
+	public final static String ACTION_NEW_REQUEST = "action_new_request";
+
 	protected String uid;
 
 	protected String requestId;
@@ -72,10 +75,20 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 		populateForm(request);
 	}
 
+	protected void openChat()
+	{
+		Intent intent = new Intent();
+		intent.putExtra("requestId", requestId);
+		intent.setAction(ACTION_OPEN_CHAT);
+		setResult(RESULT_OK, intent);
+		finish();
+	}
+
 	protected void createNewOnThis()
 	{
 		Intent intent = new Intent();
 		intent.putExtra("request", request);
+		intent.setAction(ACTION_NEW_REQUEST);
 		setResult(RESULT_OK, intent);
 		finish();
 	}

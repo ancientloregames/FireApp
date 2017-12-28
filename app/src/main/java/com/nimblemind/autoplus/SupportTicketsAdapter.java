@@ -30,19 +30,6 @@ class SupportTicketsAdapter extends SupportRequestsAdapter<Ticket, SupportTicket
 				}
 			}
 		});
-
-		holder.answerRequestButton.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				if (listener.get() != null)
-				{
-					String key = getRef(holder.getAdapterPosition()).getKey();
-					listener.get().onAnswerRequestClicked(ticket, key);
-				}
-			}
-		});
 	}
 
 	@Override

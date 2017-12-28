@@ -2,6 +2,7 @@ package com.nimblemind.autoplus;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,26 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 		partView = findViewById(R.id.textAutoPart);
 		commentView = findViewById(R.id.textComment);
 		partPhotosContainer = findViewById(R.id.partPhotoContainer);
+	}
+
+	@Override
+	protected void onPostCreate(@Nullable Bundle savedInstanceState)
+	{
+		super.onPostCreate(savedInstanceState);
+
+		View openChatButton = findViewById(R.id.buttonOpenChat);
+		if (!request.sid.isEmpty())
+		{
+			openChatButton.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					openChat();
+				}
+			});
+			openChatButton.setVisibility(View.VISIBLE);
+		}
 
 		findViewById(R.id.newRequestButton).setOnClickListener(new View.OnClickListener()
 		{

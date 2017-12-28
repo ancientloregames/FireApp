@@ -62,11 +62,4 @@ public class SupportTicketsFragment extends SupportRequestsFragment<Ticket> impl
 	{
 		showRequestDetails(request, requestKey);
 	}
-
-	@Override
-	public void onAnswerRequestClicked(Ticket request, String requestId)
-	{
-		assignRequest(requestId);
-		openChat(requestId);
-	}
 }

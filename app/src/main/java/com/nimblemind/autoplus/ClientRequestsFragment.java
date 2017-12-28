@@ -55,10 +55,16 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 			}
 			else if (requestCode == INTENT_REQUEST_DETAILS)
 			{
-				MODEL request = data.getParcelableExtra("request");
-				if (request != null)
+				switch (data.getAction())
 				{
-					createNewRequest(request);
+					case DetailRequestActivity.ACTION_OPEN_CHAT:
+						String requestId = data.getStringExtra("requestId");
+						openChat(requestId);
+						break;
+					case DetailRequestActivity.ACTION_NEW_REQUEST:
+						MODEL request = data.getParcelableExtra("request");
+						createNewRequest(request);
+						break;
 				}
 			}
 		}
