@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -24,16 +23,17 @@ import static com.nimblemind.autoplus.LoginActivity.EXTRA_NO_AUTOLOGIN;
  * com.nimblemind.autoplus. Created by nimblemind on 10/4/2017.
  */
 
-public abstract class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public abstract class MainActivity<FRAGMENT extends RequestsFragment> extends AppCompatActivity
+		implements NavigationView.OnNavigationItemSelectedListener
 {
-	private final String TAG = MainActivity.class.getSimpleName();
-
 	private DrawerLayout drawer;
 	private ActionBarDrawerToggle drawerToggle;
 
 	private String uid;
 
 	private User user;
+
+	protected FRAGMENT fragment;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -66,8 +66,6 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 			}
 		});
 
-		Log.d(TAG, user.toString() + " uid: " + uid);
-
 		if (savedInstanceState == null)
 		{
 			onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navTicketFragment));
@@ -93,36 +91,22 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item)
 	{
-		RequestsFragment fragment = null;
-		int id = item.getItemId();
-		switch (id)
+		drawer.closeDrawer(GravityCompat.START);
+
+		FRAGMENT fragment;
+		switch (item.getItemId())
 		{
 			case R.id.navTicketFragment:
 				fragment = getTicketsFragment();
 				break;
-			case R.id.navOfferFragment:
-				// TODO
-				break;
-			case R.id.navOrderFragment:
-				// TODO
-				break;
+			case R.id.navOfferFragment: // TODO
+			case R.id.navOrderFragment: // TODO
+			default: return super.onOptionsItemSelected(item);
 		}
 
-		drawer.closeDrawer(GravityCompat.START);
+		switchFragment(fragment, getFragmentArguments());
 
-		if (fragment != null)
-		{
-			Bundle arguments = new Bundle();
-			arguments.putString("uid", uid);
-			arguments.putString("userName", user.name);
-			fragment.setArguments(arguments);
-			getSupportFragmentManager()
-					.beginTransaction()
-					.replace(R.id.fragmentTarget, fragment)
-					.commitNowAllowingStateLoss();
-			return true;
-		}
-		else return super.onOptionsItemSelected(item);
+		return true;
 	}
 
 	private void gotoAuthActivity()
@@ -134,5 +118,23 @@ public abstract class MainActivity extends AppCompatActivity implements Navigati
 		finish();
 	}
 
-	protected abstract RequestsFragment getTicketsFragment();
+	protected void switchFragment(FRAGMENT fragment, Bundle arguments)
+	{
+		this.fragment = fragment;
+		fragment.setArguments(arguments);
+		getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.fragmentTarget, fragment)
+				.commitNowAllowingStateLoss();
+	}
+
+	protected Bundle getFragmentArguments()
+	{
+		Bundle arguments = new Bundle();
+		arguments.putString("uid", uid);
+		arguments.putString("userName", user.name);
+		return arguments;
+	}
+
+	protected abstract FRAGMENT getTicketsFragment();
 }

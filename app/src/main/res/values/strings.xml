@@ -149,6 +149,12 @@
 
 	<string name="photoPrefix" translatable="false">Auto_plus</string>
 
+	<!-- Query Filter Activity -->
+	<string name="activityQueryFilter">Filter</string>
+
+	<string name="queryFilterOpened">All opened</string>
+	<string name="queryFilterOwn">All mine</string>
+
 	<!-- Permissions -->
 	<string name="textRationaleTitle">Permission requered</string>
 	<string name="textRationaleMessageCamera" translatable="false">To take photos, the app needs your permission to use camera and write the result to Pictures folder</string>

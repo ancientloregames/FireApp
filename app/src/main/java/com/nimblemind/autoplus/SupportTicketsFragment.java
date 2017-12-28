@@ -3,8 +3,6 @@ package com.nimblemind.autoplus;
 import android.view.View;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 
 
 /**
@@ -33,12 +31,6 @@ public class SupportTicketsFragment extends SupportRequestsFragment<Ticket> impl
 	protected Class<Ticket> getModelClass()
 	{
 		return Ticket.class;
-	}
-
-	@Override
-	protected Query getQuery(DatabaseReference databaseReference)
-	{
-		return databaseReference.orderByChild("sid").equalTo("");
 	}
 
 	@Override

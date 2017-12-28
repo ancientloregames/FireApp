@@ -51,7 +51,7 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	}
 
 	@Override
-	protected Query getQuery(DatabaseReference databaseReference)
+	protected Query getInitialQuery(DatabaseReference databaseReference)
 	{
 		return databaseReference.orderByChild("uid").equalTo(uid);
 	}

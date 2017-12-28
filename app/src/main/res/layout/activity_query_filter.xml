@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:tools="http://schemas.android.com/tools"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:fitsSystemWindows="true"
+			  android:orientation="vertical"
+			  android:background="@color/colorPrimary"
+			  tools:context=".QueryFilterActivity"
+	>
+
+	<include layout="@layout/topbar"/>
+
+	<RadioGroup
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="@dimen/globalActivityPadding"
+		android:background="@color/recyclerItem"
+		>
+		<RadioButton
+			android:id="@+id/radioButtonOpened"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/globalActivityPadding"
+			android:text="@string/queryFilterOpened"
+			android:textSize="@dimen/detailRequestTextSize"
+			/>
+		<RadioButton
+			android:id="@+id/radioButtonOwn"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/queryFilterOwn"
+			android:textSize="@dimen/detailRequestTextSize"
+			/>
+	</RadioGroup>
+</LinearLayout>

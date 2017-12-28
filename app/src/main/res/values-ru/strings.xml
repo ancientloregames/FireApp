@@ -95,4 +95,7 @@
 	<string name="buttonTakeRequest">Взять</string>
 	<string name="buttonAnswerRequest">Ответить</string>
 	<string name="fragmentSupportTicketList">Открытые запросы</string>
+	<string name="activityQueryFilter">Фильтр</string>
+	<string name="queryFilterOpened">Все открытые</string>
+	<string name="queryFilterOwn">Все мои</string>
 </resources>

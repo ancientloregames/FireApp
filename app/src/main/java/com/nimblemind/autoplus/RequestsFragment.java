@@ -36,6 +36,7 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	protected DatabaseReference database;
 
 	protected RequestsAdapter adapter;
+	protected RecyclerView recycler;
 
 	protected View progressBar;
 
@@ -51,6 +52,8 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		database = FirebaseDatabase.getInstance().getReference("requests");
 
 		progressBar = rootView.findViewById(R.id.progressBar);
+
+		recycler = rootView.findViewById(R.id.recycler);
 
 		return rootView;
 	}
@@ -80,23 +83,11 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 			throw new RuntimeException("Uid was not passed to the list fragment!");
 		}
 
-		final RecyclerView recycler = getView().findViewById(R.id.recycler);
 		LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, true);
 		layoutManager.setStackFromEnd(true);
 		recycler.setLayoutManager(layoutManager);
 
-		SnapshotParser<MODEL> parser = new SnapshotParser<MODEL>() {
-			@Override
-			public MODEL parseSnapshot(DataSnapshot dataSnapshot) {
-				return dataSnapshot.getValue(getModelClass());
-			}
-		};
-
-		FirebaseRecyclerOptions<MODEL> options = new FirebaseRecyclerOptions.Builder<MODEL>()
-				.setQuery(getQuery(database), parser)
-				.build();
-
-		adapter = createAdapter(options);
+		adapter = createAdapter(getModelClass(), getInitialQuery(database));
 
 		recycler.setAdapter(adapter);
 	}
@@ -114,6 +105,24 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		progressBar.setVisibility(View.VISIBLE);
 		adapter.stopListening();
 		super.onStop();
+	}
+
+	protected RequestsAdapter createAdapter(final Class<MODEL> modelClass, Query query)
+	{
+		SnapshotParser<MODEL> parser = new SnapshotParser<MODEL>() {
+			@Override
+			public MODEL parseSnapshot(DataSnapshot dataSnapshot) {
+				return dataSnapshot.getValue(modelClass);
+			}
+		};
+
+		FirebaseRecyclerOptions<MODEL> options = new FirebaseRecyclerOptions.Builder<MODEL>()
+				.setQuery(query, parser)
+				.build();
+
+		adapter = createAdapter(options);
+
+		return adapter;
 	}
 
 	protected void showRequestDetails(@NonNull Request request, String requestId)
@@ -139,7 +148,7 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 
 	protected abstract Class<MODEL> getModelClass();
 
-	protected abstract Query getQuery(DatabaseReference databaseReference);
+	protected abstract Query getInitialQuery(DatabaseReference databaseReference);
 
 	protected abstract RequestsAdapter createAdapter(FirebaseRecyclerOptions<MODEL> options);
 

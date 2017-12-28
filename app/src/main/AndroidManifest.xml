@@ -93,7 +93,9 @@
 			/>
 		<activity android:name=".ChatActivity"
 				  android:label="@string/activityChat"
-				  android:parentActivityName=".MainActivity"
+			/>
+		<activity android:name=".QueryFilterActivity"
+				  android:label="@string/activityQueryFilter"
 			/>
 
 		<service
