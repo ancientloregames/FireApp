@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -92,7 +91,7 @@ public class ChatActivity extends AppCompatActivity
 				String text = textField.getText().toString();
 				if (!text.isEmpty())
 				{
-					sendMessage(new ChatMessage(uid, userName, text), chatRef);
+					sendMessage(new ChatMessage(uid, userName, text, null), chatRef);
 					textField.setText("");
 				}
 			}
