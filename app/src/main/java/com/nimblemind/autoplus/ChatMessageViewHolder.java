@@ -24,8 +24,7 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder
 
 	public void bindToData(ChatMessage message)
 	{
-		infoView.setText(itemView.getResources()
-				.getString(R.string.textMessageInfo, message.senderName, Utils.getDate(message.timestamp, "hh:mm")));
+		infoView.setText(Utils.getDate(message.timestamp, "hh:mm"));
 		messageView.setText(message.text);
 	}
 }

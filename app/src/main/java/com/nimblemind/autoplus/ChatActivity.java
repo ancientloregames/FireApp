@@ -40,7 +40,7 @@ public class ChatActivity extends AppCompatActivity
 
 		final RecyclerView recycler = findViewById(R.id.recycler);
 		final TextView textField = findViewById(R.id.textField);
-		final Button sendButton = findViewById(R.id.buttonSend);
+		final View sendButton = findViewById(R.id.buttonSend);
 
 		Intent intent = getIntent();
 		final String uid = intent.getStringExtra("uid");

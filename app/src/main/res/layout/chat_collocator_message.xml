@@ -3,27 +3,24 @@
 			  xmlns:tools="http://schemas.android.com/tools"
 			  android:layout_width="match_parent"
 			  android:layout_height="wrap_content"
-			  android:orientation="vertical"
-			  android:layout_gravity="end"
-			  android:layout_marginStart="@dimen/chatMessageOuterEndIndent"
-			  android:layout_marginLeft="@dimen/chatMessageOuterEndIndent"
-			  android:layout_marginTop="@dimen/chatMessageOuterTopIndent"
+			  android:orientation="horizontal"
+			  android:gravity="start"
 			  android:padding="@dimen/chatMessageInnerIndent"
-			  android:background="@color/chatCollocutorMessage"
 	>
-	<TextView
-		android:id="@+id/textInfo"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="end"
-		android:textColor="@android:color/darker_gray"
-		tools:text="@string/textMessageInfo"
-		/>
 	<TextView
 		android:id="@+id/textMessage"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:paddingTop="@dimen/chatMessageInnerIndent"
+		android:background="@drawable/asset_collocator_message_bg"
+		android:textSize="16sp"
 		tools:text="Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test"
+		/>
+	<TextView
+		android:id="@+id/textInfo"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="10dp"
+		android:textColor="@android:color/darker_gray"
+		tools:text="11:11"
 		/>
 </LinearLayout>

@@ -11,60 +11,47 @@
 
 	<include layout="@layout/topbar"/>
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:background="@color/authMain"
-		>
-		<TextView
-			android:id="@+id/textClientName"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			tools:text="@string/hintClientName"
-			/>
-		<TextView
-			android:id="@+id/textAutoName"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			tools:text="@string/hintAutoName"
-			/>
-		<TextView
-			android:id="@+id/textAutoPart"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:textStyle="bold"
-			tools:text="@string/hintAutoPart"
-			/>
-	</LinearLayout>
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycler"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_weight="1"
-		android:padding="10dp"
-		android:background="@android:color/white"
-		tools:listitem="@layout/client_list_item"
+		android:background="#e8f1f0"
+		tools:listitem="@layout/chat_user_message"
+		/>
+	<View xmlns:android="http://schemas.android.com/apk/res/android"
+		  android:id="@+id/divider"
+		  android:layout_width="match_parent"
+		  android:layout_height="5dp"
+		  android:background="@drawable/chat_horizontal_divider_gradient"
+		  android:layout_alignBottom="@+id/text"
 		/>
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:background="@color/authMain"
+		android:background="@android:color/white"
+		android:paddingLeft="10dp"
 		>
 		<EditText
 			android:id="@+id/textField"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
+			android:maxLines="3"
+			android:layout_gravity="center_vertical"
+			android:textSize="@dimen/newRequestEditTextSize"
 			android:hint="@string/hintTextField"
 			/>
-		<Button
+		<ImageView
 			android:id="@+id/buttonSend"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/buttonSend"
+			android:minHeight="55dp"
+			android:paddingRight="10dp"
+			android:layout_gravity="bottom"
+			android:src="@drawable/asset_action_send"
+			android:contentDescription="@string/buttonSend"
 			/>
 	</LinearLayout>
 </LinearLayout>
