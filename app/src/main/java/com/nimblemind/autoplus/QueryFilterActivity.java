@@ -17,6 +17,9 @@ public class QueryFilterActivity extends AppCompatActivity
 {
 	public final static String EXTRA_QUERY_FILTER_CODE = "query_filter";
 
+	public final static int QUERY_MODE_OPENED = 1;
+	public final static int QUERY_MODE_OWN = 2;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -33,7 +36,7 @@ public class QueryFilterActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				selectFilter(SupportRequestsFragment.QUERY_MODE_OPENED);
+				selectFilter(QUERY_MODE_OPENED);
 			}
 		});
 
@@ -42,7 +45,7 @@ public class QueryFilterActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				selectFilter(SupportRequestsFragment.QUERY_MODE_OWN);
+				selectFilter(QUERY_MODE_OWN);
 			}
 		});
 	}

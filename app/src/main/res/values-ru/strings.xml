@@ -98,4 +98,5 @@
 	<string name="activityQueryFilter">Фильтр</string>
 	<string name="queryFilterOpened">Все открытые</string>
 	<string name="queryFilterOwn">Все мои</string>
+	<string name="fragmentSupportTicketsInProcessList">Запросы в обработке</string>
 </resources>

@@ -64,6 +64,7 @@
 	<string name="fragmentClientRequestListName">My requests</string>
 	<string name="fragmentClientTicketListName">My tickets</string>
 	<string name="fragmentSupportTicketList">Opened tickets</string>
+	<string name="fragmentSupportTicketsInProcessList">Tickets in process</string>
 
 	<string name="textNoNewMessages">No new messages</string>
 	<string name="textPhotoPTS">PTS photo granted</string>

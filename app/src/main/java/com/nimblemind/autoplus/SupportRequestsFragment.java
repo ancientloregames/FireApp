@@ -8,6 +8,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 import static android.app.Activity.RESULT_OK;
+import static com.nimblemind.autoplus.QueryFilterActivity.QUERY_MODE_OPENED;
+import static com.nimblemind.autoplus.QueryFilterActivity.QUERY_MODE_OWN;
 
 
 /**
@@ -16,9 +18,6 @@ import static android.app.Activity.RESULT_OK;
 
 public abstract class SupportRequestsFragment<MODEL extends Request> extends RequestsFragment<MODEL>
 {
-	public final static int QUERY_MODE_OPENED = 1;
-	public final static int QUERY_MODE_OWN = 2;
-
 	public SupportRequestsFragment()
 	{
 	}
@@ -57,8 +56,10 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 		{
 			default:
 			case QUERY_MODE_OPENED:
+				getActivity().setTitle(getString(R.string.fragmentSupportTicketList));
 				return databaseReference.orderByChild("sid").equalTo("");
 			case QUERY_MODE_OWN:
+				getActivity().setTitle(getString(R.string.fragmentSupportTicketsInProcessList));
 				return databaseReference.orderByChild("sid").equalTo(uid);
 		}
 	}
