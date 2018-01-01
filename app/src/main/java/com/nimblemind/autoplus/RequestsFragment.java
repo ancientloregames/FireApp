@@ -134,12 +134,13 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		startActivityForResult(intent, INTENT_REQUEST_DETAILS);
 	}
 
-	protected void openChat(String requestId)
+	protected void openChat(String requestId, Request request)
 	{
 		Intent intent = new Intent(getActivity(), ChatActivity.class);
 		intent.putExtra("uid", uid);
 		intent.putExtra("userName", userName);
 		intent.putExtra("requestId", requestId);
+		intent.putExtra("request", request);
 		startActivityForResult(intent, INTENT_CHAT);
 	}
 

@@ -79,6 +79,7 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 	{
 		Intent intent = new Intent();
 		intent.putExtra("requestId", requestId);
+		intent.putExtra("request", request);
 		intent.setAction(ACTION_OPEN_CHAT);
 		setResult(RESULT_OK, intent);
 		finish();

@@ -31,8 +31,18 @@
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
 		android:background="@android:color/white"
-		android:paddingLeft="10dp"
 		>
+		<ImageView
+			android:id="@+id/buttonAddImage"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:minHeight="55dp"
+			android:padding="10dp"
+			android:layout_gravity="bottom"
+			android:scaleType="centerCrop"
+			android:src="@drawable/ic_camera"
+			android:contentDescription="@string/buttonSend"
+			/>
 		<EditText
 			android:id="@+id/textField"
 			android:layout_width="0dp"
@@ -52,6 +62,16 @@
 			android:layout_gravity="bottom"
 			android:src="@drawable/asset_action_send"
 			android:contentDescription="@string/buttonSend"
+			/>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/white"
+		>
+		<include layout="@layout/deletable_image"
+			android:visibility="gone"
+			tools:visibility="visible"
 			/>
 	</LinearLayout>
 </LinearLayout>

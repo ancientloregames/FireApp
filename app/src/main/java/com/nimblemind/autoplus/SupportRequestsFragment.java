@@ -38,8 +38,9 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 			if (requestCode == INTENT_REQUEST_DETAILS)
 			{
 				String requestId = data.getStringExtra("requestId");
+				MODEL request = data.getParcelableExtra("request");
 				assignRequest(requestId);
-				openChat(requestId);
+				openChat(requestId, request);
 			}
 		}
 	}

@@ -119,6 +119,7 @@ public class SupportDetailTicketActivity extends DetailRequestActivity<Ticket>
 	{
 		Intent resultIntent = new Intent();
 		resultIntent.putExtra("requestId", requestId);
+		resultIntent.putExtra("request", request);
 		setResult(RESULT_OK, resultIntent);
 		finish();
 	}

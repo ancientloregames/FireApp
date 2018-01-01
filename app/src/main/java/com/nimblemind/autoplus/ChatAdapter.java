@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.storage.StorageReference;
 
 
 /**
@@ -16,18 +17,21 @@ public class ChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, ChatMessag
 	private static final int VIEW_TYPE_USER = 1;
 	private static final int VIEW_TYPE_COLLOCATOR = 2;
 
+	private final StorageReference requestStorageRef;
+
 	private final String uid;
 
-	public ChatAdapter(FirebaseRecyclerOptions<ChatMessage> options, @NonNull String uid)
+	public ChatAdapter(FirebaseRecyclerOptions<ChatMessage> options, @NonNull String uid, StorageReference requestStorageRef)
 	{
 		super(options);
 		this.uid = uid;
+		this.requestStorageRef = requestStorageRef;
 	}
 
 	@Override
 	protected void onBindViewHolder(ChatMessageViewHolder holder, int position, ChatMessage model)
 	{
-		holder.bindToData(model);
+		holder.bindToData(model, requestStorageRef);
 	}
 
 	@Override
