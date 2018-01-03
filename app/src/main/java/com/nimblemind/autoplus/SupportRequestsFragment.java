@@ -72,6 +72,12 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 		recycler.setAdapter(adapter);
 	}
 
+	@Override
+	protected void resetUnreadMessages(String requestId)
+	{
+		database.child(requestId).child("unreadUsrMsgs").setValue(0);
+	}
+
 	protected void assignRequest(String requestKey)
 	{
 		database.child(requestKey).child("sid").setValue(uid);

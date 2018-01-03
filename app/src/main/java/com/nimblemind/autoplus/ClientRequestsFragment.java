@@ -91,6 +91,12 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 		super.onDestroy();
 	}
 
+	@Override
+	protected void resetUnreadMessages(String requestId)
+	{
+		database.child(requestId).child("unreadSupMsgs").setValue(0);
+	}
+
 	@CallSuper
 	protected String sendRequest(MODEL request, ArrayList<TitledUri> images)
 	{

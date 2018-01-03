@@ -107,6 +107,19 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		super.onStop();
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == INTENT_CHAT && data.hasExtra("requestId"))
+		{
+			resetUnreadMessages(data.getStringExtra("requestId"));
+		}
+	}
+
+
+
 	protected RequestsAdapter createAdapter(final Class<MODEL> modelClass, Query query)
 	{
 		SnapshotParser<MODEL> parser = new SnapshotParser<MODEL>() {
@@ -136,6 +149,7 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 
 	protected void openChat(String requestId, Request request)
 	{
+		resetUnreadMessages(requestId);
 		Intent intent = new Intent(getActivity(), ChatActivity.class);
 		intent.putExtra("uid", uid);
 		intent.putExtra("userName", userName);
@@ -143,6 +157,8 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 		intent.putExtra("request", request);
 		startActivityForResult(intent, INTENT_CHAT);
 	}
+
+	protected abstract void resetUnreadMessages(String requestId);
 
 	@LayoutRes
 	protected abstract int getFragmentLayoutId();

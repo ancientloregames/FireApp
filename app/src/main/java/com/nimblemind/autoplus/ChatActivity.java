@@ -43,6 +43,8 @@ public class ChatActivity extends AppCompatActivity
 	private ImageView imageView;
 	private TextView textField;
 
+	private String requestId;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -65,7 +67,7 @@ public class ChatActivity extends AppCompatActivity
 		Intent intent = getIntent();
 		final String uid = intent.getStringExtra("uid");
 		final String userName = intent.getStringExtra("userName");
-		final String requestId = intent.getStringExtra("requestId");
+		requestId = intent.getStringExtra("requestId");
 		final Request request = intent.getParcelableExtra("request");
 
 		StorageReference requestStorageRef = FirebaseStorage.getInstance()
@@ -181,7 +183,9 @@ public class ChatActivity extends AppCompatActivity
 		switch (item.getItemId())
 		{
 			case android.R.id.home:
-				setResult(RESULT_CANCELED);
+				Intent intent = new Intent();
+				intent.putExtra("requestId", requestId);
+				setResult(RESULT_CANCELED, intent);
 				finish();
 				return true;
 			default:
