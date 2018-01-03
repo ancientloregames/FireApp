@@ -23,6 +23,9 @@ public abstract class Request implements Parcelable
 	public final String type;
 	public final String storageFolder;	// Set on server
 	public final ArrayList<String> ptsPhotos;
+	public final int totalMsgs;			// Set on server
+	public final int unreadUsrMsgs;		// Set on server
+	public final int unreadSupMsgs;		// Set on server
 
 	public Request()
 	{
@@ -37,6 +40,9 @@ public abstract class Request implements Parcelable
 		type = getClass().getSimpleName();
 		storageFolder = null;
 		ptsPhotos = null;
+		totalMsgs = 0;
+		unreadUsrMsgs = 0;
+		unreadSupMsgs = 0;
 	}
 
 	public Request(String uid, String autoBrand, String autoModel, String vin, int year)
@@ -52,6 +58,9 @@ public abstract class Request implements Parcelable
 		this.type = getClass().getSimpleName();
 		this.storageFolder = null;
 		this.ptsPhotos = null;
+		this.totalMsgs = 0;
+		this.unreadUsrMsgs = 0;
+		this.unreadSupMsgs = 0;
 	}
 
 	public Request(String uid, ArrayList<String> ptsPhotos)
@@ -67,6 +76,9 @@ public abstract class Request implements Parcelable
 		this.type = getClass().getSimpleName();
 		this.storageFolder = null;
 		this.ptsPhotos = ptsPhotos;
+		this.totalMsgs = 0;
+		this.unreadUsrMsgs = 0;
+		this.unreadSupMsgs = 0;
 	}
 
 	protected Request(Parcel in)
@@ -82,6 +94,9 @@ public abstract class Request implements Parcelable
 		type = in.readString();
 		storageFolder = in.readString();
 		in.readStringList(ptsPhotos = new ArrayList<>());
+		totalMsgs = in.readInt();
+		unreadUsrMsgs = in.readInt();
+		unreadSupMsgs = in.readInt();
 	}
 
 	@Override
@@ -104,5 +119,8 @@ public abstract class Request implements Parcelable
 		dest.writeString(type);
 		dest.writeString(storageFolder);
 		dest.writeStringList(ptsPhotos);
+		dest.writeInt(totalMsgs);
+		dest.writeInt(unreadUsrMsgs);
+		dest.writeInt(unreadSupMsgs);
 	}
 }

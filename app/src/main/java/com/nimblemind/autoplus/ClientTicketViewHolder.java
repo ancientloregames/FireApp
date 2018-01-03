@@ -1,6 +1,7 @@
 package com.nimblemind.autoplus;
 
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.TextView;
 import com.nimblemind.autoplus.swipereveallayout.SwipeRevealLayout;
@@ -23,7 +24,7 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 	private static String textUploading;
 	private static String textPtsPhoto;
 	private static String textPartPhoto;
-	private static String textNoNewMessages;
+	private static String textNoMessages;
 
 	public ClientTicketViewHolder(View itemView)
 	{
@@ -33,7 +34,7 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 		textUploading = res.getString(R.string.textUploading);
 		textPtsPhoto = res.getString(R.string.textPhotoPTS);
 		textPartPhoto = res.getString(R.string.textPhotoPart);
-		textNoNewMessages = res.getString(R.string.textNoNewMessages);
+		textNoMessages = res.getString(R.string.textNoMessages);
 
 		itemLayout = itemView.findViewById(R.id.itemLayout);
 		infoView = itemView.findViewById(R.id.infoView);
@@ -56,7 +57,32 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 		autoNameView.setText(ticket.autoBrand != null
 				? String.format("%s %s, %d", ticket.autoBrand, ticket.autoModel, ticket.year)
 				: textPtsPhoto);
-		notificationView.setText(textNoNewMessages);
+
+		Resources resources = itemView.getContext().getResources();
+		Drawable notificationImage;
+		String notificationText;
+		if (ticket.totalMsgs != 0)
+		{
+			if (ticket.unreadSupMsgs != 0)
+			{
+				notificationImage = resources.getDrawable(R.drawable.asset_message_new);
+				notificationText = resources.getString(R.string.textNewMessagesCount, ticket.unreadSupMsgs);
+			}
+			else
+			{
+				notificationImage = resources.getDrawable(R.drawable.asset_message_has);
+				notificationText = resources.getString(R.string.textMessagesCount, ticket.totalMsgs);
+			}
+		}
+		else
+		{
+			notificationImage = resources.getDrawable(R.drawable.asset_message_empty);
+			notificationText = textNoMessages;
+		}
+		int size = (int) notificationView.getTextSize();
+		notificationImage.setBounds(0, 0 , size , size);
+		notificationView.setCompoundDrawables(notificationImage, null, null, null);
+		notificationView.setText(notificationText);
 	}
 
 	public SwipeRevealLayout getView()

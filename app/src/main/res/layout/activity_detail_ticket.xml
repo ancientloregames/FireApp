@@ -109,13 +109,14 @@
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="@dimen/globalActivityPadding"
 				android:layout_marginTop="@dimen/globalActivityPadding"
-				android:text="@string/textNoNewMessages"
+				android:text="@string/textNoMessages"
 				android:textSize="18sp"
 				android:textColor="@android:color/white"
 				android:drawableLeft="@drawable/message_bubble_white_empty"
 				android:drawablePadding="@dimen/textDrawableDefaultIndent"
 				app:backgroundTint="@color/colorPrimary"
 				android:visibility="gone"
+				tools:visibility="visible"
 				/>
 			<TextView
 				android:id="@+id/newRequestButton"

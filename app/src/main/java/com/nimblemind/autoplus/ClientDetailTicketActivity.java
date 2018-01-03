@@ -1,9 +1,13 @@
 package com.nimblemind.autoplus;
 
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,11 +18,12 @@ import com.bumptech.glide.request.transition.Transition;
 import java.io.File;
 
 
-public class DetailTicketActivity extends DetailRequestActivity<Ticket>
+public class ClientDetailTicketActivity extends DetailRequestActivity<Ticket>
 {
 	private TextView infoView;
 	private TextView partView;
 	private TextView commentView;
+	private AppCompatButton openChatButton;
 
 	private ViewGroup partPhotosContainer;
 
@@ -31,6 +36,7 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 		partView = findViewById(R.id.textAutoPart);
 		commentView = findViewById(R.id.textComment);
 		partPhotosContainer = findViewById(R.id.partPhotoContainer);
+		openChatButton = findViewById(R.id.buttonOpenChat);
 	}
 
 	@Override
@@ -38,7 +44,6 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 	{
 		super.onPostCreate(savedInstanceState);
 
-		View openChatButton = findViewById(R.id.buttonOpenChat);
 		if (!request.sid.isEmpty())
 		{
 			openChatButton.setOnClickListener(new View.OnClickListener()
@@ -78,6 +83,21 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 		{
 			commentView.setText(ticket.comment);
 			commentView.setVisibility(View.VISIBLE);
+		}
+
+		if (ticket.totalMsgs != 0)
+		{
+			Resources resources = getResources();
+			Drawable notificationImage = resources.getDrawable(R.drawable.message_bubble_white_filled);
+			int size = (int) openChatButton.getTextSize();
+			notificationImage.setBounds(0, 0 , size , size);
+			openChatButton.setCompoundDrawables(notificationImage, null, null, null);
+			if (ticket.unreadSupMsgs != 0)
+			{
+				openChatButton.setText(resources.getString(R.string.textNewMessagesCount, ticket.unreadSupMsgs));
+				openChatButton.setSupportBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.floatingButton)));
+			}
+			else openChatButton.setText(resources.getString(R.string.textMessagesCount, ticket.totalMsgs));
 		}
 
 		Fragment fragment;
@@ -123,7 +143,7 @@ public class DetailTicketActivity extends DetailRequestActivity<Ticket>
 								@Override
 								public void onClick(View v)
 								{
-									Utils.openImage(DetailTicketActivity.this, file);
+									Utils.openImage(ClientDetailTicketActivity.this, file);
 								}
 							});
 						}

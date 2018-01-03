@@ -1,6 +1,7 @@
 package com.nimblemind.autoplus;
 
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ public class SupportTicketViewHolder extends RequestViewHolder<Ticket>
 	private static String textUploading;
 	private static String textPtsPhoto;
 	private static String textPartPhoto;
-	private static String textNoNewMessages;
+	private static String textNoMessages;
 
 	public SupportTicketViewHolder(View itemView)
 	{
@@ -31,7 +32,7 @@ public class SupportTicketViewHolder extends RequestViewHolder<Ticket>
 		textUploading = res.getString(R.string.textUploading);
 		textPtsPhoto = res.getString(R.string.textPhotoPTS);
 		textPartPhoto = res.getString(R.string.textPhotoPart);
-		textNoNewMessages = res.getString(R.string.textNoNewMessages);
+		textNoMessages = res.getString(R.string.textNoMessages);
 
 		infoView = itemView.findViewById(R.id.infoView);
 		sparePartView = itemView.findViewById(R.id.sparePartView);
@@ -53,6 +54,31 @@ public class SupportTicketViewHolder extends RequestViewHolder<Ticket>
 		autoNameView.setText(ticket.autoBrand != null
 				? String.format("%s %s, %d", ticket.autoBrand, ticket.autoModel, ticket.year)
 				: textPtsPhoto);
-		notificationView.setText(textNoNewMessages);
+
+		Resources resources = itemView.getContext().getResources();
+		Drawable notificationImage;
+		String notificationText;
+		if (ticket.totalMsgs != 0)
+		{
+			if (ticket.unreadUsrMsgs != 0)
+			{
+				notificationImage = resources.getDrawable(R.drawable.asset_message_new);
+				notificationText = resources.getString(R.string.textNewMessagesCount, ticket.unreadUsrMsgs);
+			}
+			else
+			{
+				notificationImage = resources.getDrawable(R.drawable.asset_message_has);
+				notificationText = resources.getString(R.string.textMessagesCount, ticket.totalMsgs);
+			}
+		}
+		else
+		{
+			notificationImage = resources.getDrawable(R.drawable.asset_message_empty);
+			notificationText = textNoMessages;
+		}
+		int size = (int) notificationView.getTextSize();
+		notificationImage.setBounds(0, 0 , size , size);
+		notificationView.setCompoundDrawables(notificationImage, null, null, null);
+		notificationView.setText(notificationText);
 	}
 }

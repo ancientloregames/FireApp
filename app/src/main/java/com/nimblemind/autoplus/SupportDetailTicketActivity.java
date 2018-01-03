@@ -1,9 +1,13 @@
 package com.nimblemind.autoplus;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,6 +27,7 @@ public class SupportDetailTicketActivity extends DetailRequestActivity<Ticket>
 	private TextView infoView;
 	private TextView partView;
 	private TextView commentView;
+	private AppCompatButton openChatButton;
 
 	private ViewGroup partPhotosContainer;
 
@@ -35,8 +40,9 @@ public class SupportDetailTicketActivity extends DetailRequestActivity<Ticket>
 		partView = findViewById(R.id.textAutoPart);
 		commentView = findViewById(R.id.textComment);
 		partPhotosContainer = findViewById(R.id.partPhotoContainer);
+		openChatButton = findViewById(R.id.buttonAnswerRequest);
 
-		findViewById(R.id.buttonAnswerRequest).setOnClickListener(new View.OnClickListener()
+		openChatButton.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
@@ -62,6 +68,21 @@ public class SupportDetailTicketActivity extends DetailRequestActivity<Ticket>
 		{
 			commentView.setText(ticket.comment);
 			commentView.setVisibility(View.VISIBLE);
+		}
+
+		if (ticket.totalMsgs != 0)
+		{
+			Resources resources = getResources();
+			Drawable notificationImage = resources.getDrawable(R.drawable.message_bubble_white_filled);
+			int size = (int) openChatButton.getTextSize();
+			notificationImage.setBounds(0, 0 , size , size);
+			openChatButton.setCompoundDrawables(notificationImage, null, null, null);
+			if (ticket.unreadUsrMsgs != 0)
+			{
+				openChatButton.setText(resources.getString(R.string.textNewMessagesCount, ticket.unreadUsrMsgs));
+				openChatButton.setSupportBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.floatingButton)));
+			}
+			else openChatButton.setText(resources.getString(R.string.textMessagesCount, ticket.totalMsgs));
 		}
 
 		Fragment fragment;

@@ -105,8 +105,8 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	}
 
 	@Override
-	protected Class<DetailTicketActivity> getDetailRequestActivityClass()
+	protected Class<ClientDetailTicketActivity> getDetailRequestActivityClass()
 	{
-		return DetailTicketActivity.class;
+		return ClientDetailTicketActivity.class;
 	}
 }

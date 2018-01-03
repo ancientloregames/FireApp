@@ -66,7 +66,9 @@
 	<string name="fragmentSupportTicketList">Opened tickets</string>
 	<string name="fragmentSupportTicketsInProcessList">Tickets in process</string>
 
-	<string name="textNoNewMessages">No new messages</string>
+	<string name="textNoMessages">No messages</string>
+	<string name="textNewMessagesCount">%d new messages</string>
+	<string name="textMessagesCount">%d messages</string>
 	<string name="textPhotoPTS">PTS photo granted</string>
 	<string name="textPhotoPart">Part photo granted</string>
 

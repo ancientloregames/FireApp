@@ -40,7 +40,7 @@
 	<string name="errorNotVerified">Учетная запись не подтверждена</string>
 	<string name="fragmentClientRequestListName">Мои запросы</string>
 	<string name="fragmentClientTicketListName">Мои заявки</string>
-	<string name="textNoNewMessages">нет новых сообщений</string>
+	<string name="textNoMessages">нет сообщений</string>
 	<string name="textPhotoPTS">предоставленно фото ПТС</string>
 	<string name="textTickets">Заявки</string>
 	<string name="buttonCreateRequestByTemplate">Создать новую заявку на основании текущей</string>
@@ -99,4 +99,6 @@
 	<string name="queryFilterOpened">Все открытые</string>
 	<string name="queryFilterOwn">Все мои</string>
 	<string name="fragmentSupportTicketsInProcessList">Запросы в обработке</string>
+	<string name="textMessagesCount">%d сообщений</string>
+	<string name="textNewMessagesCount">%d новых сообщений</string>
 </resources>

@@ -109,7 +109,7 @@
 				android:textSize="15sp"
 				android:drawableLeft="@drawable/asset_message_empty"
 				android:drawablePadding="@dimen/textDrawableDefaultIndent"
-				tools:text="@string/textNoNewMessages"
+				tools:text="@string/textNoMessages"
 				/>
 		</LinearLayout>
 		<TextView

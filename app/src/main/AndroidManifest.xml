@@ -69,7 +69,7 @@
 				  android:theme="@style/MainTheme"
 				  android:parentActivityName=".ClientMainActivity"
 			/>
-		<activity android:name=".DetailTicketActivity"
+		<activity android:name=".ClientDetailTicketActivity"
 				  android:label="@string/activityDetailTicket"
 				  android:theme="@style/MainTheme"
 				  android:parentActivityName=".ClientMainActivity"
