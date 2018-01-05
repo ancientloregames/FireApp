@@ -24,10 +24,10 @@ public class NewTicketActivity extends NewRequestActivity
 	{
 		Intent intent = getIntent();
 		Bundle args = new Bundle();
-		args.putString("uid", uid);
+		args.putString(Constants.EXTRA_UID, uid);
 		if (mode != Mode.DEFAULT)
 		{
-			args.putParcelable("template", intent.getParcelableExtra("template"));
+			args.putParcelable(Constants.EXTRA_TEMPLATE, intent.getParcelableExtra(Constants.EXTRA_TEMPLATE));
 		}
 
 		ArrayList<TitledFragment> list = new ArrayList<>();

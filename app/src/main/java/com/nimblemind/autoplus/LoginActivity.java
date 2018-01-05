@@ -34,7 +34,6 @@ import com.securepreferences.SecurePreferences;
 
 public class LoginActivity extends AuthActivity
 {
-	static final String EXTRA_NO_AUTOLOGIN = "extra_no_autologin";
 
 	private TextInputLayout emailContainer;
 	private TextInputLayout passwordContainer;
@@ -86,7 +85,7 @@ public class LoginActivity extends AuthActivity
 			}
 		});
 
-		boolean noAutologin = getIntent().getBooleanExtra(EXTRA_NO_AUTOLOGIN, false);
+		boolean noAutologin = getIntent().getBooleanExtra(Constants.EXTRA_NO_AUTOLOGIN, false);
 
 		if (!noAutologin && Utils.checkInternetConnection(this, true))
 		{
@@ -341,7 +340,7 @@ public class LoginActivity extends AuthActivity
 	private void recoverPassword(@Nullable String email)
 	{
 		Intent intent = new Intent(this, RecoveryActivity.class);
-		intent.putExtra("email", email);
+		intent.putExtra(Constants.EXTRA_EMAIL, email);
 		startActivity(intent);
 	}
 

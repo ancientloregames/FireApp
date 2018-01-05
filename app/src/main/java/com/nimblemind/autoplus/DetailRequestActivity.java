@@ -78,8 +78,8 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 	protected void openChat()
 	{
 		Intent intent = new Intent();
-		intent.putExtra("requestId", requestId);
-		intent.putExtra("request", request);
+		intent.putExtra(Constants.EXTRA_REQUEST_ID, requestId);
+		intent.putExtra(Constants.EXTRA_REQUEST, request);
 		intent.setAction(ACTION_OPEN_CHAT);
 		setResult(RESULT_OK, intent);
 		finish();
@@ -88,7 +88,7 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 	protected void createNewOnThis()
 	{
 		Intent intent = new Intent();
-		intent.putExtra("request", request);
+		intent.putExtra(Constants.EXTRA_REQUEST, request);
 		intent.setAction(ACTION_NEW_REQUEST);
 		setResult(RESULT_OK, intent);
 		finish();
@@ -135,11 +135,11 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 			if (args != null)
 			{
 				((TextView)view.findViewById(R.id.textAutoInfo)).setText(String.format("%s %s, %d",
-						args.getString("autoBrand"),
-						args.getString("autoModel"),
-						args.getInt("year")));
+						args.getString(Constants.EXTRA_REQUEST_AUTOBRAND),
+						args.getString(Constants.EXTRA_REQUEST_AUTOMODEL),
+						args.getInt(Constants.EXTRA_REQUEST_YEAR)));
 				((TextView)view.findViewById(R.id.textVin)).setText(getString(R.string.textAutoVin,
-					args.getString("vin")));
+					args.getString(Constants.EXTRA_REQUEST_VIN)));
 			}
 			else throw new RuntimeException("Auto info must be passed!");
 		}
@@ -166,13 +166,13 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 			Bundle args = getArguments();
 			if (args != null)
 			{
-				String uid = args.getString("uid");
-				String requestId = args.getString("requestId");
+				String uid = args.getString(Constants.EXTRA_UID);
+				String requestId = args.getString(Constants.EXTRA_REQUEST_ID);
 				StorageReference requestStorageRef = FirebaseStorage.getInstance()
-						.getReference("photos").child(uid).child(requestId);
+						.getReference(Constants.DB_REF_PHOTOS).child(uid).child(requestId);
 
 				ViewGroup container = view.findViewById(R.id.ptsPhotoContainer);
-				List<String> images = args.getStringArrayList("images");
+				List<String> images = args.getStringArrayList(Constants.EXTRA_IMAGES);
 				for (String image : images)
 				{
 					final View imageLayout = getLayoutInflater()

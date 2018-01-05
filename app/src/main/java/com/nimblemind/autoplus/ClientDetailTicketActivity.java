@@ -105,17 +105,17 @@ public class ClientDetailTicketActivity extends DetailRequestActivity<Ticket>
 		if (request.autoBrand != null)
 		{
 			fragment = new AutoTextFragment();
-			args.putString("autoBrand", request.autoBrand);
-			args.putString("autoModel", request.autoModel);
-			args.putInt("year", request.year);
-			args.putString("vin", request.vin);
+			args.putString(Constants.EXTRA_REQUEST_AUTOBRAND, request.autoBrand);
+			args.putString(Constants.EXTRA_REQUEST_AUTOMODEL, request.autoModel);
+			args.putInt(Constants.EXTRA_REQUEST_YEAR, request.year);
+			args.putString(Constants.EXTRA_REQUEST_VIN, request.vin);
 		}
 		else
 		{
 			fragment = new AutoPhotoFragment();
-			args.putString("uid", request.uid);
-			args.putString("requestId", request.storageFolder);
-			args.putStringArrayList("images", request.ptsPhotos);
+			args.putString(Constants.DB_REF_USER_ID, request.uid);
+			args.putString(Constants.EXTRA_REQUEST_ID, request.storageFolder);
+			args.putStringArrayList(Constants.EXTRA_IMAGES, request.ptsPhotos);
 		}
 		fragment.setArguments(args);
 		getSupportFragmentManager()

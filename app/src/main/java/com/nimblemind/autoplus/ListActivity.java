@@ -142,7 +142,7 @@ public class ListActivity extends AppCompatActivity
 	private void finishWithResult(String selected)
 	{
 		Intent intent = new Intent();
-		intent.putExtra("result", selected);
+		intent.putExtra(Constants.EXTRA_RESULT, selected);
 		setResult(RESULT_OK, intent);
 		finish();
 	}

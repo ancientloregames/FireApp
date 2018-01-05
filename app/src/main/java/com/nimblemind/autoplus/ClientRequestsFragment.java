@@ -49,17 +49,17 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 		{
 			if (requestCode == INTENT_NEW_REQUEST)
 			{
-				MODEL newRequest = data.getParcelableExtra("request");
-				ArrayList<TitledUri> images = data.getParcelableArrayListExtra("images");
+				MODEL newRequest = data.getParcelableExtra(Constants.EXTRA_REQUEST);
+				ArrayList<TitledUri> images = data.getParcelableArrayListExtra(Constants.EXTRA_IMAGES);
 				sendRequest(newRequest, images);
 			}
 			else if (requestCode == INTENT_REQUEST_DETAILS)
 			{
-				MODEL request = data.getParcelableExtra("request");
+				MODEL request = data.getParcelableExtra(Constants.EXTRA_REQUEST);
 				switch (data.getAction())
 				{
 					case DetailRequestActivity.ACTION_OPEN_CHAT:
-						String requestId = data.getStringExtra("requestId");
+						String requestId = data.getStringExtra(Constants.EXTRA_REQUEST_ID);
 						openChat(requestId, request);
 						break;
 					case DetailRequestActivity.ACTION_NEW_REQUEST:
@@ -73,10 +73,10 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 	protected void createNewRequest(@Nullable Request template)
 	{
 		Intent intent = new Intent(getActivity(), getNewRequestActivityClass());
-		intent.putExtra("uid", uid);
+		intent.putExtra(Constants.EXTRA_UID, uid);
 		if (template != null)
 		{
-			intent.putExtra("template", template);
+			intent.putExtra(Constants.EXTRA_TEMPLATE, template);
 		}
 		startActivityForResult(intent, INTENT_NEW_REQUEST);
 	}
@@ -94,7 +94,7 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 	@Override
 	protected void resetUnreadMessages(String requestId)
 	{
-		database.child(requestId).child("unreadSupMsgs").setValue(0);
+		database.child(requestId).child(Constants.DB_REF_UNREAD_SUPPORT_MESSAGES).setValue(0);
 	}
 
 	@CallSuper

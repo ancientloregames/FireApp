@@ -34,12 +34,12 @@ public abstract class NewRequestActivity extends AppCompatActivity implements Ne
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Intent intent = getIntent();
-		if (intent.hasExtra("uid"))
+		if (intent.hasExtra(Constants.EXTRA_UID))
 		{
-			uid = intent.getStringExtra("uid");
-			if (intent.hasExtra("template"))
+			uid = intent.getStringExtra(Constants.EXTRA_UID);
+			if (intent.hasExtra(Constants.EXTRA_TEMPLATE))
 			{
-				Ticket template = intent.getParcelableExtra("template");
+				Ticket template = intent.getParcelableExtra(Constants.EXTRA_TEMPLATE);
 				mode = template.autoBrand != null ? Mode.TEXT_BASED : Mode.PHOTO_BASED;
 			}
 		}
@@ -75,8 +75,8 @@ public abstract class NewRequestActivity extends AppCompatActivity implements Ne
 	public void onSubmit(Request request, ArrayList<TitledUri> images)
 	{
 		Intent resultIntent = new Intent();
-		resultIntent.putExtra("request", request);
-		resultIntent.putParcelableArrayListExtra("images", images);
+		resultIntent.putExtra(Constants.EXTRA_REQUEST, request);
+		resultIntent.putParcelableArrayListExtra(Constants.EXTRA_IMAGES, images);
 		setResult(RESULT_OK, resultIntent);
 		finish();
 	}

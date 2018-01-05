@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import static com.nimblemind.autoplus.LoginActivity.EXTRA_NO_AUTOLOGIN;
+import static com.nimblemind.autoplus.Constants.EXTRA_NO_AUTOLOGIN;
 
 
 /**
@@ -52,8 +52,8 @@ public abstract class MainActivity<FRAGMENT extends RequestsFragment> extends Ap
 		NavigationView navigationView = findViewById(R.id.navigator);
 		navigationView.setNavigationItemSelectedListener(this);
 
-		uid = getIntent().getStringExtra("uid");
-		user = (User) getIntent().getSerializableExtra("user");
+		uid = getIntent().getStringExtra(Constants.EXTRA_UID);
+		user = (User) getIntent().getSerializableExtra(Constants.EXTRA_USER);
 
 		((TextView)navigationView.findViewById(R.id.textEmail)).setText(user.email);
 		navigationView.findViewById(R.id.buttonLogOut).setOnClickListener(new View.OnClickListener()
@@ -131,8 +131,8 @@ public abstract class MainActivity<FRAGMENT extends RequestsFragment> extends Ap
 	protected Bundle getFragmentArguments()
 	{
 		Bundle arguments = new Bundle();
-		arguments.putString("uid", uid);
-		arguments.putString("userName", user.name);
+		arguments.putString(Constants.EXTRA_UID, uid);
+		arguments.putString(Constants.EXTRA_USER_NAME, user.name);
 		return arguments;
 	}
 

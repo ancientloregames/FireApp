@@ -15,10 +15,6 @@ import android.view.View;
 
 public class QueryFilterActivity extends AppCompatActivity
 {
-	public final static String EXTRA_QUERY_FILTER_CODE = "query_filter";
-
-	public final static int QUERY_MODE_OPENED = 1;
-	public final static int QUERY_MODE_OWN = 2;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -36,7 +32,7 @@ public class QueryFilterActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				selectFilter(QUERY_MODE_OPENED);
+				selectFilter(Constants.QUERY_MODE_OPENED);
 			}
 		});
 
@@ -45,7 +41,7 @@ public class QueryFilterActivity extends AppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				selectFilter(QUERY_MODE_OWN);
+				selectFilter(Constants.QUERY_MODE_OWN);
 			}
 		});
 	}
@@ -67,7 +63,7 @@ public class QueryFilterActivity extends AppCompatActivity
 	private void selectFilter(int filterId)
 	{
 		Intent intent = new Intent();
-		intent.putExtra(EXTRA_QUERY_FILTER_CODE, filterId);
+		intent.putExtra(Constants.EXTRA_QUERY_FILTER_CODE, filterId);
 		setResult(RESULT_OK, intent);
 		finish();
 	}

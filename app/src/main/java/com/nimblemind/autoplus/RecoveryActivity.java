@@ -35,7 +35,7 @@ public class RecoveryActivity extends AuthBaseActivity
 		final TextView emailView = findViewById(R.id.textEmail);
 		View sendButton = findViewById(R.id.buttonSend);
 
-		String email = getIntent().getStringExtra("email");
+		String email = getIntent().getStringExtra(Constants.EXTRA_EMAIL);
 		if (email != null)
 		{
 			emailView.setText(email);

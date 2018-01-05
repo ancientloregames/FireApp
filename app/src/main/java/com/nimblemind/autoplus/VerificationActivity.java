@@ -31,7 +31,7 @@ public class VerificationActivity extends AuthBaseActivity
 		if (user != null)
 		{
 			final ActionCodeSettings settings = ActionCodeSettings.newBuilder()
-					.setUrl("https://plus-auto.firebaseapp.com/verify?uid=" + user.getUid())
+					.setUrl(Constants.PROJECT_LINK + "verify?uid=" + user.getUid())
 					.setAndroidPackageName(getPackageName(), false, null)
 					.setHandleCodeInApp(true)
 					.build();

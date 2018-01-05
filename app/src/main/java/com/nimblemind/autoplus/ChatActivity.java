@@ -65,15 +65,15 @@ public class ChatActivity extends AppCompatActivity
 		imageView = findViewById(R.id.image);
 
 		Intent intent = getIntent();
-		final String uid = intent.getStringExtra("uid");
-		final String userName = intent.getStringExtra("userName");
-		requestId = intent.getStringExtra("requestId");
-		final Request request = intent.getParcelableExtra("request");
+		final String uid = intent.getStringExtra(Constants.EXTRA_UID);
+		final String userName = intent.getStringExtra(Constants.EXTRA_USER_NAME);
+		requestId = intent.getStringExtra(Constants.EXTRA_REQUEST_ID);
+		final Request request = intent.getParcelableExtra(Constants.EXTRA_REQUEST);
 
 		StorageReference requestStorageRef = FirebaseStorage.getInstance()
-				.getReference("photos").child(request.uid).child(request.storageFolder);
+				.getReference(Constants.DB_REF_PHOTOS).child(request.uid).child(request.storageFolder);
 
-		final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("chats").child(requestId);
+		final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference(Constants.DB_REF_CHATS).child(requestId);
 
 		SnapshotParser<ChatMessage> parser = new SnapshotParser<ChatMessage>() {
 			@Override
@@ -184,7 +184,7 @@ public class ChatActivity extends AppCompatActivity
 		{
 			case android.R.id.home:
 				Intent intent = new Intent();
-				intent.putExtra("requestId", requestId);
+				intent.putExtra(Constants.EXTRA_REQUEST_ID, requestId);
 				setResult(RESULT_CANCELED, intent);
 				finish();
 				return true;

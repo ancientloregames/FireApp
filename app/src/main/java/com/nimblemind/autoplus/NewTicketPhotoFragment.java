@@ -32,6 +32,9 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 {
 	protected static final int INTENT_ADD_PTS_PHOTO = 102;
 
+	private static final String STATE_EXTRA_PTS_IMAGES = "pts_images";
+	private static final String STATE_EXTRA_PTS_IMAGES_NAMES = "pts_images_names";
+
 	private TextInputLayout partContainer;
 	private TextInputLayout commentContainer;
 
@@ -68,7 +71,7 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 				@Override
 				public void onClick(View v)
 				{
-					openList(new String[] { "parts" }, INTENT_SPARE_PART, 3,
+					openList(new String[] { Constants.DB_REF_PARTS }, INTENT_SPARE_PART, 3,
 							Utils.FORMAT_CAP_SENTENCE, getString(R.string.textSearchPart));
 				}
 			});
@@ -112,9 +115,9 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 
 		if (prevState != null)
 		{
-			ArrayList<TitledUri> tmpPtsPhotos = prevState.getParcelableArrayList("ptsPhotos");
+			ArrayList<TitledUri> tmpPtsPhotos = prevState.getParcelableArrayList(STATE_EXTRA_PTS_IMAGES);
 			ptsPhotos.addAll(tmpPtsPhotos);
-			ptsPhotosNames.addAll(prevState.getStringArrayList("ptsPhotosNames"));
+			ptsPhotosNames.addAll(prevState.getStringArrayList(STATE_EXTRA_PTS_IMAGES_NAMES));
 			for (TitledUri photo : ptsPhotos)
 			{
 				addPtsPhotoView(photo.uri);
@@ -125,8 +128,8 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 	@Override
 	public void onSaveInstanceState(Bundle outState)
 	{
-		outState.putParcelableArrayList("ptsPhotos", ptsPhotos);
-		outState.putStringArrayList("ptsPhotosNames", ptsPhotosNames);
+		outState.putParcelableArrayList(STATE_EXTRA_PTS_IMAGES, ptsPhotos);
+		outState.putStringArrayList(STATE_EXTRA_PTS_IMAGES_NAMES, ptsPhotosNames);
 		super.onSaveInstanceState(outState);
 	}
 
@@ -147,7 +150,7 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 			}
 			else if (requestCode == INTENT_SPARE_PART)
 			{
-				partView.setText(data.getStringExtra("result"));
+				partView.setText(data.getStringExtra(Constants.EXTRA_RESULT));
 			}
 		}
 	}
@@ -163,7 +166,7 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 	{
 		ptsPhotoButton.setOnClickListener(null);
 		StorageReference requestStorageRef = FirebaseStorage.getInstance()
-				.getReference("photos").child(uid).child(template.storageFolder);
+				.getReference(Constants.DB_REF_PHOTOS).child(uid).child(template.storageFolder);
 		for (String image : template.ptsPhotos)
 		{
 			GlideApp.with(this)

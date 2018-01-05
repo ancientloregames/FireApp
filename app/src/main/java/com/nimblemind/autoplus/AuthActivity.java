@@ -25,7 +25,7 @@ public abstract class AuthActivity extends AuthBaseActivity
 	{
 		super.onCreate(savedInstanceState);
 
-		dbUsers = FirebaseDatabase.getInstance().getReference("users");
+		dbUsers = FirebaseDatabase.getInstance().getReference(Constants.DB_REF_USERS);
 	}
 
 	protected void enter(@NonNull String uid, @NonNull User user)
@@ -43,8 +43,8 @@ public abstract class AuthActivity extends AuthBaseActivity
 				throw new RuntimeException("Wrong User Type!");
 		}
 		Intent intent = new Intent(AuthActivity.this, mainActivityClass);
-		intent.putExtra("uid", uid);
-		intent.putExtra("user", user);
+		intent.putExtra(Constants.EXTRA_UID, uid);
+		intent.putExtra(Constants.EXTRA_USER, user);
 		startActivity(intent);
 		finish();
 	}

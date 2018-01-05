@@ -8,8 +8,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
 import static android.app.Activity.RESULT_OK;
-import static com.nimblemind.autoplus.QueryFilterActivity.QUERY_MODE_OPENED;
-import static com.nimblemind.autoplus.QueryFilterActivity.QUERY_MODE_OWN;
+import static com.nimblemind.autoplus.Constants.QUERY_MODE_OPENED;
+import static com.nimblemind.autoplus.Constants.QUERY_MODE_OWN;
 
 
 /**
@@ -37,8 +37,8 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 		{
 			if (requestCode == INTENT_REQUEST_DETAILS)
 			{
-				String requestId = data.getStringExtra("requestId");
-				MODEL request = data.getParcelableExtra("request");
+				String requestId = data.getStringExtra(Constants.EXTRA_REQUEST_ID);
+				MODEL request = data.getParcelableExtra(Constants.EXTRA_REQUEST);
 				assignRequest(requestId);
 				openChat(requestId, request);
 			}
@@ -48,7 +48,7 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 	@Override
 	protected Query getInitialQuery(DatabaseReference databaseReference)
 	{
-		return databaseReference.orderByChild("sid").equalTo("");
+		return databaseReference.orderByChild(Constants.DB_REF_SUPPORT_ID).equalTo("");
 	}
 
 	protected Query getFilterQuery(DatabaseReference databaseReference, int filterCode)
@@ -58,10 +58,10 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 			default:
 			case QUERY_MODE_OPENED:
 				getActivity().setTitle(getString(R.string.fragmentSupportTicketList));
-				return databaseReference.orderByChild("sid").equalTo("");
+				return databaseReference.orderByChild(Constants.DB_REF_SUPPORT_ID).equalTo("");
 			case QUERY_MODE_OWN:
 				getActivity().setTitle(getString(R.string.fragmentSupportTicketsInProcessList));
-				return databaseReference.orderByChild("sid").equalTo(uid);
+				return databaseReference.orderByChild(Constants.DB_REF_SUPPORT_ID).equalTo(uid);
 		}
 	}
 
@@ -75,11 +75,11 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 	@Override
 	protected void resetUnreadMessages(String requestId)
 	{
-		database.child(requestId).child("unreadUsrMsgs").setValue(0);
+		database.child(requestId).child(Constants.DB_REF_UNREAD_CLIENT_MESSAGES).setValue(0);
 	}
 
 	protected void assignRequest(String requestKey)
 	{
-		database.child(requestKey).child("sid").setValue(uid);
+		database.child(requestKey).child(Constants.DB_REF_SUPPORT_ID).setValue(uid);
 	}
 }

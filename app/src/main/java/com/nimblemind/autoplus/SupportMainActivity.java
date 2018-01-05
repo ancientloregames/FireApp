@@ -40,7 +40,7 @@ public class SupportMainActivity extends MainActivity<SupportRequestsFragment>
 
 		if (requestCode == INTENT_QUERY_FILTER && resultCode == RESULT_OK)
 		{
-			int filterCode = data.getIntExtra(QueryFilterActivity.EXTRA_QUERY_FILTER_CODE, 0);
+			int filterCode = data.getIntExtra(Constants.EXTRA_QUERY_FILTER_CODE, 0);
 			fragment.applyFilter(filterCode);
 		}
 	}

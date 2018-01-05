@@ -84,7 +84,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 				public void onClick(View v)
 				{
 					modelView.setText("");
-					openList(new String[]{ "autoBrands" }, INTENT_AUTO_BRAND, 2,
+					openList(new String[]{ Constants.DB_REF_AUTO_BRANDS }, INTENT_AUTO_BRAND, 2,
 							Utils.FORMAT_UPPER_CASE, getString(R.string.textSearchBrand));
 				}
 			});
@@ -97,7 +97,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 					String brand = brandView.getText().toString();
 					if (!brand.isEmpty())
 					{
-						openList(new String[]{ "autoModels", brand }, INTENT_AUTO_MODEL, 1,
+						openList(new String[]{ Constants.DB_REF_AUTO_MODELS, brand }, INTENT_AUTO_MODEL, 1,
 								Utils.FORMAT_UPPER_CASE, getString(R.string.textSearchModel));
 					}
 				}
@@ -108,7 +108,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 				@Override
 				public void onClick(View v)
 				{
-					openList(new String[]{ "parts" }, INTENT_SPARE_PART, 3,
+					openList(new String[]{ Constants.DB_REF_PARTS }, INTENT_SPARE_PART, 3,
 							Utils.FORMAT_CAP_SENTENCE, getString(R.string.textSearchPart));
 				}
 			});
@@ -142,7 +142,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 
 		if (resultCode == RESULT_OK && data != null)
 		{
-			String result = data.getStringExtra("result");
+			String result = data.getStringExtra(Constants.EXTRA_RESULT);
 			if (result != null)
 			{
 				switch (requestCode)

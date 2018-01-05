@@ -49,7 +49,7 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	{
 		View rootView = inflater.inflate(getFragmentLayoutId(), container, false);
 
-		database = FirebaseDatabase.getInstance().getReference("requests");
+		database = FirebaseDatabase.getInstance().getReference(Constants.DB_REF_REQUESTS);
 
 		progressBar = rootView.findViewById(R.id.progressBar);
 
@@ -75,8 +75,8 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 
 		if (arguments != null)
 		{
-			uid = arguments.getString("uid");
-			userName = arguments.getString("userName");
+			uid = arguments.getString(Constants.EXTRA_UID);
+			userName = arguments.getString(Constants.EXTRA_USER_NAME);
 		}
 		else
 		{
@@ -112,9 +112,9 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	{
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (requestCode == INTENT_CHAT && data.hasExtra("requestId"))
+		if (requestCode == INTENT_CHAT && data.hasExtra(Constants.EXTRA_REQUEST_ID))
 		{
-			resetUnreadMessages(data.getStringExtra("requestId"));
+			resetUnreadMessages(data.getStringExtra(Constants.EXTRA_REQUEST_ID));
 		}
 	}
 
@@ -151,10 +151,10 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	{
 		resetUnreadMessages(requestId);
 		Intent intent = new Intent(getActivity(), ChatActivity.class);
-		intent.putExtra("uid", uid);
-		intent.putExtra("userName", userName);
-		intent.putExtra("requestId", requestId);
-		intent.putExtra("request", request);
+		intent.putExtra(Constants.EXTRA_UID, uid);
+		intent.putExtra(Constants.EXTRA_USER_NAME, userName);
+		intent.putExtra(Constants.EXTRA_REQUEST_ID, requestId);
+		intent.putExtra(Constants.EXTRA_REQUEST, request);
 		startActivityForResult(intent, INTENT_CHAT);
 	}
 

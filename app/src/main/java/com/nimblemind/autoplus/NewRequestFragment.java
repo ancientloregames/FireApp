@@ -31,6 +31,9 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 	protected static final int INTENT_ADD_PART_PHOTO = 100;
 	protected static final int INTENT_SPARE_PART = 101;
 
+	private static final String STATE_EXTRA_PART_IMAGES = "part_images";
+	private static final String STATE_EXTRA_PART_IMAGES_NAMES = "part_images_names";
+
 	protected Listener<MODEL> listener;
 
 	protected String uid;
@@ -51,7 +54,7 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 		super.onAttach(context);
 
 		Bundle args = getArguments();
-		if (args != null && args.containsKey("uid")) uid = args.getString("uid");
+		if (args != null && args.containsKey(Constants.EXTRA_UID)) uid = args.getString(Constants.EXTRA_UID);
 		else throw new RuntimeException("The Uid must be passed in order to create new request");
 
 		if (context instanceof Listener) listener = (Listener) context;
@@ -87,16 +90,16 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 		super.onViewCreated(view, prevState);
 
 		Bundle args = getArguments();
-		if (args.containsKey("template"))
+		if (args.containsKey(Constants.EXTRA_TEMPLATE))
 		{
-			populateWithTemplate((MODEL) args.getParcelable("template"));
+			populateWithTemplate((MODEL) args.getParcelable(Constants.EXTRA_TEMPLATE));
 		}
 
 		if (prevState != null)
 		{
-			ArrayList<TitledUri> tmpPartPhotos = prevState.getParcelableArrayList("partPhotos");
+			ArrayList<TitledUri> tmpPartPhotos = prevState.getParcelableArrayList(STATE_EXTRA_PART_IMAGES);
 			partPhotos.addAll(tmpPartPhotos);
-			partPhotosNames.addAll(prevState.getStringArrayList("partPhotosNames"));
+			partPhotosNames.addAll(prevState.getStringArrayList(STATE_EXTRA_PART_IMAGES_NAMES));
 			for (TitledUri photo : partPhotos)
 			{
 				addPartPhotoView(photo.uri);
@@ -107,8 +110,8 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 	@Override
 	public void onSaveInstanceState(Bundle outState)
 	{
-		outState.putParcelableArrayList("partPhotos", partPhotos);
-		outState.putStringArrayList("partPhotosNames",partPhotosNames);
+		outState.putParcelableArrayList(STATE_EXTRA_PART_IMAGES, partPhotos);
+		outState.putStringArrayList(STATE_EXTRA_PART_IMAGES_NAMES,partPhotosNames);
 		super.onSaveInstanceState(outState);
 	}
 
