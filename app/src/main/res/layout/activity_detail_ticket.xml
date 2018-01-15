@@ -115,8 +115,6 @@
 				android:drawableLeft="@drawable/message_bubble_white_empty"
 				android:drawablePadding="@dimen/textDrawableDefaultIndent"
 				app:backgroundTint="@color/colorPrimary"
-				android:visibility="gone"
-				tools:visibility="visible"
 				/>
 			<TextView
 				android:id="@+id/newRequestButton"

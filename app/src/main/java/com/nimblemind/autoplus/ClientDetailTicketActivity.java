@@ -2,6 +2,7 @@ package com.nimblemind.autoplus;
 
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,7 +55,11 @@ public class ClientDetailTicketActivity extends DetailRequestActivity<Ticket>
 					openChat();
 				}
 			});
-			openChatButton.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			openChatButton.setSupportBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+			openChatButton.setEnabled(false);
 		}
 
 		findViewById(R.id.newRequestButton).setOnClickListener(new View.OnClickListener()
