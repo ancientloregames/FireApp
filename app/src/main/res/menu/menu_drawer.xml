@@ -7,16 +7,16 @@
 			android:title="@string/textTickets"
 			android:checked="true"
 			/>
-		<item
-			android:id="@+id/navOfferFragment"
-			android:title="@string/textOffers"
-			android:enabled="false"
-			/>
-		<item
-			android:id="@+id/navOrderFragment"
-			android:title="@string/textOrders"
-			android:enabled="false"
-			/>
+		<!--<item-->
+			<!--android:id="@+id/navOfferFragment"-->
+			<!--android:title="@string/textOffers"-->
+			<!--android:enabled="false"-->
+			<!--/>-->
+		<!--<item-->
+			<!--android:id="@+id/navOrderFragment"-->
+			<!--android:title="@string/textOrders"-->
+			<!--android:enabled="false"-->
+			<!--/>-->
 		<item
 			android:id="@+id/navBranchesFragment"
 			android:title="@string/textBranchesAdresses"

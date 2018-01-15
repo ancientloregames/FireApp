@@ -38,4 +38,9 @@
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:textSize">@dimen/newRequestEditTextSize</item>
 	</style>
+
+	<style name="NavigationTheme" parent="AppTheme">
+		<item name="android:layout_marginTop">2dp</item>
+		<item name="android:layout_marginBottom">2dp</item>
+	</style>
 </resources>

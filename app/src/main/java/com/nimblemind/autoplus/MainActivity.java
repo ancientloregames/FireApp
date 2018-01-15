@@ -66,10 +66,7 @@ public abstract class MainActivity<FRAGMENT extends RequestsFragment> extends Ap
 			}
 		});
 
-		if (savedInstanceState == null)
-		{
-			onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navTicketFragment));
-		}
+		onNavigationItemSelected(navigationView.getMenu().findItem(R.id.navTicketFragment));
 	}
 
 	@Override
@@ -99,8 +96,8 @@ public abstract class MainActivity<FRAGMENT extends RequestsFragment> extends Ap
 			case R.id.navTicketFragment:
 				fragment = getTicketsFragment();
 				break;
-			case R.id.navOfferFragment: // TODO
-			case R.id.navOrderFragment: // TODO
+			// TODO case R.id.navOfferFragment:
+			// TODO case R.id.navOrderFragment:
 			default: return super.onOptionsItemSelected(item);
 		}
 
