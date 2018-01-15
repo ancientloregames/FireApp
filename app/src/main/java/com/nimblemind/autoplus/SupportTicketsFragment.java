@@ -1,7 +1,6 @@
 package com.nimblemind.autoplus;
 
 import android.view.View;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseError;
 
 

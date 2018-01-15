@@ -41,4 +41,5 @@ public class Constants
 
 	public static final int QUERY_MODE_OPENED = 1;
 	public static final int QUERY_MODE_OWN = 2;
+	public static final int QUERY_MODE_UNANSWERED = 3;
 }

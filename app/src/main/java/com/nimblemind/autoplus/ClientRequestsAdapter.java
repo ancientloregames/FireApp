@@ -1,6 +1,5 @@
 package com.nimblemind.autoplus;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.nimblemind.autoplus.swipereveallayout.ViewBinderHelper;
 
 

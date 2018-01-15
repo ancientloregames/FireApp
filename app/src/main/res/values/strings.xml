@@ -157,6 +157,7 @@
 
 	<string name="queryFilterOpened">All opened</string>
 	<string name="queryFilterOwn">All mine</string>
+	<string name="queryFilterUnansweredFirst">Unanswered first</string>
 
 	<!-- Permissions -->
 	<string name="textRationaleTitle">Permission requered</string>

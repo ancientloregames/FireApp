@@ -10,6 +10,7 @@ import com.google.firebase.database.Query;
 import static android.app.Activity.RESULT_OK;
 import static com.nimblemind.autoplus.Constants.QUERY_MODE_OPENED;
 import static com.nimblemind.autoplus.Constants.QUERY_MODE_OWN;
+import static com.nimblemind.autoplus.Constants.QUERY_MODE_UNANSWERED;
 
 
 /**
@@ -60,6 +61,7 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 				getActivity().setTitle(getString(R.string.fragmentSupportTicketList));
 				return databaseReference.orderByChild(Constants.DB_REF_SUPPORT_ID).equalTo("");
 			case QUERY_MODE_OWN:
+			case QUERY_MODE_UNANSWERED:
 				getActivity().setTitle(getString(R.string.fragmentSupportTicketsInProcessList));
 				return databaseReference.orderByChild(Constants.DB_REF_SUPPORT_ID).equalTo(uid);
 		}
@@ -68,6 +70,8 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 	public void applyFilter(int filterCode)
 	{
 		adapter = createAdapter(getModelClass(), getFilterQuery(database, filterCode));
+
+		adapter.setFilterMode(filterCode);
 
 		recycler.setAdapter(adapter);
 	}

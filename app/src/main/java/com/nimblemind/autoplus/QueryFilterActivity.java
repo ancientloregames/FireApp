@@ -44,6 +44,15 @@ public class QueryFilterActivity extends AppCompatActivity
 				selectFilter(Constants.QUERY_MODE_OWN);
 			}
 		});
+
+		findViewById(R.id.radioButtonUnanswered).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				selectFilter(Constants.QUERY_MODE_UNANSWERED);
+			}
+		});
 	}
 
 	@Override

@@ -29,7 +29,16 @@
 			android:id="@+id/radioButtonOwn"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/globalActivityPadding"
 			android:text="@string/queryFilterOwn"
+			android:textSize="@dimen/detailRequestTextSize"
+			/>
+		<RadioButton
+			android:id="@+id/radioButtonUnanswered"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/globalActivityPadding"
+			android:text="@string/queryFilterUnansweredFirst"
 			android:textSize="@dimen/detailRequestTextSize"
 			/>
 	</RadioGroup>

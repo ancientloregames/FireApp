@@ -1,7 +1,5 @@
 package com.nimblemind.autoplus;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-
 
 /**
  * com.nimblemind.autoplus. Created by nimblemind on 10/27/2017.

@@ -98,6 +98,7 @@
 	<string name="activityQueryFilter">Фильтр</string>
 	<string name="queryFilterOpened">Все открытые</string>
 	<string name="queryFilterOwn">Все мои</string>
+	<string name="queryFilterUnansweredFirst">Не отвеченные сверху</string>
 	<string name="fragmentSupportTicketsInProcessList">Запросы в обработке</string>
 	<string name="textMessagesCount">%d сообщений</string>
 	<string name="textNewMessagesCount">%d новых сообщений</string>
