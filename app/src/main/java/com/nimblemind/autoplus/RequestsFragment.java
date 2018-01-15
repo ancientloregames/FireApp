@@ -111,7 +111,7 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	{
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (requestCode == INTENT_CHAT && data.hasExtra(Constants.EXTRA_REQUEST_ID))
+		if (requestCode == INTENT_CHAT && data != null)
 		{
 			resetUnreadMessages(data.getStringExtra(Constants.EXTRA_REQUEST_ID));
 		}

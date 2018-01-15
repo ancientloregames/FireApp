@@ -92,7 +92,7 @@
 	<string name="hintTextField">Начните набирать сообщение</string>
 	<string name="buttonSend">Отправить</string>
 	<string name="buttonOpenChat">Открыть чат</string>
-	<string name="buttonTakeRequest">Взять</string>
+	<string name="buttonTakeRequest">Взять в обработку</string>
 	<string name="buttonAnswerRequest">Ответить</string>
 	<string name="fragmentSupportTicketList">Открытые запросы</string>
 	<string name="activityQueryFilter">Фильтр</string>

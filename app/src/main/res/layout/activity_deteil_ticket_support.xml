@@ -104,7 +104,7 @@
 			<include layout="@layout/default_divider"/>
 
 			<android.support.v7.widget.AppCompatButton
-				android:id="@+id/buttonAnswerRequest"
+				android:id="@+id/buttonOpenChat"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_margin="@dimen/globalActivityPadding"
@@ -114,6 +114,20 @@
 				android:drawableLeft="@drawable/message_bubble_white_empty"
 				android:drawablePadding="@dimen/textDrawableDefaultIndent"
 				app:backgroundTint="@color/colorPrimary"
+				/>
+
+			<android.support.v7.widget.AppCompatButton
+				android:id="@+id/buttonTakeRequest"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/globalActivityPadding"
+				android:gravity="center"
+				android:layout_gravity="center"
+				android:text="@string/buttonTakeRequest"
+				android:textSize="18sp"
+				android:textColor="@android:color/white"
+				app:backgroundTint="@color/floatingButton"
+				android:visibility="gone"
 				/>
 		</LinearLayout>
 	</ScrollView>

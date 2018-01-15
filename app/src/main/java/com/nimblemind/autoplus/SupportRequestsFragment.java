@@ -11,6 +11,8 @@ import static android.app.Activity.RESULT_OK;
 import static com.nimblemind.autoplus.Constants.QUERY_MODE_OPENED;
 import static com.nimblemind.autoplus.Constants.QUERY_MODE_OWN;
 import static com.nimblemind.autoplus.Constants.QUERY_MODE_UNANSWERED;
+import static com.nimblemind.autoplus.SupportDetailRequestActivity.ACTION_OPEN_CHAT;
+import static com.nimblemind.autoplus.SupportDetailRequestActivity.ACTION_TAKE_REQUEST;
 
 
 /**
@@ -40,8 +42,17 @@ public abstract class SupportRequestsFragment<MODEL extends Request> extends Req
 			{
 				String requestId = data.getStringExtra(Constants.EXTRA_REQUEST_ID);
 				MODEL request = data.getParcelableExtra(Constants.EXTRA_REQUEST);
-				assignRequest(requestId);
-				openChat(requestId, request);
+
+				String action = data.getAction();
+				if (ACTION_OPEN_CHAT.equals(action))
+				{
+					openChat(requestId, request);
+				}
+				else if (ACTION_TAKE_REQUEST.equals(action))
+				{
+					assignRequest(requestId);
+					openChat(requestId, request);
+				}
 			}
 		}
 	}

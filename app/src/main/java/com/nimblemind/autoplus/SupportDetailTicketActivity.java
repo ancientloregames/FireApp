@@ -1,6 +1,5 @@
 package com.nimblemind.autoplus;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -22,7 +21,7 @@ import java.io.File;
  * com.nimblemind.autoplus. Created by nimblemind on 12/17/2017.
  */
 
-public class SupportDetailTicketActivity extends DetailRequestActivity<Ticket>
+public class SupportDetailTicketActivity extends SupportDetailRequestActivity<Ticket>
 {
 	private TextView infoView;
 	private TextView partView;
@@ -40,22 +39,36 @@ public class SupportDetailTicketActivity extends DetailRequestActivity<Ticket>
 		partView = findViewById(R.id.textAutoPart);
 		commentView = findViewById(R.id.textComment);
 		partPhotosContainer = findViewById(R.id.partPhotoContainer);
-		openChatButton = findViewById(R.id.buttonAnswerRequest);
-
-		openChatButton.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				answerRequest();
-			}
-		});
+		openChatButton = findViewById(R.id.buttonOpenChat);
 	}
 
 	@Override
 	protected void populateForm(Ticket ticket)
 	{
 		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm"));
+
+		if (ticket.sid.isEmpty())
+		{
+			openChatButton.setVisibility(View.GONE);
+			AppCompatButton takeRequestButton = findViewById(R.id.buttonTakeRequest);
+			takeRequestButton.setVisibility(View.VISIBLE);
+			takeRequestButton.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					takeRequest();
+				}
+			});
+		}
+		else openChatButton.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					openChat();
+				}
+			});
 
 		String sparePart = ticket.spareParts.get(0);
 		if (!sparePart.isEmpty())
@@ -134,15 +147,6 @@ public class SupportDetailTicketActivity extends DetailRequestActivity<Ticket>
 						}
 					});
 		}
-	}
-
-	protected void answerRequest()
-	{
-		Intent resultIntent = new Intent();
-		resultIntent.putExtra(Constants.EXTRA_REQUEST_ID, requestId);
-		resultIntent.putExtra(Constants.EXTRA_REQUEST, request);
-		setResult(RESULT_OK, resultIntent);
-		finish();
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package com.nimblemind.autoplus;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -17,7 +16,6 @@ public class SupportTicketViewHolder extends RequestViewHolder<Ticket>
 	TextView sparePartView;
 	TextView autoNameView;
 	TextView notificationView;
-	Button answerRequestButton;
 
 	private static String textUploading;
 	private static String textPtsPhoto;
@@ -38,7 +36,6 @@ public class SupportTicketViewHolder extends RequestViewHolder<Ticket>
 		sparePartView = itemView.findViewById(R.id.sparePartView);
 		autoNameView = itemView.findViewById(R.id.autoNameView);
 		notificationView = itemView.findViewById(R.id.notificationView);
-		answerRequestButton = itemView.findViewById(R.id.buttonAnswerRequest);
 	}
 
 	@Override
