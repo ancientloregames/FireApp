@@ -12,7 +12,6 @@ import android.util.Log;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -100,19 +99,19 @@ public class ImageUploadService extends BasicService
 		}
 		photoRef = photoRef.child(name);
 
-		showProgressNotification(getString(R.string.textUploading), 0, 0);
+		//showProgressNotification(getString(R.string.textUploading), 0, 0);
 		Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
-		photoRef.putBytes(out.toByteArray()).
-				addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>()
-				{
-					@Override
-					public void onProgress(UploadTask.TaskSnapshot taskSnapshot)
-					{
-						showProgressNotification(getString(R.string.textUploading),
-								taskSnapshot.getBytesTransferred(),
-								taskSnapshot.getTotalByteCount());
-					}
-				})
+		photoRef.putBytes(out.toByteArray())
+//				.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>()
+//				{
+//					@Override
+//					public void onProgress(UploadTask.TaskSnapshot taskSnapshot)
+//					{
+//						showProgressNotification(getString(R.string.textUploading),
+//								taskSnapshot.getBytesTransferred(),
+//								taskSnapshot.getTotalByteCount());
+//					}
+//				})
 				.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
 				{
 					@Override
@@ -123,7 +122,7 @@ public class ImageUploadService extends BasicService
 						Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
 
 						broadcastUploadFinished(downloadUri, fileUri);
-						showUploadFinishedNotification(downloadUri, fileUri);
+						//showUploadFinishedNotification(downloadUri, fileUri);
 						taskCompleted();
 					}
 				})
@@ -135,7 +134,7 @@ public class ImageUploadService extends BasicService
 						Utils.trySendFabricReport("uploadFromUri:onFailure. fileUri: " + fileUri, exception);
 
 						broadcastUploadFinished(null, fileUri);
-						showUploadFinishedNotification(null, fileUri);
+						//showUploadFinishedNotification(null, fileUri);
 						taskCompleted();
 					}
 				});
