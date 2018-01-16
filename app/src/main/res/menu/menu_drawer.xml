@@ -20,7 +20,7 @@
 		<item
 			android:id="@+id/navBranchesFragment"
 			android:title="@string/textBranchesAdresses"
-			android:enabled="false"
+			android:checkable="false"
 			/>
 	</group>
 </menu>

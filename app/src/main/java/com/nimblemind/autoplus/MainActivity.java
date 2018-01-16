@@ -98,6 +98,10 @@ public abstract class MainActivity<FRAGMENT extends RequestsFragment> extends Ap
 				break;
 			// TODO case R.id.navOfferFragment:
 			// TODO case R.id.navOrderFragment:
+			case R.id.navBranchesFragment:
+				Intent intent = new Intent(this, CompanyInfoActivity.class);
+				startActivity(intent);
+				return true;
 			default: return super.onOptionsItemSelected(item);
 		}
 

@@ -38,6 +38,8 @@ dependencies {
     compile "com.android.support:design:${rootProject.ext.SUPPORT_VERSION}"
     compile "com.android.support:exifinterface:${rootProject.ext.SUPPORT_VERSION}"
 
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
     compile "com.google.firebase:firebase-auth:${rootProject.ext.FIREBASE_VERSION}"
     compile "com.google.firebase:firebase-database:${rootProject.ext.FIREBASE_VERSION}"
     compile "com.google.firebase:firebase-storage:${rootProject.ext.FIREBASE_VERSION}"
