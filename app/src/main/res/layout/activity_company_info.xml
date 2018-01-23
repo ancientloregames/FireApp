@@ -23,7 +23,10 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		android:contentDescription="@null"
+		app:layout_constraintHorizontal_bias="1.0"
+		app:layout_constraintVertical_bias="1.0"
 		/>
+	<!-- Guidelines -->
 	<android.support.constraint.Guideline
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -49,153 +52,207 @@
 	<android.support.constraint.Guideline
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:id="@+id/column_04"
+		android:orientation="vertical"
+		app:layout_constraintGuide_percent="0.74"
+		/>
+	<android.support.constraint.Guideline
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:id="@+id/row_01"
 		android:orientation="horizontal"
-		app:layout_constraintGuide_percent="0.12"
+		app:layout_constraintGuide_begin="63dp"
 		/>
 	<android.support.constraint.Guideline
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/row_02"
 		android:orientation="horizontal"
-		app:layout_constraintGuide_percent="0.19"
+		app:layout_constraintGuide_begin="97dp"
 		/>
 	<android.support.constraint.Guideline
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/row_03"
 		android:orientation="horizontal"
-		app:layout_constraintGuide_percent="0.17"
+		app:layout_constraintGuide_begin="89dp"
 		/>
 	<android.support.constraint.Guideline
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/row_04"
 		android:orientation="horizontal"
-		app:layout_constraintGuide_percent="0.24"
+		app:layout_constraintGuide_begin="127dp"
 		/>
 	<android.support.constraint.Guideline
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/row_05"
 		android:orientation="horizontal"
-		app:layout_constraintGuide_percent="0.31"
+		app:layout_constraintGuide_begin="165dp"
 		/>
 	<android.support.constraint.Guideline
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/row_06"
 		android:orientation="horizontal"
-		app:layout_constraintGuide_percent="0.41"
+		app:layout_constraintGuide_begin="210dp"
 		/>
 	<android.support.constraint.Guideline
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/row_07"
 		android:orientation="horizontal"
-		app:layout_constraintGuide_percent="0.52"
+		app:layout_constraintGuide_begin="270dp"
 		/>
+	<!-- Content -->
 	<TextView
 		android:text="г. Калининград"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/title01View"
 		app:layout_constraintTop_toTopOf="@+id/row_01"
 		app:layout_constraintStart_toStartOf="@+id/column_01"
+		app:layout_constraintEnd_toStartOf="@+id/column_02"
 		/>
 	<TextView
 		android:text="Время работы"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/title02View"
 		app:layout_constraintTop_toTopOf="@+id/row_01"
 		app:layout_constraintStart_toStartOf="@+id/column_02"
+		app:layout_constraintEnd_toEndOf="parent"
 		/>
 	<TextView
 		android:text="1. ул.Карла Маркса, д.56"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/textView3"
 		android:textIsSelectable="true"
 		app:layout_constraintTop_toTopOf="@+id/row_03"
 		app:layout_constraintStart_toStartOf="@+id/column_01"
+		app:layout_constraintEnd_toStartOf="@+id/column_02"
 		/>
 	<TextView
-		android:text="ПН-ПТ:\t\t10:00 - 19:00\nСБ:\t\t\t\t\t10:00 - 16:00\nВС:\t\t\t\t\t\tвыходной"
-		android:layout_width="wrap_content"
+		android:text="Пн-Пт:\nСб:\nВс:"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/textView4"
 		app:layout_constraintTop_toTopOf="@+id/row_02"
 		app:layout_constraintStart_toStartOf="@+id/column_02"
+		app:layout_constraintEnd_toStartOf="@+id/column_04"
+		/>
+	<TextView
+		android:text="10:00 - 19:00\n10:00 - 16:00\nвыходной"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:id="@+id/textView14"
+		app:layout_constraintTop_toTopOf="@+id/row_02"
+		app:layout_constraintStart_toStartOf="@+id/column_04"
+		app:layout_constraintEnd_toEndOf="parent"
 		/>
 	<TextView
 		android:text="2. ул.Дмитрия Донского, д.32"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/textView5"
 		android:textIsSelectable="true"
 		app:layout_constraintTop_toTopOf="@+id/row_04"
 		app:layout_constraintStart_toStartOf="@+id/column_01"
+		app:layout_constraintEnd_toStartOf="@+id/column_02"
 		/>
 	<TextView
 		android:text="3. ул.Рыбников, д.93"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/textView6"
 		android:textIsSelectable="true"
 		app:layout_constraintTop_toTopOf="@+id/row_05"
 		app:layout_constraintStart_toStartOf="@+id/column_01"
+		app:layout_constraintEnd_toStartOf="@+id/column_02"
 		/>
 	<TextView
-		android:text="Пн-Пт:\t\t10:00 - 18:00\nСб-Вс:\t\tвыходной"
-		android:layout_width="wrap_content"
+		android:text="Пн-Пт:\nСб-Вс:"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/textView7"
 		app:layout_constraintTop_toTopOf="@+id/row_05"
 		app:layout_constraintStart_toStartOf="@+id/column_02"
+		app:layout_constraintEnd_toStartOf="@+id/column_04"
+		/>
+	<TextView
+		android:text="10:00 - 18:00\nвыходной"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:id="@+id/textView13"
+		app:layout_constraintTop_toTopOf="@+id/row_05"
+		app:layout_constraintStart_toStartOf="@+id/column_04"
+		app:layout_constraintEnd_toEndOf="parent"
 		/>
 	<TextView
 		android:text="Виды оплат:\n-наличные\n-безналичные"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/textView8"
 		app:layout_constraintStart_toStartOf="@+id/column_03"
 		app:layout_constraintTop_toTopOf="@+id/row_06"
-		/>
-	<TextView
-		android:text="E-mail: AlitaParts@mail.ru"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/textView9"
-		android:textIsSelectable="true"
-		app:layout_constraintTop_toTopOf="@+id/row_07"
-		app:layout_constraintStart_toStartOf="@+id/column_03"
+		app:layout_constraintEnd_toStartOf="@+id/column_02"
 		/>
 	<TextView
 		android:text="+7(4012)92-29-72"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/textView10"
 		android:textIsSelectable="true"
 		app:layout_constraintTop_toBottomOf="@+id/textView3"
 		app:layout_constraintStart_toStartOf="@+id/column_03"
+		app:layout_constraintEnd_toStartOf="@+id/column_02"
 		/>
 	<TextView
 		android:text="+7(4012)92-29-73"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/textView11"
 		android:textIsSelectable="true"
 		app:layout_constraintTop_toBottomOf="@+id/textView5"
 		app:layout_constraintStart_toStartOf="@+id/column_03"
+		app:layout_constraintEnd_toStartOf="@+id/column_02"
 		/>
 	<TextView
 		android:text="+7(4012)79-21-51"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/textView12"
 		android:textIsSelectable="true"
 		app:layout_constraintTop_toBottomOf="@+id/textView6"
+		app:layout_constraintStart_toStartOf="@+id/column_03"
+		app:layout_constraintEnd_toStartOf="@+id/column_02"
+		/>
+	<TextView
+		android:text="Электронные адреса для связи:"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/textView"
+		app:layout_constraintStart_toStartOf="@+id/column_03"
+		app:layout_constraintTop_toTopOf="@+id/row_07"
+		/>
+	<TextView
+		android:text="aa@AlitaParts.ru"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:id="@+id/textView9"
+		android:textIsSelectable="true"
+		app:layout_constraintStart_toStartOf="@+id/column_03"
+		app:layout_constraintTop_toBottomOf="@+id/textView"
+		/>
+	<TextView
+		android:text="za@AlitaParts.ru"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/textView2"
+		android:textIsSelectable="true"
+		app:layout_constraintTop_toBottomOf="@+id/textView9"
 		app:layout_constraintStart_toStartOf="@+id/column_03"
 		/>
 </android.support.constraint.ConstraintLayout>
