@@ -31,7 +31,7 @@ public class VerificationActivity extends AuthBaseActivity
 		if (user != null)
 		{
 			final ActionCodeSettings settings = ActionCodeSettings.newBuilder()
-					.setUrl(Constants.PROJECT_LINK + "verify?uid=" + user.getUid())
+					.setUrl(Constants.PROJECT_LINK + "verification.html")
 					.setAndroidPackageName(getPackageName(), false, null)
 					.setHandleCodeInApp(true)
 					.build();
