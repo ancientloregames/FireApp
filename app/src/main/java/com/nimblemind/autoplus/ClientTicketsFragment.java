@@ -26,7 +26,7 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 
 		getActivity().startService(new Intent(getActivity(), ImageUploadService.class)
 				.putParcelableArrayListExtra(ImageUploadService.EXTRA_IMAGES, images)
-				.putExtra(ImageUploadService.EXTRA_PATH, new String[] {uid, ticketId})
+				.putExtra(ImageUploadService.EXTRA_PATH, new String[] {ticketId})
 				.setAction(ImageUploadService.ACTION_UPLOAD));
 		return ticketId;
 	}
@@ -86,9 +86,9 @@ public class ClientTicketsFragment extends ClientRequestsFragment<Ticket> implem
 	}
 
 	@Override
-	public void onCreateRequestClicked(Ticket request)
+	public void onCreateRequestClicked(String requestId, Ticket request)
 	{
-		createNewRequest(request);
+		createNewRequest(requestId, request);
 	}
 
 	@Override

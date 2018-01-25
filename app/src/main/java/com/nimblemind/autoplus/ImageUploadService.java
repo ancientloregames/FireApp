@@ -43,7 +43,7 @@ public class ImageUploadService extends BasicService
 	{
 		super.onCreate();
 
-		storagePhotoRef = FirebaseStorage.getInstance().getReference("photos");
+		storagePhotoRef = FirebaseStorage.getInstance().getReference(Constants.DB_REF_PHOTOS);
 	}
 
 	@Nullable

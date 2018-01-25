@@ -73,7 +73,7 @@ public class ClientDetailTicketActivity extends DetailRequestActivity<Ticket>
 	}
 
 	@Override
-	protected void populateForm(Ticket ticket)
+	protected void populateForm(String ticketId, Ticket ticket)
 	{
 		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm"));
 
@@ -119,7 +119,7 @@ public class ClientDetailTicketActivity extends DetailRequestActivity<Ticket>
 		{
 			fragment = new AutoPhotoFragment();
 			args.putString(Constants.DB_REF_USER_ID, request.uid);
-			args.putString(Constants.EXTRA_REQUEST_ID, request.storageFolder);
+			args.putString(Constants.EXTRA_REQUEST_ID, ticketId);
 			args.putStringArrayList(Constants.EXTRA_IMAGES, request.ptsPhotos);
 		}
 		fragment.setArguments(args);

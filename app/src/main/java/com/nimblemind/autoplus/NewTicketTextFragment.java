@@ -168,7 +168,7 @@ public class NewTicketTextFragment extends NewRequestFragment<Ticket>
 	}
 
 	@Override
-	protected void populateWithTemplate(@NonNull Ticket template)
+	protected void populateWithTemplate(@NonNull String templateId, @NonNull Ticket template)
 	{
 		brandView.setText(template.autoBrand);
 		brandView.setInputType(InputType.TYPE_NULL);

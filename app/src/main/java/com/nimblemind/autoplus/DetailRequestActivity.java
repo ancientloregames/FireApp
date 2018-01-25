@@ -59,20 +59,20 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 
 		if (savedInstanceState == null)
 		{
-			if (!intent.hasExtra("uid") || !intent.hasExtra("request"))
+			if (!intent.hasExtra(Constants.EXTRA_UID) || !intent.hasExtra(Constants.EXTRA_REQUEST))
 			{
 				throw new RuntimeException("Existing uid and request must be passed as an Extra");
 			}
 		}
 
-		uid = intent.getStringExtra("uid");
-		requestId = intent.getStringExtra("requestId");
-		request = intent.getParcelableExtra("request");
+		uid = intent.getStringExtra(Constants.EXTRA_UID);
+		requestId = intent.getStringExtra(Constants.EXTRA_REQUEST_ID);
+		request = intent.getParcelableExtra(Constants.EXTRA_REQUEST);
 		requestStorageRef = FirebaseStorage.getInstance()
-				.getReference("photos").child(request.uid).child(request.storageFolder);
+				.getReference(Constants.DB_REF_PHOTOS).child(requestId);
 
 		setTitle(getString(R.string.activityDetailTicketTitle, request.id));
-		populateForm(request);
+		populateForm(requestId, request);
 	}
 
 	protected void openChat()
@@ -94,7 +94,7 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 		finish();
 	}
 
-	protected abstract void populateForm(MODEL request);
+	protected abstract void populateForm(String requestId, MODEL request);
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
@@ -169,7 +169,7 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 				String uid = args.getString(Constants.EXTRA_UID);
 				String requestId = args.getString(Constants.EXTRA_REQUEST_ID);
 				StorageReference requestStorageRef = FirebaseStorage.getInstance()
-						.getReference(Constants.DB_REF_PHOTOS).child(uid).child(requestId);
+						.getReference(Constants.DB_REF_PHOTOS).child(requestId);
 
 				ViewGroup container = view.findViewById(R.id.ptsPhotoContainer);
 				List<String> images = args.getStringArrayList(Constants.EXTRA_IMAGES);

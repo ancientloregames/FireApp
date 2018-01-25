@@ -21,6 +21,7 @@ public abstract class NewRequestActivity extends AppCompatActivity implements Ne
 	protected Mode mode = Mode.DEFAULT;
 
 	protected String uid;
+	protected String requestId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +38,7 @@ public abstract class NewRequestActivity extends AppCompatActivity implements Ne
 		if (intent.hasExtra(Constants.EXTRA_UID))
 		{
 			uid = intent.getStringExtra(Constants.EXTRA_UID);
+			requestId = intent.getStringExtra(Constants.EXTRA_REQUEST_ID);
 			if (intent.hasExtra(Constants.EXTRA_TEMPLATE))
 			{
 				Ticket template = intent.getParcelableExtra(Constants.EXTRA_TEMPLATE);

@@ -162,11 +162,11 @@ public class NewTicketPhotoFragment extends NewRequestFragment<Ticket>
 	}
 
 	@Override
-	protected void populateWithTemplate(@NonNull Ticket template)
+	protected void populateWithTemplate(@NonNull String templateId, @NonNull Ticket template)
 	{
 		ptsPhotoButton.setOnClickListener(null);
 		StorageReference requestStorageRef = FirebaseStorage.getInstance()
-				.getReference(Constants.DB_REF_PHOTOS).child(uid).child(template.storageFolder);
+				.getReference(Constants.DB_REF_PHOTOS).child(templateId);
 		for (String image : template.ptsPhotos)
 		{
 			GlideApp.with(this)

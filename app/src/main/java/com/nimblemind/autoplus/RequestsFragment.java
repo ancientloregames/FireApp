@@ -140,9 +140,9 @@ public abstract class RequestsFragment<MODEL extends Request> extends Fragment
 	protected void showRequestDetails(@NonNull Request request, String requestId)
 	{
 		Intent intent = new Intent(getActivity(), getDetailRequestActivityClass());
-		intent.putExtra("uid", uid);
-		intent.putExtra("requestId", requestId);
-		intent.putExtra("request", request);
+		intent.putExtra(Constants.EXTRA_UID, uid);
+		intent.putExtra(Constants.EXTRA_REQUEST_ID, requestId);
+		intent.putExtra(Constants.EXTRA_REQUEST, request);
 		startActivityForResult(intent, INTENT_REQUEST_DETAILS);
 	}
 

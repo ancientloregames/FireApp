@@ -35,7 +35,7 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 			@Override
 			public void onClick(View view)
 			{
-				createNewRequest(null);
+				createNewRequest(null, null);
 			}
 		});
 	}
@@ -56,26 +56,27 @@ public abstract class ClientRequestsFragment<MODEL extends Request> extends Requ
 			else if (requestCode == INTENT_REQUEST_DETAILS)
 			{
 				MODEL request = data.getParcelableExtra(Constants.EXTRA_REQUEST);
+				String requestId = data.getStringExtra(Constants.EXTRA_REQUEST_ID);
 				switch (data.getAction())
 				{
 					case DetailRequestActivity.ACTION_OPEN_CHAT:
-						String requestId = data.getStringExtra(Constants.EXTRA_REQUEST_ID);
 						openChat(requestId, request);
 						break;
 					case DetailRequestActivity.ACTION_NEW_REQUEST:
-						createNewRequest(request);
+						createNewRequest(requestId, request);
 						break;
 				}
 			}
 		}
 	}
 
-	protected void createNewRequest(@Nullable Request template)
+	protected void createNewRequest(@Nullable String templateId, @Nullable Request template)
 	{
 		Intent intent = new Intent(getActivity(), getNewRequestActivityClass());
 		intent.putExtra(Constants.EXTRA_UID, uid);
 		if (template != null)
 		{
+			intent.putExtra(Constants.EXTRA_REQUEST_ID, templateId);
 			intent.putExtra(Constants.EXTRA_TEMPLATE, template);
 		}
 		startActivityForResult(intent, INTENT_NEW_REQUEST);

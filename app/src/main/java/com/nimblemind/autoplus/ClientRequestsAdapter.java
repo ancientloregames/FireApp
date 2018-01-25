@@ -12,7 +12,7 @@ abstract class ClientRequestsAdapter<MODEL extends Request, HOLDER extends Reque
 {
 	interface Listener<MODEL extends Request> extends AdapterListener<MODEL>
 	{
-		void onCreateRequestClicked(MODEL request);
+		void onCreateRequestClicked(String key, MODEL request);
 		void onDeleteRequestClicked(String key);
 		void onCancelDeleteRequestClicked(String key);
 	}

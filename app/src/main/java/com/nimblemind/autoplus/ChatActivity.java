@@ -71,7 +71,7 @@ public class ChatActivity extends AppCompatActivity
 		final Request request = intent.getParcelableExtra(Constants.EXTRA_REQUEST);
 
 		StorageReference requestStorageRef = FirebaseStorage.getInstance()
-				.getReference(Constants.DB_REF_PHOTOS).child(request.uid).child(request.storageFolder);
+				.getReference(Constants.DB_REF_PHOTOS).child(requestId);
 
 		final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference(Constants.DB_REF_CHATS).child(requestId);
 
@@ -140,7 +140,7 @@ public class ChatActivity extends AppCompatActivity
 					sendMessage(new ChatMessage(uid, userName, text, imagesNames), chatRef);
 					ChatActivity.this.startService(new Intent(ChatActivity.this, ImageUploadService.class)
 							.putParcelableArrayListExtra(ImageUploadService.EXTRA_IMAGES, images)
-							.putExtra(ImageUploadService.EXTRA_PATH, new String[] {request.uid, request.storageFolder})
+							.putExtra(ImageUploadService.EXTRA_PATH, new String[] {requestId})
 							.setAction(ImageUploadService.ACTION_UPLOAD));
 					clearMessageData();
 				}

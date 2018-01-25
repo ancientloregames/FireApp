@@ -21,7 +21,6 @@ public abstract class Request implements Parcelable
 	public final String vin;
 	public final int year;
 	public final String type;
-	public final String storageFolder;	// Set on server
 	public final ArrayList<String> ptsPhotos;
 	public final int totalMsgs;			// Set on server
 	public final int unreadUsrMsgs;		// Set on server
@@ -38,7 +37,6 @@ public abstract class Request implements Parcelable
 		vin = null;
 		year = 0;
 		type = getClass().getSimpleName();
-		storageFolder = null;
 		ptsPhotos = null;
 		totalMsgs = 0;
 		unreadUsrMsgs = 0;
@@ -56,7 +54,6 @@ public abstract class Request implements Parcelable
 		this.vin = vin;
 		this.year = year;
 		this.type = getClass().getSimpleName();
-		this.storageFolder = null;
 		this.ptsPhotos = null;
 		this.totalMsgs = 0;
 		this.unreadUsrMsgs = 0;
@@ -74,7 +71,6 @@ public abstract class Request implements Parcelable
 		this.vin = null;
 		this.year = 0;
 		this.type = getClass().getSimpleName();
-		this.storageFolder = null;
 		this.ptsPhotos = ptsPhotos;
 		this.totalMsgs = 0;
 		this.unreadUsrMsgs = 0;
@@ -92,7 +88,6 @@ public abstract class Request implements Parcelable
 		vin = in.readString();
 		year = in.readInt();
 		type = in.readString();
-		storageFolder = in.readString();
 		in.readStringList(ptsPhotos = new ArrayList<>());
 		totalMsgs = in.readInt();
 		unreadUsrMsgs = in.readInt();
@@ -117,7 +112,6 @@ public abstract class Request implements Parcelable
 		dest.writeString(vin);
 		dest.writeInt(year);
 		dest.writeString(type);
-		dest.writeString(storageFolder);
 		dest.writeStringList(ptsPhotos);
 		dest.writeInt(totalMsgs);
 		dest.writeInt(unreadUsrMsgs);

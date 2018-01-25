@@ -92,7 +92,9 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 		Bundle args = getArguments();
 		if (args.containsKey(Constants.EXTRA_TEMPLATE))
 		{
-			populateWithTemplate((MODEL) args.getParcelable(Constants.EXTRA_TEMPLATE));
+			String templateId = args.getParcelable(Constants.EXTRA_REQUEST_ID);
+			MODEL template = args.getParcelable(Constants.EXTRA_TEMPLATE);
+			populateWithTemplate(templateId, template);
 		}
 
 		if (prevState != null)
@@ -149,7 +151,7 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 	@LayoutRes
 	protected abstract int getLayoutId();
 
-	protected abstract void populateWithTemplate(@NonNull MODEL template);
+	protected abstract void populateWithTemplate(@NonNull String templateId, @NonNull MODEL template);
 
 	protected abstract void addPartPhotoView(Uri uri);
 
