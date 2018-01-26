@@ -88,6 +88,7 @@ public abstract class DetailRequestActivity<MODEL extends Request> extends AppCo
 	protected void createNewOnThis()
 	{
 		Intent intent = new Intent();
+		intent.putExtra(Constants.EXTRA_REQUEST_ID, requestId);
 		intent.putExtra(Constants.EXTRA_REQUEST, request);
 		intent.setAction(ACTION_NEW_REQUEST);
 		setResult(RESULT_OK, intent);
