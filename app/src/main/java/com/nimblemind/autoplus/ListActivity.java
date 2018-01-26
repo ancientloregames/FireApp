@@ -185,8 +185,8 @@ public class ListActivity extends AppCompatActivity
 									progressBar.setVisibility(View.VISIBLE);
 								}
 							});
-							searchText = newText.toUpperCase();
-							populateList(dbRef, searchText, dbResultCallback);
+							searchText = newText;
+							populateList(dbRef, searchText.toUpperCase(), dbResultCallback);
 						}
 					}, 500, TimeUnit.MILLISECONDS);
 				}
