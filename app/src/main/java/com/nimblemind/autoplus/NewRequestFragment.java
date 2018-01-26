@@ -92,7 +92,7 @@ public abstract class NewRequestFragment<MODEL extends Request> extends Fragment
 		Bundle args = getArguments();
 		if (args.containsKey(Constants.EXTRA_TEMPLATE))
 		{
-			String templateId = args.getParcelable(Constants.EXTRA_REQUEST_ID);
+			String templateId = args.getString(Constants.EXTRA_REQUEST_ID);
 			MODEL template = args.getParcelable(Constants.EXTRA_TEMPLATE);
 			populateWithTemplate(templateId, template);
 		}
