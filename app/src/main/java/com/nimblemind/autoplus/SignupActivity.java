@@ -102,13 +102,7 @@ public class SignupActivity extends AuthActivity
 							saveCredentials(email, password);
 							setUserName(name);
 							addUserToDb(task.getResult().getUser().getUid(), new User(name, email));
-							if (!email.contains(debugDomain))
-								verifyUserData();
-							else
-							{
-								setResult(RESULT_OK);
-								finish();
-							}
+							verifyUserData();
 						}
 						else
 						{

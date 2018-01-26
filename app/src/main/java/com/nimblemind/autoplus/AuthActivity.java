@@ -18,8 +18,6 @@ public abstract class AuthActivity extends AuthBaseActivity
 	protected final String TAG = "AuthActivity";
 	protected DatabaseReference dbUsers;
 
-	protected final String debugDomain = "@test.com"; //TODO remove on release
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{

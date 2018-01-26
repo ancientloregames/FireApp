@@ -256,7 +256,7 @@ public class LoginActivity extends AuthActivity
 
 	private void findUserAndEnter(@NonNull final FirebaseUser firebaseUser)
 	{
-		if (!firebaseUser.isEmailVerified() && !firebaseUser.getEmail().contains(debugDomain))
+		if (!firebaseUser.isEmailVerified())
 		{
 			Toast.makeText(LoginActivity.this, getString(R.string.errorNotVerified), Toast.LENGTH_SHORT).show();
 			showInterface(true);
