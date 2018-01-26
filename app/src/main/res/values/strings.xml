@@ -134,7 +134,7 @@
 	<string name="textNoImageViewer">You don\'t have any App to open image</string>
 
 	<!-- Chat Activity -->
-	<string name="activityChat" translatable="false">Chat</string>
+	<string name="activityChat">Chat</string>
 
 	<string name="hintClientName" translatable="false">Client Name</string>
 	<string name="hintSupportName" translatable="false">Support Name</string>
@@ -160,7 +160,7 @@
 
 	<!-- Permissions -->
 	<string name="textRationaleTitle">Permission requered</string>
-	<string name="textRationaleMessageCamera" translatable="false">To take photos, the app needs your permission to use camera and write the result to Pictures folder</string>
+	<string name="textRationaleMessageCamera">To take photos, the app needs your permission to use camera and write the result to Pictures folder</string>
 	<string name="textRationaleMessageStorage">To pick image from you gallery, the app needs your permission to read storage</string>
 	<string name="dialogAgreementMessage" translatable="false">
 Регистрируясь в приложении вы соглашаетесь с нашей политикой конфиденциальности. Ваши личные данные важны для нас и не будут переданы третьим лицам.

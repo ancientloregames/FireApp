@@ -102,4 +102,6 @@
 	<string name="fragmentSupportTicketsInProcessList">Запросы в обработке</string>
 	<string name="textMessagesCount">%d сообщений</string>
 	<string name="textNewMessagesCount">%d новых сообщений</string>
+	<string name="activityChat">Ответы на заявку</string>
+	<string name="textRationaleMessageCamera" translatable="false">Для того чтобы сделать фото, приложению необходимо получить права на использование камеры и сохранение результата в памяти телефона</string>
 </resources>
