@@ -45,7 +45,7 @@ public class SupportDetailTicketActivity extends SupportDetailRequestActivity<Ti
 	@Override
 	protected void populateForm(String ticketId, Ticket ticket)
 	{
-		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm"));
+		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, HH:mm"));
 
 		if (ticket.sid.isEmpty())
 		{

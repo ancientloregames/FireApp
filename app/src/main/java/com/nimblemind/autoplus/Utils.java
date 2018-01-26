@@ -166,7 +166,7 @@ public class Utils
 
 	public static String getDate(long time, String format)
 	{
-		Calendar cal = Calendar.getInstance(Locale.getDefault());
+		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(time);
 		String date = DateFormat.format(format, cal).toString();
 		return date;

@@ -75,7 +75,7 @@ public class ClientDetailTicketActivity extends DetailRequestActivity<Ticket>
 	@Override
 	protected void populateForm(String ticketId, Ticket ticket)
 	{
-		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm"));
+		infoView.setText(Utils.getDate(ticket.timestamp, "dd MMMM, HH:mm"));
 
 		String sparePart = ticket.spareParts.get(0);
 		if (!sparePart.isEmpty())

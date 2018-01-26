@@ -48,7 +48,7 @@ public class ClientTicketViewHolder extends RequestViewHolder<Ticket>
 	public void bindToData(Ticket ticket)
 	{
 		infoView.setText(ticket.timestamp > 0
-				? Utils.getDate(ticket.timestamp, "dd MMMM, hh:mm")
+				? Utils.getDate(ticket.timestamp, "dd MMMM, HH:mm")
 				: textUploading);
 		String sparePart = ticket.spareParts.get(0);
 		sparePartView.setText(!sparePart.isEmpty()
