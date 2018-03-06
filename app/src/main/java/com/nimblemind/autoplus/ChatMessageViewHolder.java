@@ -1,6 +1,7 @@
 package com.nimblemind.autoplus;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -90,6 +92,19 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder
 					@Override
 					public void onResourceReady(final File file, Transition<? super File> transition)
 					{
+						Uri uri = Uri.fromFile(file);
+						try
+						{
+							Bitmap bimap = Utils.decodeSampledBitmapFromUri(context.getContentResolver(), uri, 1536, 1536);
+							imageView.setImageBitmap(bimap);
+						}
+						catch (IOException e)
+						{
+							Utils.trySendFabricReport("Failed to decode bitmap."
+									+ "\nFile name: " + file.getName()
+									+ "\nFile size: " + file.length(), e);
+							imageView.setImageResource(android.R.drawable.ic_menu_report_image);
+						}
 						imageView.setImageURI(Uri.fromFile(file));
 						imageView.setOnClickListener(new View.OnClickListener()
 						{
