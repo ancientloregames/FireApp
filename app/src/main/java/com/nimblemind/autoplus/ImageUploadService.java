@@ -86,7 +86,7 @@ public class ImageUploadService extends BasicService
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Bitmap bitmap = Utils.decodeSampledBitmapFromUri(getContentResolver(), fileUri, 1024 , 1024);
+		Bitmap bitmap = Utils.decodeSampledBitmapFromUri(getContentResolver(), fileUri, 1920 , 1920);
 		bitmap = Utils.fixImageRotation(bitmap, orientation);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
